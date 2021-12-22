@@ -1,5 +1,5 @@
 /***************************************************************************
- *            tests/test_pbdd.cpp
+ *            tests/test_hermesbdd.cpp
  *
  *  Copyright  2021  Luigi Capogrosso and Luca Geretti
  *
@@ -60,7 +60,7 @@ void test_one_sat()
 
     std::unordered_map<uint32_t, bool> map = a.one_sat();
 
-    HERMESBDD_TEST_EQUAL(map[1], true);
+    HERMESBDD_TEST_ASSERT(map[1]);
 }
 
 void test_not()
@@ -73,7 +73,7 @@ void test_not()
     BDD c = !a;
     std::unordered_map<uint32_t, bool> map = c.one_sat();
 
-    HERMESBDD_TEST_EQUAL(!map[1], true);
+    HERMESBDD_TEST_ASSERT(!map[1]);
 }
 
 void test_and()
@@ -85,7 +85,7 @@ void test_and()
     BDD c = a & !b;
     std::unordered_map<uint32_t, bool> map = c.one_sat();
 
-    HERMESBDD_TEST_EQUAL(map[1] && !map[2], true);
+    HERMESBDD_TEST_ASSERT(map[1] && !map[2]);
 }
 
 void test_or()
@@ -98,7 +98,7 @@ void test_or()
     BDD c = a | b;
     std::unordered_map<uint32_t, bool> map = c.one_sat();
 
-    HERMESBDD_TEST_EQUAL(map[1] || map[2], true);
+    HERMESBDD_TEST_ASSERT(map[1] || map[2]);
 }
 
 void test_xor()
@@ -111,7 +111,7 @@ void test_xor()
     BDD c = (a ^ b);
     std::unordered_map<uint32_t, bool> map = c.one_sat();
 
-    HERMESBDD_TEST_EQUAL(map[1] ^ map[2], true);
+    HERMESBDD_TEST_ASSERT(map[1] ^ map[2]);
 }
 
 void test_implies()
@@ -124,12 +124,12 @@ void test_implies()
 
     BDD c = a > b;
 
-    HERMESBDD_TEST_EQUAL(c.count_sat(s) == 3,true);
+    HERMESBDD_TEST_ASSERT(c.count_sat(s) == 3);
 }
 
 void test_reverse_implies()
 {
-    HERMESBDD_PRINT_TEST_COMMENT("Testing IMPLIES operator.");
+    HERMESBDD_PRINT_TEST_COMMENT("Testing reverse IMPLIES operator.");
 
     BDD a(1);
     BDD b(2);
@@ -137,7 +137,7 @@ void test_reverse_implies()
 
     BDD c = a < b;
 
-    HERMESBDD_TEST_EQUAL(c.count_sat(s) == 3,true);
+    HERMESBDD_TEST_ASSERT(c.count_sat(s) == 3);
 }
 
 
@@ -152,7 +152,7 @@ int main()
     test_or();
     test_xor();
     // TODO: Fix this test.
-    // test_implies();
+    test_implies();
     test_reverse_implies();
 
     return HERMESBDD_TEST_FAILURES;
