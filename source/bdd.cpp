@@ -143,7 +143,7 @@ BDD BDD::operator^=(BDD r)
 
 BDD BDD::operator>(BDD r)
 {
-    return BDD(Node::ITE(this->node, complement(r.node), Node::true_node),
+    return BDD(Node::ITE(this->node, r.node, Node::true_node),
                true);
 }
 

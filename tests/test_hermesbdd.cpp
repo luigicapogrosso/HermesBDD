@@ -151,7 +151,6 @@ int main()
     test_and();
     test_or();
     test_xor();
-    // TODO: Fix this test.
     test_implies();
     test_reverse_implies();
 
