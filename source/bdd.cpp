@@ -96,7 +96,6 @@ BDD::BDD(uint32_t v)
 
 BDD::BDD(uint32_t node, bool dummy)
     : node(node)
-    , dummy(dummy)
 {
 
 }

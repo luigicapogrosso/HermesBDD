@@ -151,7 +151,6 @@ public:
 
 private:
     uint32_t node;
-    bool dummy;
 
     /*!
      * TODO: description.
