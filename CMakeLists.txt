@@ -1,0 +1,83 @@
+cmake_minimum_required(VERSION 3.16)
+message(STATUS "CMake version ${CMAKE_VERSION}")
+
+project(HermesBDD VERSION 0.1)
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "Intel")
+    message(WARNING "Intel compiler not supported.")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    message(WARNING "Microsoft compiler not supported.")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 10.2)
+        message(FATAL_ERROR "GCC version must be at least 10.2!")
+    endif()
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 11.0)
+        message(FATAL_ERROR "Clang version must be at least 11.0!")
+    endif()
+else()
+    message(WARNING "You are using an unsupported compiler! Compilation has
+            only been tested with Clang and GCC.")
+endif()
+
+set(CMAKE_MACOSX_RPATH 1)
+set(BUILD_SHARED_LIBS ON)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+endif()
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    add_compile_options(-Wunused-private-field)
+endif()
+
+find_package(Threads)
+if(NOT Threads_FOUND)
+    message(FATAL ERROR "Unable to find Threads library.")
+endif()
+
+# TODO: Add support for OpenMP with Clang compiler.
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+endif()
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    include(FindOpenMP)
+    if(OPENMP_FOUND)
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+    endif()
+    if(NOT OPENMP_FOUND)
+        message(FATAL ERROR "Unable to find OpenMP library.")
+    endif()
+endif()
+
+option(COVERAGE "Enable coverage reporting" OFF)
+add_library(coverage_config INTERFACE)
+if(COVERAGE)
+    message(STATUS "Enabled coverage reporting")
+    target_compile_options(coverage_config INTERFACE -O0 -g --coverage)
+    if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.13)
+        target_link_options(coverage_config INTERFACE --coverage)
+    else()
+        target_link_libraries(coverage_config INTERFACE --coverage)
+    endif()
+endif()
+
+enable_testing()
+include(CTest)
+
+include_directories(${PROJECT_SOURCE_DIR}/source)
+include_directories(${PROJECT_SOURCE_DIR}/utility)
+
+add_subdirectory(source)
+add_subdirectory(tests)
+add_subdirectory(profile)
+
+add_library(hermesbdd SHARED $<TARGET_OBJECTS:hermesbdd-all>)
+target_link_libraries(hermesbdd dl ${CMAKE_THREAD_LIBS_INIT})
+
+if(COVERAGE)
+    target_link_libraries(hermesbdd coverage_config)
+endif()
