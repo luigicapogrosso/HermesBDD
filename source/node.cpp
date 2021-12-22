@@ -224,13 +224,13 @@ uint32_t Node::ITE(uint32_t A, uint32_t B, uint32_t C)
     {
         return B;
     }
-
-    // Check if this ITE has been done before in cache.
+    
     uint32_t result;
-    if (internal::manager::cache.findITE(A, B, C, result))
-    {
-        return result;
-    }
+    // TODO: Check if this ITE has been done before in cache.
+    //if (internal::manager::cache.findITE(A, B, C, result))
+    //{
+    //    return result;
+    //}
 
     // Normalization rules.
     if (A == B)

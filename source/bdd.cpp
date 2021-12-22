@@ -245,7 +245,7 @@ static double count_sat_helper(uint32_t node, int n, std::set<uint32_t>& vars)
     }
 
     double count = countT + (countF - countT) / 2;
-    // assert(count >= 0);
+    assert(count >= 0);
 
     // TODO: add to cache now.
 
