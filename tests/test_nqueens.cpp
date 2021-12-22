@@ -98,16 +98,10 @@ static void build(int row, int col)
     queen &= (a & b & c & d);
 }
 
-
-
-int main()
+int counting_solution(int n)
 {
-    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queens problems.");
+    N = n;
 
-    N = 1;
-    std::cout << "Using a " << N << "x" << N << " chess board\n";
-
-    auto start = std::chrono::system_clock::now();
     queen = BDD::bdd_true;
 
     // Build variable array.
@@ -119,7 +113,7 @@ int main()
 
     for (int row = 0; row < N; row++)
     {
-        for (int col=0 ; col<N ; col++)
+        for (int col=0 ; col < N ; col++)
         {
             X[row][col] = BDD((uint32_t)(row * N + col));
         }
@@ -145,27 +139,68 @@ int main()
         }
     }
 
-    auto end = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed_seconds = end-start;
-    std::cout << "Elapsed time for BDD construction: "
-              << elapsed_seconds.count() << " seconds" << std::endl;
-
-    // Print the results.
-    queen.print("N-queens: " + std::to_string(N));
-
     std::set<uint32_t> vars;
     for (int i = 0; i < N * N; i++)
     {
         vars.insert((unsigned int)i);
     }
 
-    start = std::chrono::system_clock::now();
-    std::cout << "There are " << queen.count_sat(vars) << " solutions\n";
-    end = std::chrono::system_clock::now();
+    return queen.count_sat(vars);
+}
 
-    elapsed_seconds = end-start;
-    std::cout << "Elapsed time for count_sat: "
-              << elapsed_seconds.count() << " seconds" << std::endl;
+void nqueens_solution_1()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queens problems using a 1x1 chess board.");
+
+    int s = counting_solution(1);
+
+    HERMESBDD_TEST_ASSERT(s == 1);
+}
+
+void nqueens_solution_2()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queens problems using a 2x2 chess board.");
+
+    int s = counting_solution(2);
+
+    HERMESBDD_TEST_ASSERT(s == 0);
+}
+
+void nqueens_solution_4()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queens problems using a 4x4 chess board.");
+
+    int s = counting_solution(4);
+
+    HERMESBDD_TEST_ASSERT(s == 2);
+}
+
+void nqueens_solution_5()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queens problems using a 5x5 chess board.");
+
+    int s = counting_solution(5);
+
+    HERMESBDD_TEST_ASSERT(s == 10);
+}
+
+void nqueens_solution_7()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queens problems using a 7x7 chess board.");
+
+    int s = counting_solution(7);
+
+    HERMESBDD_TEST_ASSERT(s == 40);
+}
+
+
+int main()
+{
+    nqueens_solution_1();
+    nqueens_solution_2();
+    nqueens_solution_4();
+    nqueens_solution_5();
+    nqueens_solution_7();
 
     return HERMESBDD_TEST_FAILURES;
 }
