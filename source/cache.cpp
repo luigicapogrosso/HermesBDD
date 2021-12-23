@@ -37,59 +37,59 @@
 #include "cache.hpp"
 
 /*!
+ * A lock guard around nodes.
+ */
+struct lock_protector
+{
+public:
+    lock_protector(cache_slot& slot) : slot(slot)
+    {
+        while (slot.locked.test_and_set(std::memory_order_acquire));
+    }
+
+    ~lock_protector() {
+        slot.locked.clear(std::memory_order_release);
+    }
+
+private:
+    cache_slot& slot;
+};
+
+/*!
  * TODO: description.
  * @param data
  * @return
  */
-static uint64_t hash(const CacheItem& data)
+static uint64_t hash(const cache_item& data)
 {
-    return hash128(&data, sizeof(CacheItem::key));
+    return hash128(&data, sizeof(cache_item::key));
 }
-
-/*!
- * A lock guard around nodes.
- */
-struct LockProtector
-{
-public:
-    LockProtector(CacheSlot& slot) : _slot(slot)
-    {
-        while (_slot.locked.test_and_set(std::memory_order_acquire));
-    }
-
-    ~LockProtector() {
-        _slot.locked.clear(std::memory_order_release);
-    }
-
-private:
-    CacheSlot& _slot;
-};
 
 void Cache::init(size_t mem_usage)
 {
-    elems = mem_usage / sizeof(CacheSlot);
-    table = new CacheSlot[elems];
+    elems = mem_usage / sizeof(cache_slot);
+    table = new cache_slot[elems];
 
     assert(table != nullptr);
 }
 
-void Cache::insert(const CacheItem& data)
+void Cache::insert(const cache_item& data)
 {
     uint64_t index = hash(data) % elems;
 
-    CacheSlot& current = table[index];
-    LockProtector lock(current);
+    cache_slot& current = table[index];
+    lock_protector lock(current);
 
     current.data = data;
     current.exists = true;
 }
 
-bool Cache::find(CacheItem& item)
+bool Cache::find(cache_item& item)
 {
     uint64_t index = hash(item) % elems;
 
-    CacheSlot& current = table[index];
-    LockProtector lock(current);
+    cache_slot& current = table[index];
+    lock_protector lock(current);
 
     if (!current.exists)
     {
@@ -121,7 +121,7 @@ bool Cache::findITE(const uint32_t a,
                     const uint32_t c,
                     uint32_t& result)
 {
-    CacheItem data;
+    cache_item data;
 
     data.key.a = a;
     data.key.b = b;
@@ -142,7 +142,7 @@ void Cache::insertITE(const uint32_t a,
                       const uint32_t c,
                       uint32_t result)
 {
-    CacheItem data;
+    cache_item data;
 
     data.key.a = a;
     data.key.b = b;

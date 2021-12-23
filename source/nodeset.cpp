@@ -36,89 +36,92 @@
 #include "hash.hpp"
 #include "nodeset.hpp"
 
-/*!
- * @param node
- * @return
- */
-static inline size_t hash(const Node& node)
+namespace internal
 {
-    return hash128(&node, sizeof(Node));
-}
-
-/*!
- * @param src
- * @param dest
- */
-static void copy_node(const Node& src, Node& dest)
-{
-    dest.root = src.root;
-    dest.branch_true = src.branch_true;
-    dest.branch_false = src.branch_false;
-    dest.size = src.size;
-}
-
-void NodeSet::init(size_t mem_usage)
-{
-    elements = mem_usage / sizeof(NodeSlot);
-    assert(elements <std::numeric_limits<int32_t>::max());
-    // Much faster than running constructors.
-    table = (NodeSlot *) calloc(elements, sizeof(NodeSlot));
-
-    assert(table != nullptr);
-    table[0].exists = true;
-}
-
-/*!
- * A lock guard around nodes
- */
-struct LockProtector
-{
-public:
-    LockProtector(NodeSlot& slot) : _slot(slot)
+    /*!
+    * @param node
+    * @return
+    */
+    static inline size_t hash(const Node& node)
     {
-        while (_slot.locked.test_and_set(std::memory_order_acquire));
+        return hash128(&node, sizeof(Node));
     }
 
-    ~LockProtector()
+    /*!
+    * @param src
+    * @param dest
+    */
+    static void copy_node(const Node& src, Node& dest)
     {
-        _slot.locked.clear(std::memory_order_release);
+        dest.root = src.root;
+        dest.branch_true = src.branch_true;
+        dest.branch_false = src.branch_false;
+        dest.size = src.size;
     }
 
-private:
-    NodeSlot& _slot;
-};
-
-uint32_t NodeSet::lookup_create(Node node)
-{
-    uint32_t hashed = hash(node);
-
-    for (uint32_t offset = 0; offset < elements; offset++)
+    void NodeSet::init(size_t mem_usage)
     {
-        uint32_t index = (hashed + offset) % elements;
+        elements = mem_usage / sizeof(node_slot);
+        assert(elements <std::numeric_limits<int32_t>::max());
+    
+        // Faster than running constructors.
+        table = (node_slot *) calloc(elements, sizeof(node_slot));
 
-        NodeSlot& current = table[index];
-        LockProtector lock(current);
+        assert(table != nullptr);
+        table[0].exists = true;
+    }
 
-        if (!current.exists)
+    /*!
+    * A lock guard around nodes
+    */
+    struct lock_protector
+    {
+    public:
+        lock_protector(node_slot& slot) : _slot(slot)
         {
-            copy_node(node, current.node);
-
-            // Maintain data structure.
-            count.fetch_add(1, std::memory_order_relaxed);
-            current.exists = true;
-
-            return index;
+            while (_slot.locked.test_and_set(std::memory_order_acquire));
         }
 
-        if (node.root == current.node.root               &&
-            node.branch_true == current.node.branch_true &&
-            node.branch_false == current.node.branch_false)
+        ~lock_protector()
         {
-            // TODO: increase reference count.
-            return index;
+            _slot.locked.clear(std::memory_order_release);
         }
+
+    private:
+        node_slot& _slot;
+    };
+
+    uint32_t NodeSet::lookup_create(const Node& node)
+    {
+        uint32_t hashed = hash(node);
+
+        for (uint32_t offset = 0; offset < elements; offset++)
+        {
+            uint32_t index = (hashed + offset) % elements;
+
+            node_slot& current = table[index];
+            lock_protector lock(current);
+
+            if (!current.exists)
+            {
+                copy_node(node, current.node);
+
+                // Maintain data structure.
+                count.fetch_add(1, std::memory_order_relaxed);
+                current.exists = true;
+
+                return index;
+            }
+
+            if (node.root == current.node.root               &&
+                node.branch_true == current.node.branch_true &&
+                node.branch_false == current.node.branch_false)
+            {
+                // TODO: increase reference count.
+                return index;
+            }
+        }
+
+        return 0;
     }
-
-    return 0;
 }
-

@@ -38,7 +38,7 @@
 #include <atomic>
 #include <cstdint>
 
-struct CacheItem
+struct cache_item
 {
     struct
     {
@@ -49,13 +49,13 @@ struct CacheItem
     uint32_t result;
 };
 
-struct CacheSlot
+struct cache_slot
 {
     bool exists;
     std::atomic_flag locked;
 
-    CacheItem data;
-    CacheSlot()
+    cache_item data;
+    cache_slot()
         : locked(false)
     {
     }
@@ -97,20 +97,20 @@ public:
 
 private:
     size_t elems;
-    CacheSlot *table;
+    cache_slot *table;
 
     /*!
      * TODO: description.
      * @param data
      * @return
      */
-    bool find(CacheItem& data);
+    bool find(cache_item& data);
 
     /*!
      * TODO: description.
      * @param data
      */
-    void insert(const CacheItem& data);
+    void insert(const cache_item& data);
 };
 
 #endif // CACHE_HPP

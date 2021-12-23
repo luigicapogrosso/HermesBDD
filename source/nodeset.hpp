@@ -41,34 +41,37 @@
 
 #include "node.hpp"
 
-struct NodeSlot
+namespace internal
 {
-    Node node;
-    bool exists;
-    std::atomic_flag locked;
-};
+    struct node_slot
+    {
+        Node node;
+        bool exists;
+        std::atomic_flag locked;
+    };
 
-class NodeSet
-{
-public:
-    NodeSlot *table;
+    class NodeSet
+    {
+    public:
+        node_slot *table;
 
-    /*!
-     * TODO: description.
-     * @param mem_usage
-     */
-    void init(size_t mem_usage);
+        /*!
+        * TODO: description.
+        * @param mem_usage
+        */
+        void init(size_t mem_usage);
 
-    /*!
-     * TODO: description.
-     * @param node
-     * @return
-     */
-    uint32_t lookup_create(Node node);
+        /*!
+        * TODO: description.
+        * @param node
+        * @return
+        */
+        uint32_t lookup_create(const Node& node);
 
-    std::atomic<uint32_t> count;
-private:
-    uint32_t elements;
-};
+        std::atomic<uint32_t> count;
+    private:
+        uint32_t elements;
+    };
+}
 
 #endif // NODESET_HPP
