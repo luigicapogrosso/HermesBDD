@@ -37,7 +37,7 @@ jobs:
       run: ctest -j $($NPROC)
 
     - name: Generate Code Coverage
-      working-directory: ${{runner.workspace}}/PBDD
+      working-directory: ${{runner.workspace}}/HermesBDD
       run: |
         lcov --directory ${{runner.workspace}}/build --capture --output-file coverage.info
         lcov --remove coverage.info '/usr/*' --output-file coverage.info
