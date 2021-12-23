@@ -48,8 +48,18 @@ void test_print()
 {
     HERMESBDD_PRINT_TEST_COMMENT("Testing print().");
 
-    BDD a(1);
-    a.print("a(1)");
+    BDD c(2);
+    BDD d(2);
+    BDD e(3);
+    BDD f(4);
+    BDD g(5);
+    BDD h(6);
+    BDD i(7);
+    BDD j(8);
+    
+    BDD g1 = ((d | c) & (i & j)) ^ ((g > h) < i) & ((e | f) | (c & f & j & i));
+    
+    g1.print("Simple SAT Instance");
 }
 
 void test_one_sat()
@@ -57,87 +67,39 @@ void test_one_sat()
     HERMESBDD_PRINT_TEST_COMMENT("Testing one_sat().");
 
     BDD a(1);
-
+    BDD b(2);
+    
     std::unordered_map<uint32_t, bool> map = a.one_sat();
-
     HERMESBDD_TEST_ASSERT(map[1]);
-}
 
-void test_not()
-{
-    HERMESBDD_PRINT_TEST_COMMENT("Testing NOT operator.");
+    BDD c1 = a | b;
+    map = c1.one_sat();
+    HERMESBDD_TEST_ASSERT(map[1] || map[2]);
 
-    BDD a(1);
-    BDD b(2);
-
-    BDD c = !a;
-    std::unordered_map<uint32_t, bool> map = c.one_sat();
-
+    BDD c2 = !a;
+    map = c2.one_sat();
     HERMESBDD_TEST_ASSERT(!map[1]);
-}
 
-void test_and()
-{
-    HERMESBDD_PRINT_TEST_COMMENT("Testing AND operator.");
-    BDD a(1);
-    BDD b(2);
-
-    BDD c = a & !b;
-    std::unordered_map<uint32_t, bool> map = c.one_sat();
-
+    BDD c3 = a & !b;
+    map = c3.one_sat();
     HERMESBDD_TEST_ASSERT(map[1] && !map[2]);
 }
 
-void test_or()
+void test_count_sat()
 {
-    HERMESBDD_PRINT_TEST_COMMENT("Testing OR operator.");
+    BDD n1(1);
+    BDD n2(2);
+    BDD n3(3);
+    BDD n4(4);
+    BDD n5(5);
+    BDD n6(6);
+    std::set<uint32_t> s3({1, 2, 3, 4});
 
-    BDD a(1);
-    BDD b(2);
+    BDD t1 = (n1 | n2) & (n3 | n4);
+    HERMESBDD_TEST_EQUAL(t1.count_sat(s3), 9);
 
-    BDD c = a | b;
-    std::unordered_map<uint32_t, bool> map = c.one_sat();
-
-    HERMESBDD_TEST_ASSERT(map[1] || map[2]);
-}
-
-void test_xor()
-{
-    HERMESBDD_PRINT_TEST_COMMENT("Testing XOR operator.");
-
-    BDD a(1);
-    BDD b(2);
-
-    BDD c = (a ^ b);
-    std::unordered_map<uint32_t, bool> map = c.one_sat();
-
-    HERMESBDD_TEST_ASSERT(map[1] ^ map[2]);
-}
-
-void test_implies()
-{
-    HERMESBDD_PRINT_TEST_COMMENT("Testing IMPLIES operator.");
-
-    BDD a(1);
-    BDD b(2);
-    std::set<uint32_t> s({1, 2});
-
-    BDD c = a > b;
-
-    HERMESBDD_TEST_ASSERT(c.count_sat(s) == 3);
-}
-
-void test_reverse_implies()
-{
-    HERMESBDD_PRINT_TEST_COMMENT("Testing reverse IMPLIES operator.");
-
-    BDD a(1);
-    BDD b(2);
-    std::set<uint32_t> s({1, 2});
-
-    BDD c = a < b;
-
-    HERMESBDD_TEST_ASSERT(c.count_sat(s) == 3);
+    BDD t2 = (n1 & n2) | (n3 & n4);
+    HERMESBDD_TEST_EQUAL(t2.count_sat(s3), 7);
 }
 
 
@@ -146,13 +108,7 @@ int main()
     test_constructors();
     test_print();
     test_one_sat();
-
-    test_not();
-    test_and();
-    test_or();
-    test_xor();
-    test_implies();
-    test_reverse_implies();
+    test_count_sat();
 
     return HERMESBDD_TEST_FAILURES;
 }

@@ -1,4 +1,5 @@
 set(UNIT_TESTS
+    test_ITE
     test_hermesbdd
     test_nqueens
 )
