@@ -306,13 +306,11 @@ uint32_t Node::ITE(uint32_t A, uint32_t B, uint32_t C)
             pointer(C_false)->size > granularity)
         {
             // TODO: Do in parallel C++ standard library thread.
-#pragma omp parallel
             R_false = ITE(A_false, B_false, C_false);
         }
         else
         {
             // TODO: Do in parallel with C++ standard library thread.
-#pragma omp parallel
             R_false = ITE(A_false, B_false, C_false);
         }
 
@@ -321,13 +319,11 @@ uint32_t Node::ITE(uint32_t A, uint32_t B, uint32_t C)
             pointer(C_false)->size > granularity)
         {
             // TODO: Do in parallel C++ standard library thread.
-#pragma omp parallel
             R_true = ITE(A_true, B_true, C_true);
         }
         else
         {
             // TODO: Do in parallel C++ standard library thread.
-#pragma omp parallel
             R_true = ITE(A_true, B_true, C_true);
         }
 
