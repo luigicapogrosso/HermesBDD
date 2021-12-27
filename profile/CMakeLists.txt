@@ -1,5 +1,6 @@
 set(PROFILE_FILES
     profile_replaceme
+    profile_ITE
 )
 
 foreach(PROFILE ${PROFILE_FILES})
