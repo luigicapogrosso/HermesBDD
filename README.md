@@ -1,5 +1,9 @@
 # HermesBDD #
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://github.com/luigicapogrosso/HermesBDD/workflows/Continuous%20Integration/badge.svg)](https://github.com/luigicapogrosso/HermesBDD/actions)
+[![codecov](https://codecov.io/gh/luigicapogrosso/HermesBDD/branch/main/graph/badge.svg)](https://codecov.io/gh/luigicapogrosso/HermesBDD)
+
 This project is a parallel implementation of [binary decision diagram](https://en.wikipedia.org/wiki/Binary_decision_diagram). It focuses on high performance, usability, and correctness.
 
 ## Building ##
