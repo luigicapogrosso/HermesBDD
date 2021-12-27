@@ -95,7 +95,7 @@ void test_or_eq()
     BDD a(1);
     BDD b(2);
 
-    BDD c = a | b;
+    BDD c = a |= b;
     std::unordered_map<uint32_t, bool> map = c.one_sat();
 
     HERMESBDD_TEST_EQUAL(map[1], !map[2]);
@@ -121,7 +121,7 @@ void test_xor_eq()
     BDD a(1);
     BDD b(2);
 
-    BDD c = (a ^ b);
+    BDD c = (a ^= b);
     std::unordered_map<uint32_t, bool> map = c.one_sat();
 
     HERMESBDD_TEST_EQUAL(map[1], !map[2]);
@@ -148,7 +148,7 @@ void test_implies_eq()
     BDD b(2);
     std::set<uint32_t> s({1, 2});
 
-    BDD c = a > b;
+    BDD c = a >= b;
     std::unordered_map<uint32_t, bool> map = c.one_sat();
 
     HERMESBDD_TEST_EQUAL(map[1], map[2]);
@@ -175,7 +175,7 @@ void test_reverse_implies_eq()
     BDD b(2);
     std::set<uint32_t> s({1, 2});
 
-    BDD c = a < b;
+    BDD c = a <= b;
     std::unordered_map<uint32_t, bool> map = c.one_sat();
 
     HERMESBDD_TEST_EQUAL(map[1], map[2]);
@@ -184,10 +184,6 @@ void test_reverse_implies_eq()
 
 int main()
 {
-    // test_constructors();
-    // test_print();
-    // test_one_sat();
-
     test_not();
 
     test_and();
