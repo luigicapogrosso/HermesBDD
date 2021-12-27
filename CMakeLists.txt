@@ -26,12 +26,13 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-endif()
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    add_compile_options(-Wunused-private-field)
-endif()
+set(ANY_TARGET_WARN all extra pedantic sign-conversion cast-qual 
+                    disabled-optimization init-self missing-include-dirs 
+                    sign-promo switch-default undef redundant-decls)
+foreach(WARN ${ANY_TARGET_WARN})
+    add_compile_options(-W${WARN})
+endforeach()
 
 find_package(Threads)
 if(NOT Threads_FOUND)

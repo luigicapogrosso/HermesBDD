@@ -128,6 +128,8 @@ static uint64_t hash128(const void* key, const uint64_t len)
         case  2: k1 ^= ((uint64_t)tail[ 1]) << 8; [[clang::fallthrough]];
         case  1: k1 ^= ((uint64_t)tail[ 0]) << 0;
             k1 *= c1; k1  = ROTL64(k1,31); k1 *= c2; h1 ^= k1;
+        default: // do nothing;
+            break;
     };
 
     // Finalization.

@@ -65,12 +65,13 @@ struct ProfileITE : public Profiler
         int num_samples = 10000;
 
         profile("Profiling NOT operator",
-        [&](int i)
+        [&](uint32_t i)
             { 
                 BDD a(i);
                 BDD b(i + 1);
 
                 BDD c = !a;
+                std::unordered_map<uint32_t, bool> map = c.one_sat();
             },
         num_samples);
     }
@@ -80,12 +81,13 @@ struct ProfileITE : public Profiler
         int num_samples = 10000;
 
         profile("Profiling AND operator",
-        [&](int i)
+        [&](uint32_t i)
             { 
                 BDD a(i);
                 BDD b(i + 1);
 
                 BDD c = a & !b;
+                std::unordered_map<uint32_t, bool> map = c.one_sat();
             },
         num_samples);
     }
@@ -95,12 +97,13 @@ struct ProfileITE : public Profiler
         int num_samples = 10000;
 
         profile("Profiling AND EQUAL operator",
-        [&](int i)
+        [&](uint32_t i)
             { 
                 BDD a(i);
                 BDD b(i + 1);
 
                 BDD c = a &= b;
+                std::unordered_map<uint32_t, bool> map = c.one_sat();
             },
         num_samples);
     }
@@ -110,12 +113,13 @@ struct ProfileITE : public Profiler
         int num_samples = 10000;
 
         profile("Profiling OR operator",
-        [&](int i)
+        [&](uint32_t i)
             { 
                 BDD a(i);
                 BDD b(i + 1);
 
                 BDD c = a | b;
+                std::unordered_map<uint32_t, bool> map = c.one_sat();
             },
         num_samples);
     }
@@ -125,12 +129,13 @@ struct ProfileITE : public Profiler
         int num_samples = 10000;
 
         profile("Profiling OR EQUAL operator",
-        [&](int i)
+        [&](uint32_t i)
             { 
                 BDD a(i);
                 BDD b(i + 1);
 
                 BDD c = a |= b;
+                std::unordered_map<uint32_t, bool> map = c.one_sat();
             },
         num_samples);
     }
@@ -140,12 +145,13 @@ struct ProfileITE : public Profiler
         int num_samples = 10000;
 
         profile("Profiling XOR operator",
-        [&](int i)
+        [&](uint32_t i)
             { 
                 BDD a(i);
                 BDD b(i + 1);
 
                 BDD c = a ^ b;
+                std::unordered_map<uint32_t, bool> map = c.one_sat();
             },
         num_samples);
     }
@@ -155,12 +161,13 @@ struct ProfileITE : public Profiler
         int num_samples = 10000;
 
         profile("Profiling XOR EQUAL operator",
-        [&](int i)
+        [&](uint32_t i)
             { 
                 BDD a(i);
                 BDD b(i + 1);
 
                 BDD c = a ^= b;
+                std::unordered_map<uint32_t, bool> map = c.one_sat();
             },
         num_samples);
     }
@@ -170,12 +177,13 @@ struct ProfileITE : public Profiler
         int num_samples = 10000;
 
         profile("Profiling IMPLIES operator",
-        [&](int i)
+        [&](uint32_t i)
             { 
                 BDD a(i);
                 BDD b(i + 1);
 
                 BDD c = a > b;
+                std::unordered_map<uint32_t, bool> map = c.one_sat();
             },
         num_samples);
     }
@@ -185,12 +193,13 @@ struct ProfileITE : public Profiler
         int num_samples = 10000;
 
         profile("Profiling IMPLIES EQUAL operator",
-        [&](int i)
+        [&](uint32_t i)
             { 
                 BDD a(i);
                 BDD b(i + 1);
 
                 BDD c = a >= b;
+                std::unordered_map<uint32_t, bool> map = c.one_sat();
             },
         num_samples);
     }
@@ -200,12 +209,13 @@ struct ProfileITE : public Profiler
         int num_samples = 10000;
 
         profile("Profiling reverse IMPLIES operator",
-        [&](int i)
+        [&](uint32_t i)
             { 
                 BDD a(i);
                 BDD b(i + 1);
 
                 BDD c = a < b;
+                std::unordered_map<uint32_t, bool> map = c.one_sat();
             },
         num_samples);
     }
@@ -215,12 +225,13 @@ struct ProfileITE : public Profiler
         int num_samples = 10000;
 
         profile("Profiling reverse IMPLIES EQUAL operator",
-        [&](int i)
+        [&](uint32_t i)
             { 
                 BDD a(i);
                 BDD b(i + 1);
 
                 BDD c = a <= b;
+                std::unordered_map<uint32_t, bool> map = c.one_sat();
             },
         num_samples);
     }

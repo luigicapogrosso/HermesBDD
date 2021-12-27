@@ -57,7 +57,7 @@ void test_print()
     BDD i(7);
     BDD j(8);
     
-    BDD g1 = ((d | c) & (i & j)) ^ ((g > h) < i) & ((e | f) | (c & f & j & i));
+    BDD g1 = (((d | c) & (i & j)) ^ ((g > h) < i)) & ((e | f) | (c & f & j & i));
     
     g1.print("Simple SAT Instance");
 }

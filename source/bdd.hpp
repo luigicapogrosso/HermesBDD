@@ -49,7 +49,7 @@ public:
      * @param v
      */
     BDD(uint32_t v);
-
+    
     static BDD bdd_true;
     static BDD bdd_false;
 
@@ -148,9 +148,16 @@ public:
      * @return
      */
     std::unordered_map<uint32_t, bool> one_sat();
+    
+    /*!
+     * TODO: description.
+     * @return
+     */
+    bool use_dummy();
 
 private:
     uint32_t node;
+    bool dummy;
 
     /*!
      * TODO: description.

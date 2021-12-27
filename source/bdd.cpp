@@ -96,6 +96,7 @@ BDD::BDD(uint32_t v)
 
 BDD::BDD(uint32_t node, bool dummy)
     : node(node)
+    , dummy(dummy)
 {
 
 }
@@ -259,4 +260,9 @@ double BDD::count_sat(std::set<uint32_t> vars)
     }
 
     return count;
+}
+
+bool BDD::use_dummy()
+{
+    return dummy;
 }
