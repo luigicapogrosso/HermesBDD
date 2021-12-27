@@ -60,7 +60,6 @@ struct ProfileITE : public Profiler
         profile_reverse_implies_eq();
     }
 
-
     void profile_not()
     {
         int num_samples = 10000;

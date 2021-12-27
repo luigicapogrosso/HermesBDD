@@ -1,6 +1,6 @@
 set(PROFILE_FILES
-    profile_replaceme
     profile_ITE
+    profile_nqueens
 )
 
 foreach(PROFILE ${PROFILE_FILES})

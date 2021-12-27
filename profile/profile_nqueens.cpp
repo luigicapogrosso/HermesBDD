@@ -1,5 +1,5 @@
 /***************************************************************************
- *            tests/test_nqueens.cpp
+ *            profile_replaceme.cpp
  *
  *  Copyright  2021  Luigi Capogrosso and Luca Geretti
  *
@@ -30,15 +30,11 @@
  */
 
 
-
-#include <set>
-#include <ctime>
-#include <chrono>
 #include <cassert>
-#include <unordered_map>
+#include <iostream>
 
 #include "bdd.hpp"
-#include "test.hpp"
+#include "profile.hpp"
 
 static int N;                /// Size of the chess board.
 static BDD **X;              /// BDD variable array.
@@ -148,59 +144,26 @@ int counting_solution(int n)
     return queen.count_sat(vars);
 }
 
-void nqueens_solution_1()
+struct ProfileNQueens : public Profiler
 {
-    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problems using a 1x1 chess board.");
+    ProfileNQueens() : Profiler(1e5) { }
 
-    int s = counting_solution(1);
+    void run()
+    {
+        profile_nqueens();
+    }
 
-    HERMESBDD_TEST_ASSERT(s == 1);
-}
+    void profile_nqueens()
+    {
+        int num_samples = 10000;
 
-void nqueens_solution_2()
-{
-    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problems using a 2x2 chess board.");
-
-    int s = counting_solution(2);
-
-    HERMESBDD_TEST_ASSERT(s == 0);
-}
-
-void nqueens_solution_4()
-{
-    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problems using a 4x4 chess board.");
-
-    int s = counting_solution(4);
-
-    HERMESBDD_TEST_ASSERT(s == 2);
-}
-
-void nqueens_solution_5()
-{
-    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problems using a 5x5 chess board.");
-
-    int s = counting_solution(5);
-
-    HERMESBDD_TEST_ASSERT(s == 10);
-}
-
-void nqueens_solution_7()
-{
-    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problems using a 7x7 chess board.");
-
-    int s = counting_solution(7);
-
-    HERMESBDD_TEST_ASSERT(s == 40);
-}
+        profile("Profiling N-queens problem",
+        [&](int i) { counting_solution(i % 7); }, num_samples);
+    }
+};
 
 
 int main()
 {
-    nqueens_solution_1();
-    nqueens_solution_2();
-    nqueens_solution_4();
-    nqueens_solution_5();
-    nqueens_solution_7();
-
-    return HERMESBDD_TEST_FAILURES;
+    ProfileNQueens().run();
 }

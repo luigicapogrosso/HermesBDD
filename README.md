@@ -1,14 +1,14 @@
 # HermesBDD #
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://github.com/luigicapogrosso/HermesBDD/workflows/Continuous%20Integration/badge.svg)](https://github.com/luigicapogrosso/HermesBDD/actions)
 [![codecov](https://codecov.io/gh/luigicapogrosso/HermesBDD/branch/main/graph/badge.svg)](https://codecov.io/gh/luigicapogrosso/HermesBDD)
+[![Build Status](https://github.com/luigicapogrosso/HermesBDD/workflows/Continuous%20Integration/badge.svg)](https://github.com/luigicapogrosso/HermesBDD/actions)
 
 This project is a parallel implementation of [binary decision diagram](https://en.wikipedia.org/wiki/Binary_decision_diagram). It focuses on high performance, usability, and correctness.
 
 ## Building ##
 
-The build system is CMake. To build the library from sources in a clean way, it is preferable that you set up a build subdirectory, say:
+The build system used is CMake. The library is tested for compilation using gcc (minimum required: 10.2) and clang (minimum required: 11.0). To build the library from sources in a clean way, it is preferable that you set up a build subdirectory, say:
 
 ```
 $ mkdir build && cd build
@@ -26,7 +26,7 @@ At this point, if no error arises, you can build with:
 $ cmake --build .
 ```
 
-## Author ##
+## Authors ##
 
 `Luigi Capogrosso`
 - PhD at Politecnico di Torino, Italy [luigi.capogrosso@polito.it](mailto:luigi.capogrosso@polito.it)

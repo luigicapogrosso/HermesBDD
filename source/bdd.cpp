@@ -212,11 +212,6 @@ std::unordered_map<uint32_t, bool> BDD::one_sat()
     }
 }
 
-
-// TODO: I think there is a better way to implement this.
-//       The invariant should be that count_sat_helper will return the exact
-//       number of SAT assignments. We should do the negations at the base
-//       case and right before adding to cache.
 static double count_sat_helper(uint32_t node, int n, std::set<uint32_t>& vars)
 {
     // TODO: handle overflow by using real doubles.
