@@ -216,7 +216,7 @@ std::unordered_map<uint32_t, bool> BDD::one_sat()
 static double count_sat_helper(uint32_t node, int n, std::set<uint32_t>& vars)
 {
     // TODO: handle overflow by using real doubles.
-    double pow2 = pow(2, n);
+    long double pow2 = pow(2, n);
     if (is_leaf(node))
     {
         return pow2;
@@ -230,15 +230,15 @@ static double count_sat_helper(uint32_t node, int n, std::set<uint32_t>& vars)
         assert(false);
     }
 
-    double countT = count_sat_helper(dnode->branch_true, n, vars);
-    double countF = count_sat_helper(dnode->branch_false, n, vars);
+    long double countT = count_sat_helper(dnode->branch_true, n, vars);
+    long double countF = count_sat_helper(dnode->branch_false, n, vars);
 
     if (is_complemented(dnode->branch_true))
     {
         countT = pow2 - countT;
     }
 
-    double count = countT + (countF - countT) / 2;
+    long double count = countT + (countF - countT) / 2;
     assert(count >= 0);
 
     // TODO: add to cache now.
@@ -249,8 +249,8 @@ static double count_sat_helper(uint32_t node, int n, std::set<uint32_t>& vars)
 double BDD::count_sat(std::set<uint32_t> vars)
 {
     int n = vars.size();
-    double pow2 = pow(2, n);
-    double count = count_sat_helper(this->node, n, vars);
+    long double pow2 = pow(2, n);
+    long double count = count_sat_helper(this->node, n, vars);
 
     if (!is_complemented(this->node))
     {

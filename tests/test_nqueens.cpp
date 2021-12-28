@@ -99,7 +99,7 @@ int counting_solution(int n)
             }
 
             BDD c = BDD::bdd_true;
-            for (int k=0 ; k<N ; k++)
+            for (int k = 0 ; k < N ; k++)
             {
                 int ll = k - row + col;
                 if ((ll >= 0) && (ll < N))
@@ -115,7 +115,7 @@ int counting_solution(int n)
             for (int k = 0; k < N; k++)
             {
                 int ll = row + col - k;
-                if (ll>=0 && ll<N)
+                if (ll >= 0 && ll < N)
                 {
                     if (k != row)
                     {
@@ -131,7 +131,7 @@ int counting_solution(int n)
     std::set<uint32_t> vars;
     for (int i = 0; i < N * N; i++)
     {
-        vars.insert((unsigned int)i);
+        vars.insert((unsigned int) i);
     }
 
     return queen.count_sat(vars);
@@ -173,6 +173,15 @@ void nqueens_solution_5()
     HERMESBDD_TEST_ASSERT(s == 10);
 }
 
+void nqueens_solution_6()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problems using a 6x6 chess board.");
+
+    int s = counting_solution(6);
+
+    HERMESBDD_TEST_ASSERT(s == 4);
+}
+
 void nqueens_solution_7()
 {
     HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problems using a 7x7 chess board.");
@@ -182,13 +191,13 @@ void nqueens_solution_7()
     HERMESBDD_TEST_ASSERT(s == 40);
 }
 
-
 int main()
 {
     nqueens_solution_1();
     nqueens_solution_2();
     nqueens_solution_4();
     nqueens_solution_5();
+    nqueens_solution_6();
     nqueens_solution_7();
 
     return HERMESBDD_TEST_FAILURES;

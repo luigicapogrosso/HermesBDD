@@ -37,6 +37,8 @@
 #include "node.hpp"
 #include "bdd_internal.hpp"
 
+#define NO_CACHE
+
 // TODO: tune this.
 static constexpr int granularity = 500;
 
@@ -223,14 +225,31 @@ uint32_t Node::ITE(uint32_t A, uint32_t B, uint32_t C)
         return B;
     }
     
+#ifdef NO_CACHE    
+    return Node::ITE_without_cache(A, B, C);
+#else
     uint32_t result;
-    
     // Check if this ITE has been done before in cache.
     if (internal::manager::cache.findITE(A, B, C, result))
     {
         return result;
     }
+    else
+    {
+        result = Node::ITE_without_cache(A, B, C);        
 
+        // Put in cache.
+        internal::manager::cache.insertITE(A, B, C, result);
+
+        return result;
+    }
+#endif
+}
+
+uint32_t Node::ITE_without_cache(uint32_t A, uint32_t B, uint32_t C) 
+{
+    uint32_t result;
+    
     // Normalization rules.
     if (A == B)
     {
@@ -303,12 +322,10 @@ uint32_t Node::ITE(uint32_t A, uint32_t B, uint32_t C)
             pointer(B_false)->size +
             pointer(C_false)->size > granularity)
         {
-            // TODO: Do in parallel C++ standard library thread.
             R_false = ITE(A_false, B_false, C_false);
         }
         else
         {
-            // TODO: Do in parallel with C++ standard library thread.
             R_false = ITE(A_false, B_false, C_false);
         }
 
@@ -316,20 +333,15 @@ uint32_t Node::ITE(uint32_t A, uint32_t B, uint32_t C)
             pointer(B_false)->size +
             pointer(C_false)->size > granularity)
         {
-            // TODO: Do in parallel C++ standard library thread.
             R_true = ITE(A_true, B_true, C_true);
         }
         else
         {
-            // TODO: Do in parallel C++ standard library thread.
             R_true = ITE(A_true, B_true, C_true);
         }
 
         result = make(x, R_true, R_false);
     }
-
-    // Put in cache.
-    internal::manager::cache.insertITE(A, B, C, result);
 
     return result;
 }

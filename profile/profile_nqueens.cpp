@@ -54,7 +54,7 @@ int counting_solution(int n)
 
     for (int row = 0; row < N; row++)
     {
-        for (int col=0 ; col < N ; col++)
+        for (int col = 0 ; col < N ; col++)
         {
             X[row][col] = BDD((uint32_t)(row * N + col));
         }
@@ -95,7 +95,7 @@ int counting_solution(int n)
             }
 
             BDD c = BDD::bdd_true;
-            for (int k=0 ; k<N ; k++)
+            for (int k = 0 ; k < N ; k++)
             {
                 int ll = k - row + col;
                 if ((ll >= 0) && (ll < N))
@@ -144,7 +144,7 @@ struct ProfileNQueens : public Profiler
 
     void profile_nqueens()
     {
-        int num_samples = 10000;
+        int num_samples = 1000;
 
         profile("Profiling N-queens problem",
         [&](auto) 

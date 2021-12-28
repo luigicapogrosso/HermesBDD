@@ -82,6 +82,15 @@ public:
      */
     static uint32_t ITE(uint32_t A, uint32_t B, uint32_t C);
 
+     /*!
+     * TODO: description.
+     * @param A
+     * @param B
+     * @param C
+     * @return
+     */
+    static uint32_t ITE_without_cache(uint32_t A, uint32_t B, uint32_t C);
+
     /*!
      * For debug purposes, will print a full graph of the tree.
      * @param node
