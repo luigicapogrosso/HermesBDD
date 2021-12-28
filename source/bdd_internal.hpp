@@ -37,17 +37,17 @@
 
 #include "node.hpp"
 #include "cache.hpp"
-#include "nodeset.hpp"
+#include "treeset.hpp"
 
 namespace internal
 {
-    // Cache line width (bytes) on x86.
+    // Cache line width (bytes) on x64.
     constexpr size_t cache_width = 64;
 
     namespace manager
     {
-        // TODO: no concept of ordering/reordering.
-        extern NodeSet nodes;
+        // No concept of ordering/reordering.
+        extern TreeSet nodes;
         extern Cache cache;
     }
 }

@@ -54,11 +54,6 @@ public:
     uint32_t branch_false;
 
     /*!
-     * Creates an uninitialized node that is marked as invalid.
-     */
-    Node();
-
-    /*!
      * Creates node on stack, should be ONLY used in make to get heap pointer.
      * @param root
      * @param branch_true

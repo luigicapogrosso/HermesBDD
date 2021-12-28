@@ -37,68 +37,13 @@
 #include "profile.hpp"
 
 static int N;                /// Size of the chess board.
-static BDD **X;              /// BDD variable array.
-static BDD queen;            /// N-queen problem express as a BDD.
-
-/*!
- * TODO: description.
- * @param row
- * @param col
- */
-static void build(int row, int col)
-{
-    BDD a = BDD::bdd_true;
-    for (int x = 0 ; x < N ; x++)
-    {
-        if (x != col)
-        {
-            a &= (X[row][col] > !X[row][x]);
-        }
-    }
-
-    BDD b = BDD::bdd_true;
-    for (int y = 0; y < N; y++)
-    {
-        if (y != row)
-        {
-            b &= (X[row][col] > !X[y][col]);
-        }
-    }
-
-    BDD c = BDD::bdd_true;
-    for (int k=0 ; k<N ; k++)
-    {
-        int ll = k - row + col;
-        if ((ll >= 0) && (ll < N))
-        {
-            if (k != row)
-            {
-                c &= (X[row][col] > !X[k][ll]);
-            }
-        }
-    }
-
-    BDD d = BDD::bdd_true;
-    for (int k = 0; k < N; k++)
-    {
-        int ll = row + col - k;
-        if (ll>=0 && ll<N)
-        {
-            if (k != row)
-            {
-                d &= (X[row][col] > !X[k][ll]);
-            }
-        }
-    }
-
-    queen &= (a & b & c & d);
-}
 
 int counting_solution(int n)
 {
     N = n;
 
-    queen = BDD::bdd_true;
+    BDD **X;
+    BDD queen = BDD::bdd_true;
 
     // Build variable array.
     X = new BDD*[static_cast<unsigned long>(N)];
@@ -131,7 +76,51 @@ int counting_solution(int n)
     {
         for (int col = 0; col < N; col++)
         {
-            build(row, col);
+            BDD a = BDD::bdd_true;
+            for (int x = 0 ; x < N ; x++)
+            {
+                if (x != col)
+                {
+                    a &= (X[row][col] > !X[row][x]);
+                }
+            }
+
+            BDD b = BDD::bdd_true;
+            for (int y = 0; y < N; y++)
+            {
+                if (y != row)
+                {
+                    b &= (X[row][col] > !X[y][col]);
+                }
+            }
+
+            BDD c = BDD::bdd_true;
+            for (int k=0 ; k<N ; k++)
+            {
+                int ll = k - row + col;
+                if ((ll >= 0) && (ll < N))
+                {
+                    if (k != row)
+                    {
+                        c &= (X[row][col] > !X[k][ll]);
+                    }
+                }
+            }
+
+            BDD d = BDD::bdd_true;
+            for (int k = 0; k < N; k++)
+            {
+                int ll = row + col - k;
+                if (ll>=0 && ll<N)
+                {
+                    if (k != row)
+                    {
+                        d &= (X[row][col] > !X[k][ll]);
+                    }
+                }
+            }
+
+            queen &= (a & b & c & d);
         }
     }
 
@@ -158,7 +147,11 @@ struct ProfileNQueens : public Profiler
         int num_samples = 10000;
 
         profile("Profiling N-queens problem",
-        [&](int i) { counting_solution(i % 7); }, num_samples);
+        [&](auto) 
+            { 
+                counting_solution(1 + (rand() % static_cast<int>(7 - 1 + 1))); 
+            }, 
+        num_samples);
     }
 };
 

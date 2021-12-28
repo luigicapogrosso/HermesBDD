@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/luigicapogrosso/HermesBDD/branch/main/graph/badge.svg)](https://codecov.io/gh/luigicapogrosso/HermesBDD)
 [![Build Status](https://github.com/luigicapogrosso/HermesBDD/workflows/Continuous%20Integration/badge.svg)](https://github.com/luigicapogrosso/HermesBDD/actions)
 
-This project is a parallel implementation of [binary decision diagram](https://en.wikipedia.org/wiki/Binary_decision_diagram). It focuses on high performance, usability, and correctness.
+This project is a parallel implementation of [binary decision diagram](https://en.wikipedia.org/wiki/Binary_decision_diagram). It focuses on high performance, usability, and correctness. For further information, check out the [documentation page](https://luigicapogrosso.github.io/HermesBDD/).
 
 ## Building ##
 

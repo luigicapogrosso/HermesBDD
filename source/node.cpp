@@ -147,8 +147,6 @@ static inline uint32_t evaluate_at(uint32_t node, uint32_t var, bool value)
     return new_node;
 }
 
-Node::Node() { }
-
 Node::Node(uint32_t root, uint32_t branch_true, uint32_t branch_false)
     : root(root)
     , branch_true(branch_true)
@@ -189,12 +187,12 @@ uint32_t Node::make(uint32_t root, uint32_t branch_true, uint32_t branch_false)
         uint32_t new_false = complement(branch_false);
         Node node(root, new_true, new_false);
 
-        return complement(internal::manager::nodes.lookup_create(node));
+        return complement(internal::manager::nodes.lookup_or_create(node));
     }
 
     Node node(root, branch_true, branch_false);
 
-    return internal::manager::nodes.lookup_create(node);
+    return internal::manager::nodes.lookup_or_create(node);
 }
 
 uint32_t Node::ITE(uint32_t A, uint32_t B, uint32_t C)
@@ -228,10 +226,10 @@ uint32_t Node::ITE(uint32_t A, uint32_t B, uint32_t C)
     uint32_t result;
     
     // Check if this ITE has been done before in cache.
-    if (internal::manager::cache.findITE(A, B, C, result))
-    {
-        return result;
-    }
+    //if (internal::manager::cache.findITE(A, B, C, result))
+    //{
+    //    return result;
+    //}
 
     // Normalization rules.
     if (A == B)
@@ -331,7 +329,7 @@ uint32_t Node::ITE(uint32_t A, uint32_t B, uint32_t C)
     }
 
     // Put in cache.
-    internal::manager::cache.insertITE(A, B, C, result);
+    //internal::manager::cache.insertITE(A, B, C, result);
 
     return result;
 }

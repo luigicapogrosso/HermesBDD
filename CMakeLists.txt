@@ -26,7 +26,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-
 set(ANY_TARGET_WARN all extra pedantic sign-conversion cast-qual 
                     disabled-optimization init-self missing-include-dirs 
                     sign-promo switch-default undef redundant-decls)

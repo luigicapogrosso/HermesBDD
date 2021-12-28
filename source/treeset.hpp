@@ -1,5 +1,5 @@
 /***************************************************************************
- *            nodeset.hpp
+ *            treeset.hpp
  *
  *  Copyright  2021  Luigi Capogrosso and Luca Geretti
  *
@@ -31,8 +31,8 @@
 
 
 
-#ifndef NODESET_HPP
-#define NODESET_HPP
+#ifndef TREESET_HPP
+#define TREESET_HPP
 
 
 #include <atomic>
@@ -50,7 +50,7 @@ namespace internal
         std::atomic_flag locked;
     };
 
-    class NodeSet
+    class TreeSet
     {
     public:
         node_slot *table;
@@ -66,7 +66,7 @@ namespace internal
         * @param node
         * @return
         */
-        uint32_t lookup_create(const Node& node);
+        uint32_t lookup_or_create(const Node& node);
 
         std::atomic<uint32_t> count;
     private:
@@ -74,4 +74,4 @@ namespace internal
     };
 }
 
-#endif // NODESET_HPP
+#endif // TREESET_HPP

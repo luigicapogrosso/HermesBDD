@@ -42,6 +42,9 @@
 class BDD
 {
 public:
+    /*!
+     * TODO: description.
+     */
     BDD();
 
     /*!

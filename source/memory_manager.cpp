@@ -56,14 +56,13 @@ namespace internal
         // TODO: we need to set the sizes of these somewhere.
         // std::unordered_map<Query, Node*> cache;
         Cache cache;
-        NodeSet nodes;
+        TreeSet nodes;
 
         struct ConstructorHack {
             ConstructorHack() {
                 // Leave 256 MB for other people, taking at most 16 GB.
                 size_t max_mem = 0x400000000;
 
-                // TODO: small tables for development only XXX.
                 //size_t max_mem = 0x40000000;
                 size_t extra_mem = 0x10000000;
 
