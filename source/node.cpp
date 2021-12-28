@@ -226,10 +226,10 @@ uint32_t Node::ITE(uint32_t A, uint32_t B, uint32_t C)
     uint32_t result;
     
     // Check if this ITE has been done before in cache.
-    //if (internal::manager::cache.findITE(A, B, C, result))
-    //{
-    //    return result;
-    //}
+    if (internal::manager::cache.findITE(A, B, C, result))
+    {
+        return result;
+    }
 
     // Normalization rules.
     if (A == B)
@@ -329,7 +329,7 @@ uint32_t Node::ITE(uint32_t A, uint32_t B, uint32_t C)
     }
 
     // Put in cache.
-    //internal::manager::cache.insertITE(A, B, C, result);
+    internal::manager::cache.insertITE(A, B, C, result);
 
     return result;
 }

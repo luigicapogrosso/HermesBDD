@@ -204,9 +204,9 @@ std::unordered_map<uint32_t, bool> BDD::one_sat()
     if (one_sat_helper(this->node, !is_complemented(this->node), map))
     {
         return map;
-    } else
+    } 
+    else
     {
-        std::cout << "one_sat() returned with no solution" << std::endl;
         map.clear();
 
         return map;
@@ -227,8 +227,6 @@ static double count_sat_helper(uint32_t node, int n, std::set<uint32_t>& vars)
     Node *dnode = pointer(node);
     if (vars.count(dnode->root) == 0)
     {
-        std::cout << "Undeclared variable: " << dnode->root << std::endl;
-
         assert(false);
     }
 
