@@ -30,14 +30,16 @@
  */
 
 
+
 #include <thread>
+#include <future>
 #include <iostream>
 
 #include "bdd.hpp"
 #include "node.hpp"
 #include "bdd_internal.hpp"
 
-#define NO_CACHE
+// #define NO_CACHE
 
 // TODO: tune this.
 static constexpr int granularity = 500;
@@ -224,9 +226,22 @@ uint32_t Node::ITE(uint32_t A, uint32_t B, uint32_t C)
     {
         return B;
     }
-    
+
+    return Node::ITE_with_thread(A, B, C, 0);
+}
+
+uint32_t Node::ITE_with_thread(uint32_t A, uint32_t B, uint32_t C, int level) 
+{
 #ifdef NO_CACHE    
-    return Node::ITE_without_cache(A, B, C);
+    if (level == 0 || level == 1)
+    {
+        auto future = std::async (Node::ITE_with_thread, A, B, C, level + 1);
+        result = future.get();
+    }
+    else
+    {
+        result = Node::ITE_without_cache(A, B, C);
+    }
 #else
     uint32_t result;
     // Check if this ITE has been done before in cache.
@@ -235,8 +250,16 @@ uint32_t Node::ITE(uint32_t A, uint32_t B, uint32_t C)
         return result;
     }
     else
-    {
-        result = Node::ITE_without_cache(A, B, C);        
+    {       
+        if (level == 0 || level == 1)
+        {
+            auto future = std::async (Node::ITE_with_thread, A, B, C, level + 1);
+            result = future.get();
+        }
+        else
+        {
+            result = Node::ITE_without_cache(A, B, C);
+        }
 
         // Put in cache.
         internal::manager::cache.insertITE(A, B, C, result);

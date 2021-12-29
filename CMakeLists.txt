@@ -38,21 +38,6 @@ if(NOT Threads_FOUND)
     message(FATAL ERROR "Unable to find Threads library.")
 endif()
 
-# TODO: Add support for OpenMP with Clang compiler.
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-endif()
-
-if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-    include(FindOpenMP)
-    if(OPENMP_FOUND)
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-    endif()
-    if(NOT OPENMP_FOUND)
-        message(FATAL ERROR "Unable to find OpenMP library.")
-    endif()
-endif()
-
 option(COVERAGE "Enable coverage reporting" OFF)
 add_library(coverage_config INTERFACE)
 if(COVERAGE)
