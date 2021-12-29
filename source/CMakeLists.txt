@@ -6,8 +6,8 @@ add_library(${LIBRARY_NAME} OBJECT
     node.hpp
     node.cpp
     memory_manager.cpp
-    treeset.cpp
-    treeset.hpp
+    tree.cpp
+    tree.hpp
     hash.hpp
     cache.cpp
     cache.hpp

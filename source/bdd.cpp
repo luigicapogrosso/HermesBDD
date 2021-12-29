@@ -215,7 +215,6 @@ std::unordered_map<uint32_t, bool> BDD::one_sat()
 
 static double count_sat_helper(uint32_t node, int n, std::set<uint32_t>& vars)
 {
-    // TODO: handle overflow by using real doubles.
     long double pow2 = pow(2, n);
     if (is_leaf(node))
     {

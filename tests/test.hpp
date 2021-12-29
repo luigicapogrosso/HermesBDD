@@ -50,7 +50,7 @@ typedef bool Bool;
 // and can't store it in a variable since we don't know it's type.
 template<class R, class ER>
 bool
-ariadne_check(std::ostream& os, const R& r, const ER& er) {
+hermesbdd_check(std::ostream& os, const R& r, const ER& er) {
     os << r << std::flush; return (r==er);
 }
 
@@ -203,7 +203,7 @@ int test_case_counter = 0;
 #define HERMESBDD_TEST_CHECK_WARN(expression,expected)                         \
     {                                                                   \
         std::cout << #expression << ": " << std::flush; \
-        Bool ok = ariadne_check(std::cout,expression,expected);         \
+        Bool ok = hermesbdd_check(std::cout,expression,expected);         \
         if(ok) {                                                        \
             std::cout << "\n" << std::endl;                             \
         } else {                                                        \
@@ -217,7 +217,7 @@ int test_case_counter = 0;
 #define HERMESBDD_TEST_CHECK(expression,expected)                         \
     {                                                                   \
         std::cout << #expression << ": " << std::flush; \
-        Bool ok = ariadne_check(std::cout,expression,expected);         \
+        Bool ok = hermesbdd_check(std::cout,expression,expected);         \
         if(ok) {                                                        \
             std::cout << "\n" << std::endl;                             \
         } else {                                                        \

@@ -1,5 +1,5 @@
 /***************************************************************************
- *            treeset.hpp
+ *            tree.hpp
  *
  *  Copyright  2021  Luigi Capogrosso and Luca Geretti
  *
@@ -31,8 +31,8 @@
 
 
 
-#ifndef TREESET_HPP
-#define TREESET_HPP
+#ifndef TREE_HPP
+#define TREE_HPP
 
 
 #include <atomic>
@@ -50,7 +50,7 @@ namespace internal
         std::atomic_flag locked;
     };
 
-    class TreeSet
+    class Tree
     {
     public:
         node_slot *table;
@@ -74,4 +74,4 @@ namespace internal
     };
 }
 
-#endif // TREESET_HPP
+#endif // TREE_HPP

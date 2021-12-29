@@ -37,7 +37,7 @@
 
 #include "node.hpp"
 #include "cache.hpp"
-#include "treeset.hpp"
+#include "tree.hpp"
 
 namespace internal
 {
@@ -47,7 +47,7 @@ namespace internal
     namespace manager
     {
         // No concept of ordering/reordering.
-        extern TreeSet nodes;
+        extern Tree nodes;
         extern Cache cache;
     }
 }

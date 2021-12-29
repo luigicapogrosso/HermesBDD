@@ -56,7 +56,7 @@ namespace internal
         // TODO: we need to set the sizes of these somewhere.
         // std::unordered_map<Query, Node*> cache;
         Cache cache;
-        TreeSet nodes;
+        Tree nodes;
 
         struct ConstructorHack {
             ConstructorHack() {

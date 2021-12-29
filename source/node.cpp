@@ -33,6 +33,7 @@
 
 #include <thread>
 #include <future>
+#include <cassert>
 #include <iostream>
 
 #include "bdd.hpp"
@@ -133,7 +134,7 @@ static inline uint32_t evaluate_at(uint32_t node, uint32_t var, bool value)
     if (pointer(node)->root == var)
     {
         uint32_t target = (value ? pointer(node)->branch_true : pointer(node)
-                ->branch_false);
+                           ->branch_false);
 
         return is_complemented(node) ? complement(target) : target;
     }

@@ -1,5 +1,5 @@
 /***************************************************************************
- *            treeset.cpp
+ *            tree.cpp
  *
  *  Copyright  2021  Luigi Capogrosso and Luca Geretti
  *
@@ -34,7 +34,7 @@
 #include <cassert>
 
 #include "hash.hpp"
-#include "treeset.hpp"
+#include "tree.hpp"
 
 namespace internal
 {
@@ -59,7 +59,7 @@ namespace internal
         dest.size = src.size;
     }
 
-    void TreeSet::init(size_t mem_usage)
+    void Tree::init(size_t mem_usage)
     {
         elements = mem_usage / sizeof(node_slot);
         assert(elements <std::numeric_limits<int32_t>::max());
@@ -91,7 +91,7 @@ namespace internal
         node_slot& _slot;
     };
 
-    uint32_t TreeSet::lookup_or_create(const Node& node)
+    uint32_t Tree::lookup_or_create(const Node& node)
     {
         uint32_t hashed = hash(node);
 
