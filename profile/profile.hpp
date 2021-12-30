@@ -71,24 +71,24 @@ public:
                  std::function<void(int)> function,
                  int num_tries)
     {
-        _sw.restart();
+        _ussw.restart();
         for (int i = 0; i < num_tries; ++i) function(i);
-        _sw.click();
+        _ussw.click();
         std::cout << msg << " completed in "
-                  << ((double)_sw.duration().count())/num_tries*1000
-                  << " ns on average" << std::endl;
+                  << ((double)_ussw.duration().count())/num_tries*1000
+                  << " us on average" << std::endl;
     }
 
     void profile_on_total(std::string msg,
                  std::function<void(int)> function,
                  int num_tries)
     {
-        _sw.restart();
+        _mssw.restart();
         for (int i = 0; i < num_tries; ++i) function(i);
-        _sw.click();
+        _mssw.click();
         std::cout << msg << " completed in "
-                  << std::setprecision (2) << ((double)_sw.duration().count())
-                  << " s on total" << std::endl;
+                  << ((double)_mssw.duration().count())
+                  << " ms on total" << std::endl;
     }
 
     void profile(std::string msg, std::function<void(int)> function)
@@ -97,7 +97,8 @@ public:
     }
 
 private:
-    Stopwatch<Microseconds> _sw;
+    Stopwatch<Microseconds> _ussw;
+    Stopwatch<Milliseconds> _mssw;
     Randomiser _rnd;
     const int _num_tries;
 };
