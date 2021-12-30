@@ -35,6 +35,7 @@
 #define PROFILE_HPP
 
 
+#include <iomanip>
 #include <functional>
 
 #include "stopwatch.hpp"
@@ -66,7 +67,7 @@ public:
 
     [[nodiscard]] Randomiser const& rnd() const { return _rnd; }
 
-    void profile(std::string msg,
+    void profile_on_average(std::string msg,
                  std::function<void(int)> function,
                  int num_tries)
     {
@@ -78,9 +79,21 @@ public:
                   << " ns on average" << std::endl;
     }
 
+    void profile_on_total(std::string msg,
+                 std::function<void(int)> function,
+                 int num_tries)
+    {
+        _sw.restart();
+        for (int i = 0; i < num_tries; ++i) function(i);
+        _sw.click();
+        std::cout << msg << " completed in "
+                  << std::setprecision (2) << ((double)_sw.duration().count())
+                  << " s on total" << std::endl;
+    }
+
     void profile(std::string msg, std::function<void(int)> function)
     {
-        profile(msg,function,_num_tries);
+        profile_on_average(msg, function, _num_tries);
     }
 
 private:

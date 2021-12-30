@@ -144,12 +144,12 @@ struct ProfileNQueens : public Profiler
 
     void profile_nqueens()
     {
-        int num_samples = 1000;
+        int num_samples = 10;
 
-        profile("Profiling N-queens problem",
+        profile_on_total("Profiling N-queens problem",
         [&](auto) 
-            { 
-                counting_solution(1 + (rand() % static_cast<int>(7 - 1 + 1))); 
+            {
+                counting_solution(7); 
             }, 
         num_samples);
     }
