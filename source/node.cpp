@@ -346,7 +346,9 @@ uint32_t Node::ITE_without_cache(uint32_t A, uint32_t B, uint32_t C)
             pointer(B_false)->size +
             pointer(C_false)->size > granularity)
         {
-            R_false = ITE(A_false, B_false, C_false);
+            auto future = std::async (ITE, A_false, B_false, C_false);
+            R_false = future.get();
+            // R_false = ITE(A_false, B_false, C_false);
         }
         else
         {
@@ -357,7 +359,9 @@ uint32_t Node::ITE_without_cache(uint32_t A, uint32_t B, uint32_t C)
             pointer(B_false)->size +
             pointer(C_false)->size > granularity)
         {
-            R_true = ITE(A_true, B_true, C_true);
+            auto future = std::async (ITE, A_true, B_true, C_true);
+            R_true = future.get();
+            // R_true = ITE(A_true, B_true, C_true);
         }
         else
         {
