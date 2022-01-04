@@ -50,6 +50,18 @@ if(COVERAGE)
     endif()
 endif()
 
+option(NO_CACHE "Do not use cache" OFF)
+if(NO_CACHE)
+    MESSAGE(STATUS "NO_CACHE enabled")
+    add_definitions(-DNO_CACHE)
+endif()
+
+option(NO_THREAD "Do not use thread" OFF)
+if(NO_THREAD)
+    MESSAGE(STATUS "NO_THREAD enabled")
+    add_definitions(-DNO_THREAD)
+endif()
+
 enable_testing()
 include(CTest)
 

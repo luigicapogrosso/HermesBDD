@@ -40,9 +40,6 @@
 #include "node.hpp"
 #include "bdd_internal.hpp"
 
-// #define NO_CACHE
-// #define NO_THREAD
-
 // TODO: tune this.
 static constexpr int granularity = 500;
 
@@ -326,10 +323,11 @@ uint32_t Node::ITE_without_cache(uint32_t A, uint32_t B, uint32_t C)
             pointer(B_false)->size +
             pointer(C_false)->size > granularity)
         {
-            auto future = std::async (ITE, A_false, B_false, C_false);
-            R_false = future.get();
 #ifdef NO_THREAD
             R_false = ITE(A_false, B_false, C_false);
+#else
+            auto future = std::async (ITE, A_false, B_false, C_false);
+            R_false = future.get();
 #endif
         }
         else
@@ -341,10 +339,11 @@ uint32_t Node::ITE_without_cache(uint32_t A, uint32_t B, uint32_t C)
             pointer(B_false)->size +
             pointer(C_false)->size > granularity)
         {
-            auto future = std::async (ITE, A_true, B_true, C_true);
-            R_true = future.get();
 #ifdef NO_THREAD
             R_true = ITE(A_true, B_true, C_true);
+#else
+            auto future = std::async (ITE, A_true, B_true, C_true);
+            R_true = future.get();
 #endif
         }
         else
