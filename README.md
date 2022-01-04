@@ -26,6 +26,24 @@ At this point, if no error arises, you can build with:
 $ cmake --build .
 ```
 
+## Library performance ##
+
+Our baselines are:
+| Problem      | USE_CACHE | USE_THREAD | Time (ms) |
+|--------------|-----------|------------|-----------|
+| N-queens     | NO        | NO         |           |
+
+Our speedup achievements:
+| Problem      | USE_CACHE | USE_THREAD | Time (ms) | Speedup |
+|--------------|-----------|------------|-----------|---------|
+| N-queens     | YES       | NO         |           |         |
+| N-queens     | NO        | YES        |           |         |
+| N-queens     | YES       | YES        |           |         |
+
+## Contribution guidelines ##
+
+If you would like to contribute to HermesBDD, please contact the authors.
+
 ## Authors ##
 
 `Luigi Capogrosso`
