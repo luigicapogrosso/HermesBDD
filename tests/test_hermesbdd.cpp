@@ -102,6 +102,38 @@ void test_count_sat()
     HERMESBDD_TEST_EQUAL(t2.count_sat(s3), 7);
 }
 
+void test_simple()
+{
+    // The True terminal.
+    BDD one = BDD::bdd_true;
+    // The False terminal.
+    BDD zero = BDD::bdd_false;
+
+    // Check if they really are the True/False terminal.
+    HERMESBDD_TEST_ASSERT(one.get_node() == 0x80000000);
+    HERMESBDD_TEST_ASSERT(zero.get_node() == 0x00000000);
+
+    // Create a BDD variable x_0.
+    BDD a(0);
+    // Create a BDD variable x_1.
+    BDD b(1);
+
+    // Check if a really is the Boolean formula "x_0".
+    HERMESBDD_TEST_ASSERT(!a.is_constant());
+
+    // check if b really is the Boolean formula "x_1"
+    HERMESBDD_TEST_ASSERT(!b.is_constant());
+
+    // Compute !a and check if !!a is really a.
+    BDD not_a = !a;
+    HERMESBDD_TEST_ASSERT((!not_a) == a);
+
+    // Compute a & b and !(!a ^ !b) and check if they are equivalent.
+    BDD a_and_b = a & b;
+    BDD not_not_a_or_not_b = !((!a) | (!b));
+    HERMESBDD_TEST_ASSERT(a_and_b == not_not_a_or_not_b);
+}
+
 
 int main()
 {
@@ -109,6 +141,7 @@ int main()
     test_print();
     test_one_sat();
     test_count_sat();
+    test_simple();
 
     return HERMESBDD_TEST_FAILURES;
 }

@@ -59,6 +59,13 @@ public:
     static BDD bdd_false;
 
     /*!
+     * @brief Compute '<a> == <b>'.
+     * @param r
+     * @return
+     */
+    bool operator==(BDD r);
+
+    /*!
      * @brief Compute the negation of '<bdd>'.
      * @return
      */
@@ -152,10 +159,22 @@ public:
     std::unordered_map<uint32_t, bool> one_sat();
 
     /*!
-     * @brief TODO: description.
+     * @brief Returns non-zero if this Bdd is true_node or false_node.
      * @return
      */
-    bool use_dummy();
+    bool is_constant();
+
+    /*!
+     * @brief Gets the node.
+     * @return
+     */
+    uint32_t get_node();
+
+    /*!
+     * @brief Gets the dummy.
+     * @return
+     */
+    bool get_dummy();
 
 private:
     bool dummy;

@@ -103,6 +103,11 @@ BDD::BDD(uint32_t node, bool dummy)
 
 }
 
+bool BDD::operator==(BDD r)
+{
+    return this->node == r.node;
+}
+
 BDD BDD::operator!()
 {
     return BDD(complement(this->node), true);
@@ -261,7 +266,17 @@ std::unordered_map<uint32_t, bool> BDD::one_sat()
     }
 }
 
-bool BDD::use_dummy()
+bool BDD::is_constant()
+{
+    return node == Node::true_node || Node::false_node;
+}
+
+uint32_t BDD::get_node()
+{
+    return node;
+}
+
+bool BDD::get_dummy()
 {
     return dummy;
 }
