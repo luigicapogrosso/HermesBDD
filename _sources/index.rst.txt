@@ -1,0 +1,80 @@
+HermesBDD
+=====================
+
+HermesBDD is a parallel (multi-core) library of Binary Decision Diagrams written 
+in C++. It focuses on high performance, usability, and correctness.
+
+HermesBDD is licensed with the MIT license. The main authors of the project are 
+Luigi Capogrosso and Luca Geretti, who can be reached via 
+luigi.capogrosso@polito.it and luca.geretti@univr.it, respectively.  
+Please let us know if you use HermesBDD in your projects and if you need
+decision diagram operations that are currently not implemented in HermesBDD.
+
+The main repository of HermesBDD is https://github.com/luigicapogrosso/HermesBDD.
+
+Dependencies
+------------
+
+HermesBDD has the following dependencies:
+
+- **CMake** for compiling.
+
+Building
+--------
+
+The library is tested for compilation using GCC (minimum required: 10.2) and 
+Clang (minimum required: 11.0). To build the library from sources in a clean 
+way, it is preferable that you set up a build subdirectory, say:
+
+.. code:: bash
+
+    mkdir build && cd build
+
+Then you can prepare the build environment, choosing a Release build for 
+maximum performance:
+
+.. code:: bash
+
+    cmake .. -DCMAKE_BUILD_TYPE=Release
+
+At this point, if no error arises, you can build with:
+
+.. code:: bash
+
+    cmake --build .
+
+Basic BDD functionality
+-----------------------
+
+To create new BDDs, you can use:
+
+- ``BDD(var)``       : representation of literal <var>.
+- ``BDD::bdd_true``  : representation of constant ``true``.
+- ``BDD::bdd_false`` : representation of constant ``false``.
+
+The following basic BDD operations are implemented:
+
+- ``bdd_a == bdd_b``             : compute '<bdd_a> == <bdd_b>'.
+- ``!bdd_a``                     : compute the negation of <bdd_a>.
+- ``bdd_a & bdd_b``              : compute '<bdd_a> and <bdd_b>'.
+- ``bdd_a &= bdd_b``             : compute '<bdd_a> and eq. <bdd_b>'.
+- ``bdd_a | bdd_b``              : compute '<bdd_a> or <bdd_b>'.
+- ``bdd_a |= bdd_b``             : compute '<bdd_a> or eq. <bdd_b>'.
+- ``bdd_a ^ bdd_b``              : compute '<bdd_a> xor <bdd_b>'.
+- ``bdd_a ^= bdd_b``             : compute '<bdd_a> xor eq. <bdd_b>'.
+- ``bdd_a > bdd_b``              : compute '<bdd_a> then <bdd_b>'.
+- ``bdd_a >= bdd_b``             : compute '<bdd_a> then eq. <bdd_b>'.
+- ``bdd_a < bdd_b``              : compute '<bdd_b> then <bdd_a>'.
+- ``bdd_a <= bdd_b``             : compute '<bdd_b> then eq. <bdd_a>'.
+- ``ITE(a, b, c)``               : compute 'if <a> then <b> else <c>' with cache support.
+- ``ITE_without_cache(a, b, c)`` : compute 'if <a> then <b> else <c>' without cache support.
+
+Tests
+--------
+
+Simple tests can be found in the ``tests`` subdirectory. The file
+``test_hermesbdd.cpp`` contains a toy program that uses the C++ objects to
+perform basic BDD manipulation.  The file ``test_nqueens.cpp`` contains the 
+implementation through the use of BDD of the N-queen problem. Finally, the 
+file ``test_ITE.cpp`` contains toy program that checks the correctness of all 
+the ITE operators.
