@@ -29,16 +29,14 @@ $ cmake --build .
 ## Library performance ##
 
 Our baselines are:
-| Problem      | USE_CACHE | USE_THREAD | Time (ms) |
-|--------------|-----------|------------|-----------|
-| N-queens     | NO        | NO         |           |
+| Problem      | Samples   | USE_CACHE  | USE_THREAD | Time (ms) |
+|--------------|-----------|------------|------------|-----------|
+| N-queens     | 100       | NO         | NO         | 5319      |
 
 Our speedup achievements:
-| Problem      | USE_CACHE | USE_THREAD | Time (ms) | Speedup |
-|--------------|-----------|------------|-----------|---------|
-| N-queens     | YES       | NO         |           |         |
-| N-queens     | NO        | YES        |           |         |
-| N-queens     | YES       | YES        |           |         |
+| Problem      | Samples   | USE_CACHE  | USE_THREAD | Time (ms) | Speedup |
+|--------------|-----------|------------|----------- |-----------|---------|
+| N-queens     | 100       | YES        | YES        | 616       | 8.6     |
 
 ## Contribution guidelines ##
 

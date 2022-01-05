@@ -144,7 +144,7 @@ struct ProfileNQueens : public Profiler
 
     void profile_nqueens()
     {
-        int num_samples = 10;
+        int num_samples = 100;
 
         profile_on_total("Profiling N-queens problem",
         [&](auto) 
