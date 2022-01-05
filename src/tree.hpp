@@ -1,5 +1,5 @@
 /***************************************************************************
- *            memory_manager.cpp
+ *            tree.hpp
  *
  *  Copyright  2021  Luigi Capogrosso and Luca Geretti
  *
@@ -31,48 +31,47 @@
 
 
 
+#ifndef TREE_HPP
+#define TREE_HPP
+
+
+#include <atomic>
 #include <cstdio>
-#include <cassert>
-#include <unistd.h>
+#include <cstdint>
 
-#include "bdd_internal.hpp"
-
-
-static size_t mem_available()
-{
-    long pages = sysconf(_SC_PHYS_PAGES);
-    long page_size = sysconf(_SC_PAGE_SIZE);
-
-    assert(pages != -1);
-    assert(page_size != -1);
-
-    return static_cast<size_t>(pages) * static_cast<size_t>(page_size);
-}
+#include "node.hpp"
 
 namespace internal
 {
-    namespace manager
+    struct node_slot
     {
-        // TODO: we need to set the sizes of these somewhere.
-        // std::unordered_map<Query, Node*> cache;
-        Cache cache;
-        Tree nodes;
+        Node node;
+        bool exists;
+        std::atomic_flag locked;
+    };
 
-        struct ConstructorHack {
-            ConstructorHack() {
-                // Leave 256 MB for other people, taking at most 16 GB.
-                size_t max_mem = 0x400000000;
+    class Tree
+    {
+    public:
+        node_slot *table;
 
-                //size_t max_mem = 0x40000000;
-                size_t extra_mem = 0x10000000;
+        /*!
+        * @brief Init tree.
+        * @param mem_usage
+        */
+        void init(size_t mem_usage);
 
-                size_t cache_size = 0x20000000;
-                size_t mem = std::min(mem_available() - extra_mem,
-                                      max_mem) - cache_size;
+        /*!
+        * @brief TODO: description.
+        * @param node
+        * @return
+        */
+        uint32_t lookup_or_create(const Node& node);
 
-                nodes.init(mem);
-                cache.init(cache_size);
-            }
-        } hack;
-    }
+        std::atomic<uint32_t> count;
+    private:
+        uint32_t elements;
+    };
 }
+
+#endif // TREE_HPP

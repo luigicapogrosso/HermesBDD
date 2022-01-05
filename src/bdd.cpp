@@ -40,7 +40,7 @@
 #include "bdd_internal.hpp"
 
 /*!
- * TODO: description.
+ * @brief Compute the complement of the node.
  * @param node
  * @return
  */
@@ -50,7 +50,7 @@ static inline uint32_t complement(uint32_t node)
 }
 
 /*!
- * TODO: description.
+ * @brief Compute if the node is complemented.
  * @param node
  * @return
  */
@@ -60,18 +60,17 @@ static inline bool is_complemented(uint32_t node)
 }
 
 /*!
- * TODO: description.
+ * @brief Compute if the node is a leaf.
  * @param node
  * @return
  */
 static inline bool is_leaf(uint32_t node)
 {
-    return node == Node::true_node ||
-           node == Node::false_node;
+    return node == Node::true_node || node == Node::false_node;
 }
 
 /*!
- * TODO: description.
+ * @brief Get the pointer of the node.
  * @param node
  * @return
  */
@@ -83,20 +82,23 @@ static inline Node *pointer(uint32_t node)
     return &internal::manager::nodes.table[index].node;
 }
 
-BDD BDD::bdd_true(Node::true_node, true);
+BDD::BDD()
+{
 
-BDD BDD::bdd_false(Node::false_node, true);
-
-BDD::BDD() {}
+}
 
 BDD::BDD(uint32_t v)
 {
     node = Node::make(v, Node::true_node, Node::false_node);
 }
 
+BDD BDD::bdd_true(Node::true_node, true);
+
+BDD BDD::bdd_false(Node::false_node, true);
+
 BDD::BDD(uint32_t node, bool dummy)
-    : node(node)
-    , dummy(dummy)
+    : dummy(dummy)
+    , node(node)
 {
 
 }
@@ -171,48 +173,6 @@ void BDD::print(std::string title)
     Node::print(this->node, title);
 }
 
-static bool one_sat_helper(uint32_t node,
-                           bool p,
-                           std::unordered_map<uint32_t, bool>& map)
-{
-    if (is_leaf(node))
-    {
-        return !p;
-    }
-
-    Node* dnode = pointer(node);
-
-    map[dnode->root] = false;
-    if (one_sat_helper(dnode->branch_false, p, map))
-    {
-        return true;
-    }
-
-    map[dnode->root] = true;
-    if (is_complemented(dnode->branch_true))
-    {
-        p = !p;
-    }
-
-    return one_sat_helper(dnode->branch_true, p, map);
-}
-
-std::unordered_map<uint32_t, bool> BDD::one_sat()
-{
-    std::unordered_map<uint32_t, bool> map;
-
-    if (one_sat_helper(this->node, !is_complemented(this->node), map))
-    {
-        return map;
-    } 
-    else
-    {
-        map.clear();
-
-        return map;
-    }
-}
-
 static double count_sat_helper(uint32_t node, int n, std::set<uint32_t>& vars)
 {
     long double pow2 = pow(2, n);
@@ -257,6 +217,48 @@ double BDD::count_sat(std::set<uint32_t> vars)
     }
 
     return count;
+}
+
+static bool one_sat_helper(uint32_t node,
+                           bool p,
+                           std::unordered_map<uint32_t, bool>& map)
+{
+    if (is_leaf(node))
+    {
+        return !p;
+    }
+
+    Node* dnode = pointer(node);
+
+    map[dnode->root] = false;
+    if (one_sat_helper(dnode->branch_false, p, map))
+    {
+        return true;
+    }
+
+    map[dnode->root] = true;
+    if (is_complemented(dnode->branch_true))
+    {
+        p = !p;
+    }
+
+    return one_sat_helper(dnode->branch_true, p, map);
+}
+
+std::unordered_map<uint32_t, bool> BDD::one_sat()
+{
+    std::unordered_map<uint32_t, bool> map;
+
+    if (one_sat_helper(this->node, !is_complemented(this->node), map))
+    {
+        return map;
+    }
+    else
+    {
+        map.clear();
+
+        return map;
+    }
 }
 
 bool BDD::use_dummy()

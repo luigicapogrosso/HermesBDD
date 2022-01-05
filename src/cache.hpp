@@ -1,5 +1,5 @@
 /***************************************************************************
- *            node.hpp
+ *            cache.hpp
  *
  *  Copyright  2021  Luigi Capogrosso and Luca Geretti
  *
@@ -31,72 +31,92 @@
 
 
 
-#ifndef NODE_HPP
-#define NODE_HPP
+#ifndef CACHE_HPP
+#define CACHE_HPP
 
 
-#include <limits>
-#include <string>
+#include <atomic>
 #include <cstdint>
 
-#define ID(uniq, x) "\"" << uniq << "_" << x << "\""
-
-class Node
+/*!
+ * @brief Representation of a cache item.
+ */
+struct cache_item
 {
-public:
-    static constexpr uint32_t true_node = 0x80000000;
-    static constexpr uint32_t false_node = 0x00000000;
-
-    // Uniquely identifying BDDs in canonical form.
-    int size;
-    uint32_t root;
-    uint32_t branch_true;
-    uint32_t branch_false;
-
-    /*!
-     * Creates node on stack, should be ONLY used in make to get heap pointer.
-     * @param root
-     * @param branch_true
-     * @param branch_false
-     */
-    Node(uint32_t root, uint32_t branch_true, uint32_t branch_false);
-
-    /*!
-     * Creates node on the heap, this is the pointer that should be used in
-     * other operations.
-     * @param root
-     * @param branch_true
-     * @param branch_false
-     * @return
-     */
-    static uint32_t make(uint32_t root,
-                        uint32_t branch_true,
-                        uint32_t branch_false);
-
-    /*!
-     * TODO: description.
-     * @param A
-     * @param B
-     * @param C
-     * @return
-     */
-    static uint32_t ITE(uint32_t A, uint32_t B, uint32_t C);
-
-     /*!
-     * TODO: description.
-     * @param A
-     * @param B
-     * @param C
-     * @return
-     */
-    static uint32_t ITE_without_cache(uint32_t A, uint32_t B, uint32_t C);
-
-    /*!
-     * For debug purposes, will print a full graph of the tree.
-     * @param node
-     * @param title
-     */
-    static void print(uint32_t node, std::string title);
+    struct
+    {
+        uint32_t a;
+        uint32_t b;
+        uint32_t c;
+    } key;
+    uint32_t result;
 };
 
-#endif // NODE_HPP
+/*!
+ * @brief Representation of a cache slot.
+ */
+struct cache_slot
+{
+    bool exists;
+    std::atomic_flag locked;
+
+    cache_item data;
+    cache_slot()
+        : locked(false)
+    {
+    }
+};
+
+class Cache
+{
+public:
+    /*!
+     * @brief Find ITE in cache.
+     * @param a
+     * @param b
+     * @param c
+     * @param result
+     * @return
+     */
+    bool findITE(const uint32_t a,
+                 const uint32_t b,
+                 const uint32_t c,
+                 uint32_t& result);
+
+    /*!
+     * @brief Insert ITE in cache.
+     * @param a
+     * @param b
+     * @param c
+     * @param result
+     */
+    void insertITE(const uint32_t a,
+                   const uint32_t b,
+                   const uint32_t c,
+                   uint32_t result);
+
+    /*!
+     * @brief Init cache.
+     * @param mem_usage
+     */
+    void init(size_t mem_usage);
+
+private:
+    size_t elems;
+    cache_slot *table;
+
+    /*!
+     * @brief Find item in cache.
+     * @param data
+     * @return
+     */
+    bool find(cache_item& data);
+
+    /*!
+     * @brief Insert item in cache.
+     * @param data
+     */
+    void insert(const cache_item& data);
+};
+
+#endif // CACHE_HPP

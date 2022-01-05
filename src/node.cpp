@@ -44,39 +44,7 @@
 static constexpr int granularity = 500;
 
 /*!
- * TODO: description.
- * @param node
- * @return
- */
-static inline bool is_leaf(uint32_t node)
-{
-    return node == Node::true_node || node == Node::false_node;
-}
-
-/*!
- * TODO: description.
- * @param node
- * @return
- */
-static inline Node* pointer(uint32_t node)
-{
-    uint32_t index = 0x7FFFFFFF & node;
-
-    return &internal::manager::nodes.table[index].node;
-}
-
-/*!
- * TODO: description.
- * @param node
- * @return
- */
-static inline bool is_complemented(uint32_t node)
-{
-    return (node & 0x80000000);
-}
-
-/*!
- * TODO: description.
+ * @brief Compute the complement of the node.
  * @param node
  * @return
  */
@@ -86,7 +54,40 @@ static inline uint32_t complement(uint32_t node)
 }
 
 /*!
- * TODO: description.
+ * @brief Compute if the node is complemented.
+ * @param node
+ * @return
+ */
+static inline bool is_complemented(uint32_t node)
+{
+    return (node & 0x80000000);
+}
+
+/*!
+ * @brief Compute if the node is a leaf.
+ * @param node
+ * @return
+ */
+static inline bool is_leaf(uint32_t node)
+{
+    return node == Node::true_node || node == Node::false_node;
+}
+
+/*!
+ * @brief Get the pointer of the node.
+ * @param node
+ * @return
+ */
+static inline Node *pointer(uint32_t node)
+{
+    // TODO: set lowest order bit to 0.
+    uint32_t index = 0x7FFFFFFF & node;
+
+    return &internal::manager::nodes.table[index].node;
+}
+
+/*!
+ * @brief Compute 'if <A> is equal to complement of <B>.
  * @param A
  * @param B
  * @return
@@ -97,13 +98,13 @@ static inline bool equals_complement(uint32_t A, uint32_t B)
 }
 
 /*!
- * TODO: description.
+ * @brief Obtain the variable of the root node of <bdd>.
  * @param A
  * @param B
  * @param C
  * @return
  */
-static inline uint32_t top_variable(uint32_t A, uint32_t B, uint32_t C)
+static inline uint32_t get_root_var(uint32_t A, uint32_t B, uint32_t C)
 {
     auto var = [] (uint32_t x)
     {
@@ -114,7 +115,7 @@ static inline uint32_t top_variable(uint32_t A, uint32_t B, uint32_t C)
 }
 
 /*!
- * TODO: description.
+ * @brief TODO: description.
  * @param node
  * @param var
  * @param value
@@ -128,7 +129,7 @@ static inline uint32_t evaluate_at(uint32_t node, uint32_t var, bool value)
         return node;
     }
 
-    // Variable is exactly this node, choose appropriate branch
+    // Variable is exactly this node, choose appropriate branch.
     if (pointer(node)->root == var)
     {
         uint32_t target = (value ? pointer(node)->branch_true : pointer(node)
@@ -228,18 +229,16 @@ uint32_t Node::ITE(uint32_t A, uint32_t B, uint32_t C)
 
 #ifdef NO_CACHE
     return Node::ITE_without_cache(A, B, C);
-#else   
+#else
     uint32_t result;
-    // Check if this ITE has been done before in cache.
     if (internal::manager::cache.findITE(A, B, C, result))
     {
         return result;
     }
     else
-    {       
+    {
         result = Node::ITE_without_cache(A, B, C);
 
-        // Put in cache.
         internal::manager::cache.insertITE(A, B, C, result);
 
         return result;
@@ -247,10 +246,10 @@ uint32_t Node::ITE(uint32_t A, uint32_t B, uint32_t C)
 #endif
 }
 
-uint32_t Node::ITE_without_cache(uint32_t A, uint32_t B, uint32_t C) 
+uint32_t Node::ITE_without_cache(uint32_t A, uint32_t B, uint32_t C)
 {
     uint32_t result;
-    
+
     // Normalization rules.
     if (A == B)
     {
@@ -310,7 +309,7 @@ uint32_t Node::ITE_without_cache(uint32_t A, uint32_t B, uint32_t C)
     else
     {
         // If no normalization applies.
-        uint32_t x = top_variable(A, B, C);
+        uint32_t x = get_root_var(A, B, C);
         uint32_t A_false = evaluate_at(A, x, false);
         uint32_t B_false = evaluate_at(B, x, false);
         uint32_t C_false = evaluate_at(C, x, false);
@@ -357,7 +356,9 @@ uint32_t Node::ITE_without_cache(uint32_t A, uint32_t B, uint32_t C)
     return result;
 }
 
-static void print_rec(uint32_t node, std::set<uint32_t>& visited, uint32_t uniq)
+static void print_rec(uint32_t node,
+                      std::set<uint32_t>& visited,
+                      uint32_t uniq)
 {
     node = (is_complemented(node) ? complement(node) : node);
 

@@ -39,18 +39,20 @@
 namespace internal
 {
     /*!
-    * @param node
-    * @return
-    */
+     * @brief Compute the hash128 of the cache item.
+     * @param data
+     * @return
+     */
     static inline size_t hash(const Node& node)
     {
         return hash128(&node, sizeof(Node));
     }
 
     /*!
-    * @param src
-    * @param dest
-    */
+     * @brief Copy node src in dest.
+     * @param src
+     * @param dest
+     */
     static void copy_node(const Node& src, Node& dest)
     {
         dest.root = src.root;
@@ -63,7 +65,7 @@ namespace internal
     {
         elements = mem_usage / sizeof(node_slot);
         assert(elements <std::numeric_limits<int32_t>::max());
-    
+
         // Faster than running constructors.
         table = (node_slot *) calloc(elements, sizeof(node_slot));
 
@@ -72,8 +74,8 @@ namespace internal
     }
 
     /*!
-    * A lock guard around nodes
-    */
+     * @brief A lock guard around nodes
+     */
     struct lock_protector
     {
     public:

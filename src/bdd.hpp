@@ -43,127 +43,126 @@ class BDD
 {
 public:
     /*!
-     * TODO: description.
+     * @brief '<bdd>' empty constructor.
      */
     BDD();
 
     /*!
-     * TODO: description.
+     * @brief '<bdd>' constructor.
      * @param v
      */
     BDD(uint32_t v);
-    
+
+    /// Representation of constant 'true'.
     static BDD bdd_true;
+    /// Representation of constant 'false'.
     static BDD bdd_false;
 
-    // NOT.
     /*!
-     * TODO: description.
+     * @brief Compute the negation of '<bdd>'.
      * @return
      */
     BDD operator!();
 
-    // AND.
     /*!
-     * TODO: description.
+     * @brief Compute '<a> and <b>'.
      * @param r
      * @return
      */
     BDD operator&(BDD r);
     /*!
-     * TODO: description.
+     * @brief Compute '<a> and= <b>'.
      * @param r
      * @return
      */
     BDD operator&=(BDD r);
 
-    // OR.
     /*!
-     * TODO: description.
+     * @brief Compute '<a> or <b>'.
      * @param r
      * @return
      */
     BDD operator|(BDD r);
     /*!
-     * TODO: description.
+     * @brief Compute '<a> or= <b>'.
      * @param r
      * @return
      */
     BDD operator|=(BDD r);
 
-    // XOR.
     /*!
-     * TODO: description.
+     * @brief Compute '<a> xor <b>'.
      * @param r
      * @return
      */
     BDD operator^(BDD r);
     /*!
-     * TODO: description.
+     * @brief Compute '<a> xor= <b>'.
      * @param r
      * @return
      */
     BDD operator^=(BDD r);
 
-    // IMPLIES.
     /*!
-     * TODO: description.
+     * @brief Compute '<a> then <b>'.
      * @param r
      * @return
      */
     BDD operator>(BDD r);
     /*!
-     * TODO: description.
+     * @brief Compute '<a> then= <b>'.
      * @param r
      * @return
      */
     BDD operator>=(BDD r);
 
-    // REVERSE IMPLIES.
     /*!
-     * TODO: description.
+     * @brief Compute '<b> then <a>'.
      * @param r
      * @return
      */
     BDD operator<(BDD r);
     /*!
-     * TODO: description.
+     * @brief Compute '<b> then= <a>'.
      * @param r
      * @return
      */
     BDD operator<=(BDD r);
 
     /*!
-     * TODO: description.
+     * @brief Print the '<bdd>' with a custom title.
      * @param title
      */
     void print(std::string title);
 
     /*!
-     * TODO: description.
+     * @brief Compute the number of minterms (assignments that lead to True)
+              for a function with <number_of_vars> variables; we don’t need to
+              know the exact variables that may be in the BDD, just how many
+              there are.
      * @param vars
      * @return
      */
     double count_sat(std::set<uint32_t> vars);
 
     /*!
-     * TODO: description.
+     * @brief Extract a single path to True from the BDD.
      * @return
      */
     std::unordered_map<uint32_t, bool> one_sat();
-    
+
     /*!
-     * TODO: description.
+     * @brief TODO: description.
      * @return
      */
     bool use_dummy();
 
 private:
-    uint32_t node;
     bool dummy;
+    uint32_t node;
 
     /*!
-     * TODO: description.
+     * @brief TODO: description.
      * @param node
      * @param dummy
      */

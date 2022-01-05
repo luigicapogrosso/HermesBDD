@@ -46,16 +46,16 @@ struct ProfileITE : public Profiler
 
         profile_and();
         profile_and_eq();
-        
+
         profile_or();
         profile_or_eq();
-        
+
         profile_xor();
         profile_xor_eq();
-        
+
         profile_implies();
         profile_implies_eq();
-        
+
         profile_reverse_implies();
         profile_reverse_implies_eq();
     }
@@ -66,7 +66,7 @@ struct ProfileITE : public Profiler
 
         profile_on_average("Profiling NOT operator",
         [&](uint32_t i)
-            { 
+            {
                 BDD a(i);
                 BDD b(i + 1);
 
@@ -82,7 +82,7 @@ struct ProfileITE : public Profiler
 
         profile_on_average("Profiling AND operator",
         [&](uint32_t i)
-            { 
+            {
                 BDD a(i);
                 BDD b(i + 1);
 
@@ -98,7 +98,7 @@ struct ProfileITE : public Profiler
 
         profile_on_average("Profiling AND EQUAL operator",
         [&](uint32_t i)
-            { 
+            {
                 BDD a(i);
                 BDD b(i + 1);
 
@@ -114,7 +114,7 @@ struct ProfileITE : public Profiler
 
         profile_on_average("Profiling OR operator",
         [&](uint32_t i)
-            { 
+            {
                 BDD a(i);
                 BDD b(i + 1);
 
@@ -130,7 +130,7 @@ struct ProfileITE : public Profiler
 
         profile_on_average("Profiling OR EQUAL operator",
         [&](uint32_t i)
-            { 
+            {
                 BDD a(i);
                 BDD b(i + 1);
 
@@ -146,7 +146,7 @@ struct ProfileITE : public Profiler
 
         profile_on_average("Profiling XOR operator",
         [&](uint32_t i)
-            { 
+            {
                 BDD a(i);
                 BDD b(i + 1);
 
@@ -162,7 +162,7 @@ struct ProfileITE : public Profiler
 
         profile_on_average("Profiling XOR EQUAL operator",
         [&](uint32_t i)
-            { 
+            {
                 BDD a(i);
                 BDD b(i + 1);
 
@@ -178,7 +178,7 @@ struct ProfileITE : public Profiler
 
         profile_on_average("Profiling IMPLIES operator",
         [&](uint32_t i)
-            { 
+            {
                 BDD a(i);
                 BDD b(i + 1);
 
@@ -194,7 +194,7 @@ struct ProfileITE : public Profiler
 
         profile_on_average("Profiling IMPLIES EQUAL operator",
         [&](uint32_t i)
-            { 
+            {
                 BDD a(i);
                 BDD b(i + 1);
 
@@ -210,7 +210,7 @@ struct ProfileITE : public Profiler
 
         profile_on_average("Profiling reverse IMPLIES operator",
         [&](uint32_t i)
-            { 
+            {
                 BDD a(i);
                 BDD b(i + 1);
 
@@ -226,7 +226,7 @@ struct ProfileITE : public Profiler
 
         profile_on_average("Profiling reverse IMPLIES EQUAL operator",
         [&](uint32_t i)
-            { 
+            {
                 BDD a(i);
                 BDD b(i + 1);
 

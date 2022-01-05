@@ -40,7 +40,7 @@
 #include "bdd.hpp"
 #include "test.hpp"
 
-static int N;                /// Size of the chess board.
+static int N;
 
 int counting_solution(int n)
 {

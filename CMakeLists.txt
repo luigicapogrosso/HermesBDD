@@ -26,8 +26,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-set(ANY_TARGET_WARN all extra pedantic sign-conversion cast-qual 
-                    disabled-optimization init-self missing-include-dirs 
+set(ANY_TARGET_WARN all extra pedantic sign-conversion cast-qual
+                    disabled-optimization init-self missing-include-dirs
                     sign-promo switch-default undef redundant-decls)
 foreach(WARN ${ANY_TARGET_WARN})
     add_compile_options(-W${WARN})
@@ -65,10 +65,10 @@ endif()
 enable_testing()
 include(CTest)
 
-include_directories(${PROJECT_SOURCE_DIR}/source)
+include_directories(${PROJECT_SOURCE_DIR}/src)
 include_directories(${PROJECT_SOURCE_DIR}/utility)
 
-add_subdirectory(source)
+add_subdirectory(src)
 add_subdirectory(tests)
 add_subdirectory(profile)
 

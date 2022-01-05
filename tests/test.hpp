@@ -55,8 +55,8 @@ hermesbdd_check(std::ostream& os, const R& r, const ER& er) {
 }
 
 
-//This is the variable that stores counter for the number of test cases
-//The value is used and updated in the next two macro definitions
+// This is the variable that stores counter for the number of test cases
+// The value is used and updated in the next two macro definitions
 int test_case_counter = 0;
 
 /*! \brief Tests a class function */

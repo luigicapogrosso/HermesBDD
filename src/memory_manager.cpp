@@ -1,5 +1,5 @@
 /***************************************************************************
- *            tree.hpp
+ *            memory_manager.cpp
  *
  *  Copyright  2021  Luigi Capogrosso and Luca Geretti
  *
@@ -31,47 +31,51 @@
 
 
 
-#ifndef TREE_HPP
-#define TREE_HPP
-
-
-#include <atomic>
 #include <cstdio>
-#include <cstdint>
+#include <cassert>
+#include <unistd.h>
 
-#include "node.hpp"
+#include "bdd_internal.hpp"
+
+/*!
+ * @brief Compute the memory available size.
+ * @return
+ */
+static size_t mem_available()
+{
+    long pages = sysconf(_SC_PHYS_PAGES);
+    long page_size = sysconf(_SC_PAGE_SIZE);
+
+    assert(pages != -1);
+    assert(page_size != -1);
+
+    return static_cast<size_t>(pages) * static_cast<size_t>(page_size);
+}
 
 namespace internal
 {
-    struct node_slot
+    namespace manager
     {
-        Node node;
-        bool exists;
-        std::atomic_flag locked;
-    };
+        // TODO: we need to set the sizes of these somewhere.
+        // std::unordered_map<Query, Node*> cache;
+        Cache cache;
+        Tree nodes;
 
-    class Tree
-    {
-    public:
-        node_slot *table;
+        struct ConstructorHack {
+            ConstructorHack() {
+                // Leave 256 MB for other people, taking at most 16 GB.
+                size_t max_mem = 0x400000000;
 
-        /*!
-        * TODO: description.
-        * @param mem_usage
-        */
-        void init(size_t mem_usage);
+                //size_t max_mem = 0x40000000;
+                size_t extra_mem = 0x10000000;
 
-        /*!
-        * TODO: description.
-        * @param node
-        * @return
-        */
-        uint32_t lookup_or_create(const Node& node);
+                size_t cache_size = 0x20000000;
+                size_t mem = std::min(mem_available() - extra_mem,
+                                      max_mem) - cache_size;
 
-        std::atomic<uint32_t> count;
-    private:
-        uint32_t elements;
-    };
+                nodes.init(mem);
+                cache.init(cache_size);
+            }
+        } hack;
+    }
 }
-
-#endif // TREE_HPP

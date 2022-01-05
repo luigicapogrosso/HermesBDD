@@ -188,16 +188,16 @@ int main()
 
     test_and();
     test_and_eq();
-    
+
     test_or();
     test_or_eq();
-    
+
     test_xor();
     test_xor_eq();
-    
+
     test_implies();
     test_implies_eq();
-    
+
     test_reverse_implies();
     test_reverse_implies_eq();
 

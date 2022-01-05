@@ -36,7 +36,7 @@
 #include "bdd.hpp"
 #include "profile.hpp"
 
-static int N;                /// Size of the chess board.
+static int N;
 
 int counting_solution(int n)
 {
@@ -147,10 +147,10 @@ struct ProfileNQueens : public Profiler
         int num_samples = 100;
 
         profile_on_total("Profiling N-queens problem",
-        [&](auto) 
+        [&](auto)
             {
-                counting_solution(7); 
-            }, 
+                counting_solution(7);
+            },
         num_samples);
     }
 };

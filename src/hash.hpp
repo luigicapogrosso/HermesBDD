@@ -38,9 +38,6 @@
 #include <cstdint>
 #include <cstddef>
 
-// MurmurHash3 was written by Austin Appleby, and is placed in the public
-// domain. The author hereby disclaims copyright to this source code.
-
 #define FORCE_INLINE static inline __attribute__((always_inline))
 
 static inline uint64_t rotl64 (uint64_t x, int8_t r)

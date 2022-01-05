@@ -56,9 +56,9 @@ void test_print()
     BDD h(6);
     BDD i(7);
     BDD j(8);
-    
+
     BDD g1 = (((d | c) & (i & j)) ^ ((g > h) < i)) & ((e | f) | (c & f & j & i));
-    
+
     g1.print("Simple SAT Instance");
 }
 
@@ -68,7 +68,7 @@ void test_one_sat()
 
     BDD a(1);
     BDD b(2);
-    
+
     std::unordered_map<uint32_t, bool> map = a.one_sat();
     HERMESBDD_TEST_ASSERT(map[1]);
 

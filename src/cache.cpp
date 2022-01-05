@@ -37,7 +37,7 @@
 #include "cache.hpp"
 
 /*!
- * A lock guard around nodes.
+ * @brief Lock guard around nodes.
  */
 struct lock_protector
 {
@@ -56,7 +56,7 @@ private:
 };
 
 /*!
- * TODO: description.
+ * @brief Compute the hash128 of the cache item.
  * @param data
  * @return
  */
