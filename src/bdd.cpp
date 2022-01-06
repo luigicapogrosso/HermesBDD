@@ -178,7 +178,7 @@ void BDD::print(std::string title)
     Node::print(this->node, title);
 }
 
-static double count_sat_helper(uint32_t node, int n, std::set<uint32_t>& vars)
+static long double count_sat_helper(uint32_t node, int n, std::set<uint32_t>& vars)
 {
     long double pow2 = pow(2, n);
     if (is_leaf(node))
@@ -210,7 +210,7 @@ static double count_sat_helper(uint32_t node, int n, std::set<uint32_t>& vars)
     return count;
 }
 
-double BDD::count_sat(std::set<uint32_t> vars)
+long double BDD::count_sat(std::set<uint32_t> vars)
 {
     int n = vars.size();
     long double pow2 = pow(2, n);

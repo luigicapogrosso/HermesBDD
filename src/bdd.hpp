@@ -150,7 +150,7 @@ public:
      * @param vars
      * @return
      */
-    double count_sat(std::set<uint32_t> vars);
+    long double count_sat(std::set<uint32_t> vars);
 
     /*!
      * @brief Extract a single path to True from the BDD.
