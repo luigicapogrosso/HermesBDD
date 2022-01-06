@@ -139,7 +139,7 @@ int counting_solution(int n)
 
 void nqueens_solution_1()
 {
-    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problems using a 1x1 chess board.");
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 1x1 chess board.");
 
     int s = counting_solution(1);
 
@@ -148,7 +148,7 @@ void nqueens_solution_1()
 
 void nqueens_solution_2()
 {
-    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problems using a 2x2 chess board.");
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 2x2 chess board.");
 
     int s = counting_solution(2);
 
@@ -157,7 +157,7 @@ void nqueens_solution_2()
 
 void nqueens_solution_4()
 {
-    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problems using a 4x4 chess board.");
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 4x4 chess board.");
 
     int s = counting_solution(4);
 
@@ -166,7 +166,7 @@ void nqueens_solution_4()
 
 void nqueens_solution_5()
 {
-    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problems using a 5x5 chess board.");
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 5x5 chess board.");
 
     int s = counting_solution(5);
 
@@ -175,7 +175,7 @@ void nqueens_solution_5()
 
 void nqueens_solution_6()
 {
-    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problems using a 6x6 chess board.");
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 6x6 chess board.");
 
     int s = counting_solution(6);
 
@@ -184,12 +184,22 @@ void nqueens_solution_6()
 
 void nqueens_solution_7()
 {
-    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problems using a 7x7 chess board.");
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 7x7 chess board.");
 
     int s = counting_solution(7);
 
     HERMESBDD_TEST_ASSERT(s == 40);
 }
+
+void nqueens_solution_8()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 8x8 chess board.");
+
+    int s = counting_solution(8);
+
+    HERMESBDD_TEST_ASSERT(s == 92);
+}
+
 
 int main()
 {
@@ -199,6 +209,7 @@ int main()
     nqueens_solution_5();
     nqueens_solution_6();
     nqueens_solution_7();
+    nqueens_solution_8();
 
     return HERMESBDD_TEST_FAILURES;
 }
