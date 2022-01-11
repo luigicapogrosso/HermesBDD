@@ -132,6 +132,15 @@ void test_simple()
     BDD a_and_b = a & b;
     BDD not_not_a_or_not_b = !((!a) | (!b));
     HERMESBDD_TEST_ASSERT(a_and_b == not_not_a_or_not_b);
+
+    // Compute !ithvar(1) and nithvar(1) and check if they are equivalent.
+    BDD c;
+    c = c.ithvar(1);
+    BDD not_c = !c;
+
+    BDD d;
+    d = d.nithvar(1);
+    HERMESBDD_TEST_ASSERT(not_c == d);
 }
 
 

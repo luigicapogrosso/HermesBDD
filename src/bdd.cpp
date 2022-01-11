@@ -173,6 +173,16 @@ BDD BDD::operator<=(BDD r)
     return *this;
 }
 
+BDD BDD::ithvar(uint32_t v)
+{
+    return Node::make(v, Node::true_node, Node::false_node);
+}
+
+BDD BDD::nithvar(uint32_t v)
+{
+    return !(ithvar(v));
+}
+
 void BDD::print(std::string title)
 {
     Node::print(this->node, title);

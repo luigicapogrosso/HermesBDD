@@ -136,6 +136,18 @@ public:
      */
     BDD operator<=(BDD r);
 
+    /**
+     * @brief Create the BDD representing "if <v> then true else false".
+     * @return
+     */
+    BDD ithvar(uint32_t v);
+
+    /**
+     * @brief Create a BDD representing the negation of <v>.
+     * @return
+     */
+    BDD nithvar(uint32_t v);
+
     /*!
      * @brief Print the '<bdd>' with a custom title.
      * @param title
@@ -143,7 +155,7 @@ public:
     void print(std::string title);
 
     /*!
-     * @brief Compute the number of minterms (assignments that lead to True)
+     * @brief Compute the number of minterms (assignments that lead to true)
               for a function with <number_of_vars> variables; we don’t need to
               know the exact variables that may be in the BDD, just how many
               there are.
@@ -153,7 +165,7 @@ public:
     long double count_sat(std::set<uint32_t> vars);
 
     /*!
-     * @brief Extract a single path to True from the BDD.
+     * @brief Extract a single path to true from the BDD.
      * @return
      */
     std::unordered_map<uint32_t, bool> one_sat();
