@@ -3,10 +3,10 @@ message(STATUS "CMake version ${CMAKE_VERSION}")
 
 project(HermesBDD VERSION 0.1)
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "Intel")
-    message(WARNING "Intel compiler not supported.")
-elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    message(WARNING "Microsoft compiler not supported.")
+if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 19.20)
+        message(FATAL_ERROR "MSVC version must be at least 19.20!")
+    endif()
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 10.2)
         message(FATAL_ERROR "GCC version must be at least 10.2!")
@@ -17,7 +17,14 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     endif()
 else()
     message(WARNING "You are using an unsupported compiler! Compilation has
-            only been tested with Clang and GCC.")
+            only been tested with Clang, GCC and MSVC.")
+endif()
+
+if(WIN32)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+    set(LIBRARY_KIND STATIC)
+else()
+    set(LIBRARY_KIND SHARED)
 endif()
 
 set(CMAKE_MACOSX_RPATH 1)
@@ -26,12 +33,16 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-set(ANY_TARGET_WARN all extra pedantic sign-conversion cast-qual
-                    disabled-optimization init-self missing-include-dirs
-                    sign-promo switch-default undef redundant-decls)
-foreach(WARN ${ANY_TARGET_WARN})
-    add_compile_options(-W${WARN})
-endforeach()
+if(NOT WIN32)
+    set(ANY_TARGET_WARN all extra pedantic sign-conversion cast-qual disabled-optimization
+            init-self missing-include-dirs sign-promo switch-default undef redundant-decls
+            strict-aliasing unused-parameter shadow error)
+    foreach(WARN ${ANY_TARGET_WARN})
+        add_compile_options(-W${WARN})
+    endforeach()
+else()
+    add_compile_options(/WX)
+endif()
 
 find_package(Threads)
 if(NOT Threads_FOUND)

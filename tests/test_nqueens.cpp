@@ -51,9 +51,9 @@ int counting_solution(int n)
 
     // Build variable array.
     X = new BDD*[static_cast<unsigned long>(N)];
-    for (int n = 0; n < N; n++)
+    for (int k = 0; k < N; k++)
     {
-        X[n] = new BDD[static_cast<unsigned long>(N)];
+        X[k] = new BDD[static_cast<unsigned long>(N)];
     }
 
     for (int row = 0; row < N; row++)
