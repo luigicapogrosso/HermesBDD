@@ -33,7 +33,11 @@
 
 #include <cstdio>
 #include <cassert>
-#include <unistd.h>
+#ifndef WIN32
+    #include <unistd.h>
+#else
+    #include <io.h>
+#endif
 
 #include "bdd_internal.hpp"
 

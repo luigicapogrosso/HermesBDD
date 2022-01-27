@@ -62,8 +62,8 @@ struct cache_slot
 
     cache_item data;
     cache_slot()
-        : locked(false)
     {
+        locked.clear();
     }
 };
 
