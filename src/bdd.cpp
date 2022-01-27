@@ -96,9 +96,9 @@ BDD BDD::bdd_true(Node::true_node, true);
 
 BDD BDD::bdd_false(Node::false_node, true);
 
-BDD::BDD(uint32_t node, bool dummy)
-    : dummy(dummy)
-    , node(node)
+BDD::BDD(uint32_t node_, bool dummy_)
+    : dummy(dummy_)
+    , node(node_)
 {
 
 }

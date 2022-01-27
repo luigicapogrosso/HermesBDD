@@ -42,7 +42,7 @@
 struct lock_protector
 {
 public:
-    lock_protector(cache_slot& slot) : slot(slot)
+    lock_protector(cache_slot& s) : slot(s)
     {
         while (slot.locked.test_and_set(std::memory_order_acquire));
     }

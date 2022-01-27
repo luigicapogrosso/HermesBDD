@@ -151,10 +151,10 @@ static inline uint32_t evaluate_at(uint32_t node, uint32_t var, bool value)
     return new_node;
 }
 
-Node::Node(uint32_t root, uint32_t branch_true, uint32_t branch_false)
-    : root(root)
-    , branch_true(branch_true)
-    , branch_false(branch_false)
+Node::Node(uint32_t root_, uint32_t branch_true_, uint32_t branch_false_)
+    : root(root_)
+    , branch_true(branch_true_)
+    , branch_false(branch_false_)
 {
     int size_true, size_false;
 
