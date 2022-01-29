@@ -44,10 +44,7 @@ else()
     add_compile_options(/WX)
 endif()
 
-find_package(Threads)
-if(NOT Threads_FOUND)
-    message(FATAL ERROR "Unable to find Threads library.")
-endif()
+find_package(Threads REQUIRED)
 
 option(COVERAGE "Enable coverage reporting" OFF)
 add_library(coverage_config INTERFACE)
@@ -84,7 +81,7 @@ add_subdirectory(tests)
 add_subdirectory(profile)
 
 add_library(hermesbdd SHARED $<TARGET_OBJECTS:hermesbdd-all>)
-target_link_libraries(hermesbdd dl ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(hermesbdd ${CMAKE_THREAD_LIBS_INIT})
 
 if(COVERAGE)
     target_link_libraries(hermesbdd coverage_config)
