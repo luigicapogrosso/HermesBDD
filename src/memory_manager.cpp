@@ -49,15 +49,15 @@
 static size_t mem_available()
 {
     #ifdef WIN32
-        MEMORYSTATUSEX statex;
-        GlobalMemoryStatusEx (&statex);
-        return static_cast<size_t>(statex.ullAvailPhys);
+    MEMORYSTATUSEX statex;
+    GlobalMemoryStatusEx (&statex);
+    return static_cast<size_t>(statex.ullAvailPhys);
     #else
-        long pages = sysconf(_SC_PHYS_PAGES);
-        long page_size = sysconf(_SC_PAGE_SIZE);
-        assert(pages != -1);
-        assert(page_size != -1);
-        return static_cast<size_t>(pages) * static_cast<size_t>(page_size);
+    long pages = sysconf(_SC_PHYS_PAGES);
+    long page_size = sysconf(_SC_PAGE_SIZE);
+    assert(pages != -1);
+    assert(page_size != -1);
+    return static_cast<size_t>(pages) * static_cast<size_t>(page_size);
     #endif
 }
 
@@ -79,7 +79,11 @@ namespace internal
                 size_t extra_mem = 0x10000000;
 
                 size_t cache_size = 0x20000000;
+                #ifdef WIN32
                 size_t mem = min(mem_available() - extra_mem, max_mem) - cache_size;
+                #else
+                size_t mem =std::min(mem_available() - extra_mem, max_mem) - cache_size;   
+                #endif     
 
                 nodes.init(mem);
                 cache.init(cache_size);
