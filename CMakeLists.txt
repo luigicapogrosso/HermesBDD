@@ -80,7 +80,7 @@ add_subdirectory(src)
 add_subdirectory(tests)
 add_subdirectory(profile)
 
-add_library(hermesbdd SHARED $<TARGET_OBJECTS:hermesbdd-all>)
+add_library(hermesbdd ${LIBRARY_KIND} $<TARGET_OBJECTS:hermesbdd-all>)
 target_link_libraries(hermesbdd ${CMAKE_THREAD_LIBS_INIT})
 
 if(COVERAGE)
