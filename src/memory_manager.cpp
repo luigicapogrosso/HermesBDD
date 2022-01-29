@@ -33,10 +33,11 @@
 
 #include <cstdio>
 #include <cassert>
-#ifndef WIN32
-    #include <unistd.h>
-#else
+#ifdef WIN32
     #include <io.h>
+    #include <windows.h> 
+#else
+    #include <unistd.h>
 #endif
 
 #include "bdd_internal.hpp"
@@ -47,13 +48,17 @@
  */
 static size_t mem_available()
 {
-    long pages = sysconf(_SC_PHYS_PAGES);
-    long page_size = sysconf(_SC_PAGE_SIZE);
-
-    assert(pages != -1);
-    assert(page_size != -1);
-
-    return static_cast<size_t>(pages) * static_cast<size_t>(page_size);
+    #ifdef WIN32
+        MEMORYSTATUSEX statex;
+        GlobalMemoryStatusEx (&statex);
+        return static_cast<size_t>(statex.ullAvailPhys);
+    #else
+        long pages = sysconf(_SC_PHYS_PAGES);
+        long page_size = sysconf(_SC_PAGE_SIZE);
+        assert(pages != -1);
+        assert(page_size != -1);
+        return static_cast<size_t>(pages) * static_cast<size_t>(page_size);
+    #endif
 }
 
 namespace internal
@@ -74,8 +79,7 @@ namespace internal
                 size_t extra_mem = 0x10000000;
 
                 size_t cache_size = 0x20000000;
-                size_t mem = std::min(mem_available() - extra_mem,
-                                      max_mem) - cache_size;
+                size_t mem = min(mem_available() - extra_mem, max_mem) - cache_size;
 
                 nodes.init(mem);
                 cache.init(cache_size);
