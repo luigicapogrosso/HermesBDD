@@ -38,7 +38,11 @@
 #include <cstdint>
 #include <cstddef>
 
-#define FORCE_INLINE static inline __attribute__((always_inline))
+#ifdef WIN32
+    #define FORCE_INLINE static inline __forceinline
+#else
+    #define FORCE_INLINE static inline __attribute__((always_inline))
+#endif
 
 static inline uint64_t rotl64 (uint64_t x, int8_t r)
 {
