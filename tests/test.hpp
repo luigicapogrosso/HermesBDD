@@ -59,6 +59,16 @@ hermesbdd_check(std::ostream& os, const R& r, const ER& er) {
 // The value is used and updated in the next two macro definitions
 int test_case_counter = 0;
 
+#if defined(linux) || defined(__linux) || defined(__linux__)
+#define HERMESBDD_PRETTY_FUNCTION __PRETTY_FUNCTION__
+#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
+#define HERMESBDD_PRETTY_FUNCTION __FUNCSIG__
+#elif defined(darwin) || defined(__darwin) || defined(__darwin__) || defined(__APPLE__)
+#define HERMESBDD_PRETTY_FUNCTION __PRETTY_FUNCTION__
+#else
+#define HERMESBDD_PRETTY_FUNCTION ""
+#endif
+
 /*! \brief Tests a class function */
 #define HERMESBDD_TEST_CLASS(classname,testclassconstruct)                       \
     { \
@@ -105,12 +115,12 @@ int test_case_counter = 0;
     catch(const std::exception& except) {                                    \
         ++HERMESBDD_TEST_FAILURES;                                        \
         std::cout << "exception: \"" << except.what() << "\"\n" << std::endl; \
-        std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": " << message << " throwed \"" << except.what() << "\"." << std::endl;     \
+        std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": " << message << " throwed \"" << except.what() << "\"." << std::endl;     \
     }                                                                   \
     catch(...) {                                                        \
         ++HERMESBDD_TEST_FAILURES;                                        \
         std::cout << "unknown exception\n" << std::endl;                \
-        std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": " << message << " throwed an unknown exception." << std::endl;       \
+        std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": " << message << " throwed an unknown exception." << std::endl;       \
     }                                                                   \
 
 
@@ -208,7 +218,7 @@ int test_case_counter = 0;
             std::cout << "\n" << std::endl;                             \
         } else {                                                        \
             std::cout << "\nWARNING: expected " << #expression << " = " << #expected << " == " << (expected) << " \n" << std::endl; \
-            std::cerr << "WARNING: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": Check `" << #expression << "==" << #expected << "' failed; obtained " << (expression) << std::endl; \
+            std::cerr << "WARNING: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": Check `" << #expression << "==" << #expected << "' failed; obtained " << (expression) << std::endl; \
         }                                                               \
     }                                                                   \
 
@@ -223,7 +233,7 @@ int test_case_counter = 0;
         } else {                                                        \
             ++HERMESBDD_TEST_FAILURES;                                    \
             std::cout << "\nERROR: expected " << #expression << " = " << #expected << " == " << (expected) << " \n" << std::endl; \
-            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": Check `" << #expression << "==" << #expected << "' failed; obtained " << (expression) << std::endl; \
+            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": Check `" << #expression << "==" << #expected << "' failed; obtained " << (expression) << std::endl; \
         }                                                               \
     }                                                                   \
 
@@ -239,7 +249,7 @@ int test_case_counter = 0;
             ++HERMESBDD_TEST_FAILURES;                                    \
             std::cout << "\nERROR: " << #expression1 << ":\n           " << (expression1) \
                       << "\n     : " << #expression2 << ":\n           " << (expression2) << std::endl; \
-            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": Identity `" << #expression1 << " === " << #expression2 << "' failed; " << #expression1 << "=" << (expression1) << "; " << #expression2 << "=" << (expression2) << std::endl; \
+            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": Identity `" << #expression1 << " === " << #expression2 << "' failed; " << #expression1 << "=" << (expression1) << "; " << #expression2 << "=" << (expression2) << std::endl; \
         }                                                               \
     }                                                                   \
 
@@ -253,7 +263,7 @@ int test_case_counter = 0;
         } else {                                                        \
             ++HERMESBDD_TEST_FAILURES;                                    \
             std::cout << "\nERROR: " << #expression << ":\n           " << (expression) << std::endl; \
-            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": Sameness of `" << #expression << " and " << #expected << "' failed;" << std::endl; \
+            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": Sameness of `" << #expression << " and " << #expected << "' failed;" << std::endl; \
             std::cerr << "  " << #expression << "=" << (expression) << std::endl; \
             std::cerr << "  " << #expected << "=" << (expected) << std::endl; \
         }                                                               \
@@ -271,7 +281,7 @@ int test_case_counter = 0;
             ++HERMESBDD_TEST_FAILURES;                                    \
             std::cout << "\nERROR: " << #expression1 << ":\n           " << (expression1) \
                       << "\n     : " << #expression2 << ":\n           " << (expression2) << std::endl; \
-            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": Equality `" << #expression1 << " == " << #expression2 << "' failed; " << #expression1 << "=" << (expression1) << "; " << #expression2 << "=" << (expression2) << std::endl; \
+            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": Equality `" << #expression1 << " == " << #expression2 << "' failed; " << #expression1 << "=" << (expression1) << "; " << #expression2 << "=" << (expression2) << std::endl; \
         }                                                               \
     }                                                                   \
 
@@ -284,7 +294,7 @@ int test_case_counter = 0;
             ++HERMESBDD_TEST_FAILURES;                                    \
             std::cout << "\nERROR: " << #expression1 << ":\n           " << (expression1) \
                       << "\n     : " << #expression2 << ":\n           " << (expression2) << std::endl; \
-            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": Inequality `" << #expression1 << " != " << #expression2 << "' failed; " << #expression1 << "=" << (expression1) << "; " << #expression2 << "=" << (expression2) << std::endl; \
+            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": Inequality `" << #expression1 << " != " << #expression2 << "' failed; " << #expression1 << "=" << (expression1) << "; " << #expression2 << "=" << (expression2) << std::endl; \
         } else {                                                        \
             std::cout << "true\n" << std::endl;                         \
         }                                                               \
@@ -300,7 +310,7 @@ int test_case_counter = 0;
         } else {                                                        \
             ++HERMESBDD_TEST_FAILURES;                                    \
             std::cout << "\nERROR: " << #expression << ":\n           " << (expression) << std::endl; \
-            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": Equality `" << #expression << " == " << #expected << "' failed;" << std::endl; \
+            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": Equality `" << #expression << " == " << #expected << "' failed;" << std::endl; \
             std::cerr << "  " << #expression << "=" << (expression) << std::endl; \
             std::cerr << "  " << #expected << "=" << (expected) << std::endl; \
         }                                                               \
@@ -320,7 +330,7 @@ int test_case_counter = 0;
                       << "\n     : " << #expected << ":\n           " << (expected) \
                       << "\n     : error: " << (error) \
                       << "\n     : tolerance " << (tolerance) << std::endl; \
-            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": ApproximateTag equality `" << #expression << " ~ " << #expected << "' failed; " << #expression << "=" << (expression) << "; " << #expected << "=" << (expected)<< "; error=" << (error) << "; tolerance=" << (tolerance) << std::endl; \
+            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": ApproximateTag equality `" << #expression << " ~ " << #expected << "' failed; " << #expression << "=" << (expression) << "; " << #expected << "=" << (expected)<< "; error=" << (error) << "; tolerance=" << (tolerance) << std::endl; \
         }                                                               \
     }                                                                   \
                                                                    \
@@ -336,7 +346,7 @@ int test_case_counter = 0;
         } else {                                                        \
             ++HERMESBDD_TEST_FAILURES;                                    \
             std::cout << "\nERROR: " << #expression << ":\n           " << (expression) << std::endl; \
-            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": Equality `" << #expression << " < " << #expected << "' failed; " << #expression << "=" << (expression) << std::endl; \
+            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": Equality `" << #expression << " < " << #expected << "' failed; " << #expression << "=" << (expression) << std::endl; \
         }                                                               \
     }                                                                   \
 
@@ -351,7 +361,7 @@ int test_case_counter = 0;
         } else {                                                        \
             ++HERMESBDD_TEST_FAILURES;                                    \
             std::cout << "\nERROR: false" << std::endl;                 \
-            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": Predicate `" << #predicate << "(" << #argument << ")' with " << #argument << "=" << (argument) << " is false." << std::endl; \
+            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": Predicate `" << #predicate << "(" << #argument << ")' with " << #argument << "=" << (argument) << " is false." << std::endl; \
         }                                                               \
     }
 
@@ -366,7 +376,7 @@ int test_case_counter = 0;
         } else {                                                        \
             ++HERMESBDD_TEST_FAILURES;                                    \
             std::cout << "\nERROR: false" << std::endl;                 \
-            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": Predicate `" << #predicate << "(" << #argument1 << "," << #argument2 << ")' with\n  " << #argument1 << "=" << (argument1) << ";\n  " << #argument2 << "=" << (argument2) << " is false." << std::endl; \
+            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": Predicate `" << #predicate << "(" << #argument1 << "," << #argument2 << ")' with\n  " << #argument1 << "=" << (argument1) << ";\n  " << #argument2 << "=" << (argument2) << " is false." << std::endl; \
         }                                                               \
     }
 
@@ -381,7 +391,7 @@ int test_case_counter = 0;
         } else {                                                        \
             ++HERMESBDD_TEST_FAILURES;                                    \
             std::cout << "\nERROR: expected: " << #expression << #comparison << #expected << "=" << (expected) << std::endl; \
-            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": Comparison `" << #expression << #comparison << #expected << "' failed; " << #expression << "=" << (expression) << "; " << #expected << "=" << (expected) << std::endl; \
+            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": Comparison `" << #expression << #comparison << #expected << "' failed; " << #expression << "=" << (expression) << "; " << #expected << "=" << (expected) << std::endl; \
         }                                                               \
     }                                                                   \
 
@@ -397,7 +407,7 @@ int test_case_counter = 0;
         } else {                                                        \
             ++HERMESBDD_TEST_FAILURES;                                    \
             std::cout << "\nERROR: expected: " << #expression << #comparison << #expected << std::endl; \
-            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": Comparison `" << #expression << #comparison << #expected << "' failed; " << #expression << "=" << result << "; " << #expected << "=" << (expected) << std::endl; \
+            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": Comparison `" << #expression << #comparison << #expected << "' failed; " << #expression << "=" << result << "; " << #expected << "=" << (expected) << std::endl; \
         }                                                               \
     }                                                                   \
 
@@ -473,7 +483,7 @@ int test_case_counter = 0;
             statement;                                                  \
             ++HERMESBDD_TEST_FAILURES;                                    \
             std::cout << "\nERROR: expected " << #error << "; no exception thrown\n"; \
-            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": expected " << #error << "; no exception thrown." << std::endl; \
+            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": expected " << #error << "; no exception thrown." << std::endl; \
         }                                                               \
         catch(const error& err) {                                         \
             std::cout << "caught " << #error << " as expected\n" << std::endl; \
@@ -481,7 +491,7 @@ int test_case_counter = 0;
         catch(const std::exception& except) {                                \
             ++HERMESBDD_TEST_FAILURES;                                    \
             std::cout << "\nERROR: caught exception " << except.what() << "; expected " << #error << "\n"; \
-            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": caught exception " << except.what() << "; expected " << #error << std::endl; \
+            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": caught exception " << except.what() << "; expected " << #error << std::endl; \
         }                                                               \
     }                                                                   \
 
@@ -494,7 +504,7 @@ int test_case_counter = 0;
             statement;                                                  \
             ++HERMESBDD_TEST_FAILURES;                                    \
             std::cout << "\nERROR: expected exception; none thrown\n";  \
-            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << __PRETTY_FUNCTION__ << ": expected exception; no exception thrown." << std::endl; \
+            std::cerr << "ERROR: " << __FILE__ << ":" << __LINE__ << ": " << HERMESBDD_PRETTY_FUNCTION << ": expected exception; no exception thrown." << std::endl; \
         }                                                               \
         catch(...) {                                                    \
             std::cout << "caught exception as expected\n" << std::endl; \
