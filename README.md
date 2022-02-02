@@ -40,13 +40,17 @@ Available options are:
 Our baselines are:
 | Problem        | Samples   | USE_CACHE  | USE_THREAD | Core | Time (ms) |
 |--------------- |-----------|------------|------------|------|-----------|
+| N-queens (7x7) | 50        | NO         | NO         | 12   | 5072      |
 | N-queens (7x7) | 50        | NO         | NO         | 16   | 2517      |
+| N-queens (8x8) | 50        | NO         | NO         | 12   | 78062     |
 | N-queens (8x8) | 50        | NO         | NO         | 16   | 39283     |
 
 Our speedup achievements:
 | Problem        | Samples   | USE_CACHE  | USE_THREAD | Core | Time (ms) | Speedup |
 |--------------  |-----------|------------|----------- |------|-----------|---------|
+| N-queens (7x7) | 50        | YES        | YES        | 12   | 752       | 6.74x   |
 | N-queens (7x7) | 50        | YES        | YES        | 16   | 568       | 4.43x   |
+| N-queens (8x8) | 50        | YES        | YES        | 12   | 4322      | 18.06x  |
 | N-queens (8x8) | 50        | YES        | YES        | 16   | 3227      | 12.17x  |
 
 ## Contribution guidelines ##
