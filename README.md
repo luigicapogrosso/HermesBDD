@@ -26,6 +26,15 @@ At this point, if no error arises, you can build with:
 $ cmake --build .
 ```
 
+### CMake options ###
+
+Available options are:
+| CMake Option | Description               | Default Value |
+| ------------ | ------------------------- | ------------- |
+| NO_CACHE     | Do not use cache          | OFF           |
+| NO_THREAD    | Do not use thread         | OFF           |
+| COVERAGE     | Enable coverage reporting | OFF           |
+
 ## Library performance ##
 
 Our baselines are:
