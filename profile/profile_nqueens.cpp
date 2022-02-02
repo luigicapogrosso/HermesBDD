@@ -139,17 +139,30 @@ struct ProfileNQueens : public Profiler
 
     void run()
     {
-        profile_nqueens();
+        profile_nqueens_7x7();
+        profile_nqueens_8x8();
     }
 
-    void profile_nqueens()
+    void profile_nqueens_7x7()
     {
-        int num_samples = 100;
+        int num_samples = 50;
 
-        profile_on_total("Profiling N-queens problem",
+        profile_on_total("Profiling N-queens (7x7) problem",
         [&](auto)
             {
                 counting_solution(7);
+            },
+        num_samples);
+    }
+
+    void profile_nqueens_8x8()
+    {
+        int num_samples = 50;
+
+        profile_on_total("Profiling N-queens (8x8) problem",
+        [&](auto)
+            {
+                counting_solution(8);
             },
         num_samples);
     }

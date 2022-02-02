@@ -38,14 +38,16 @@ Available options are:
 ## Library performance ##
 
 Our baselines are:
-| Problem      | Samples   | USE_CACHE  | USE_THREAD | Time (ms) |
-|--------------|-----------|------------|------------|-----------|
-| N-queens     | 100       | NO         | NO         | 5319      |
+| Problem        | Samples   | USE_CACHE  | USE_THREAD | Core | Time (ms) |
+|--------------- |-----------|------------|------------|------|-----------|
+| N-queens (7x7) | 50        | NO         | NO         | 16   | 2517      |
+| N-queens (8x8) | 50        | NO         | NO         | 16   | 39283     |
 
 Our speedup achievements:
-| Problem      | Samples   | USE_CACHE  | USE_THREAD | Time (ms) | Speedup |
-|--------------|-----------|------------|----------- |-----------|---------|
-| N-queens     | 100       | YES        | YES        | 616       | 8.6     |
+| Problem        | Samples   | USE_CACHE  | USE_THREAD | Core | Time (ms) | Speedup |
+|--------------  |-----------|------------|----------- |------|-----------|---------|
+| N-queens (7x7) | 50        | YES        | YES        | 16   | 568       | 4.43x   |
+| N-queens (8x8) | 50        | YES        | YES        | 16   | 3227      | 12.17x  |
 
 ## Contribution guidelines ##
 
