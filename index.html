@@ -40,13 +40,24 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <!-- Local TOC -->
               <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">HermesBDD</a><ul>
+<li><a class="reference internal" href="#">HermesBDD</a></li>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li><a class="reference internal" href="#building">Building</a></li>
-<li><a class="reference internal" href="#basic-bdd-functionality">Basic BDD functionality</a></li>
-<li><a class="reference internal" href="#tests">Tests</a></li>
+<li><a class="reference internal" href="#building">Building</a><ul>
+<li><a class="reference internal" href="#cmake-options">CMake options</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#using-hermesbdd">Using HermesBDD</a><ul>
+<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="#basic-hermesbdd-functionality">Basic HermesBDD functionality</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tests">Tests</a><ul>
+<li><a class="reference internal" href="#queens">Queens</a></li>
+<li><a class="reference internal" href="#id3">HermesBDD</a></li>
+<li><a class="reference internal" href="#ite">ITE</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#authors">Authors</a></li>
 </ul>
 </div>
         </div>
@@ -75,30 +86,32 @@
              
   <section id="hermesbdd">
 <h1>HermesBDD<a class="headerlink" href="#hermesbdd" title="Permalink to this headline">¶</a></h1>
-<p>HermesBDD is a parallel (multi-core) library of Binary Decision Diagrams written
-in C++. It focuses on high performance, usability, and correctness.</p>
-<p>HermesBDD is licensed with the MIT license. The main authors of the project are
-Luigi Capogrosso and Luca Geretti, who can be reached via
-<a class="reference external" href="mailto:luigi&#46;capogrosso&#37;&#52;&#48;polito&#46;it">luigi<span>&#46;</span>capogrosso<span>&#64;</span>polito<span>&#46;</span>it</a> and <a class="reference external" href="mailto:luca&#46;geretti&#37;&#52;&#48;univr&#46;it">luca<span>&#46;</span>geretti<span>&#64;</span>univr<span>&#46;</span>it</a>, respectively.
-Please let us know if you use HermesBDD in your projects and if you need
-decision diagram operations that are currently not implemented in HermesBDD.</p>
+<p>HermesBDD is a parallel multi-core, and multi-platform, library of <a class="reference external" href="https://en.wikipedia.org/wiki/Binary_decision_diagram">Binary Decision Diagrams</a>
+written in C++. It focuses on high performance, usability, and correctness.</p>
+<p>So how did HermesBDD get its name? In Greek mythology, Hermes, son of Zeus and
+the nymph Maia, was the messenger of the gods, because he was as swift as the wind.
+Hence the name HermesBDD, meaning an extremely fast and light BDD library.</p>
 <p>The main repository of HermesBDD is <a class="reference external" href="https://github.com/luigicapogrosso/HermesBDD">https://github.com/luigicapogrosso/HermesBDD</a>.</p>
+</section>
 <section id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<h1>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h1>
 <p>HermesBDD has the following dependencies:</p>
 <ul class="simple">
-<li><p><strong>CMake</strong> for compiling.</p></li>
+<li><p><strong>CMake</strong>, for compiling;</p></li>
+<li><p><strong>Sphinx</strong>, for documentation generation.</p></li>
 </ul>
+<p>For further information about CMake and Sphinx, check the following <a class="reference external" href="https://cmake.org/">1</a> and
+<a class="reference external" href="https://www.sphinx-doc.org/en/master/">2</a> documentation page, respectively.</p>
 </section>
 <section id="building">
-<h2>Building<a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h2>
-<p>The library is tested for compilation using GCC (minimum required: 10.2) and
-Clang (minimum required: 11.0). To build the library from sources in a clean
-way, it is preferable that you set up a build subdirectory, say:</p>
+<h1>Building<a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h1>
+<p>The library is tested for compilation using GCC (minimum required: 10.2), Clang
+(minimum required: 11.0), and MSVC (minimum required: 19.20). To build the library
+from sources in a clean way, it is preferable that you set up a build subdirectory, say:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build
 </pre></div>
 </div>
-<p>Then you can prepare the build environment, choosing a Release build for
+<p>Then, you can prepare the build environment, choosing a Release build for
 maximum performance:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake .. -DCMAKE_BUILD_TYPE<span class="o">=</span>Release
 </pre></div>
@@ -107,14 +120,93 @@ maximum performance:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake --build .
 </pre></div>
 </div>
+<section id="cmake-options">
+<h2>CMake options<a class="headerlink" href="#cmake-options" title="Permalink to this headline">¶</a></h2>
+<p>Available options are:</p>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 50%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Default Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>NO_CACHE</p></td>
+<td><p>Do not use cache</p></td>
+<td><p>OFF</p></td>
+</tr>
+<tr class="row-odd"><td><p>NO_THREAD</p></td>
+<td><p>Do not use thread</p></td>
+<td><p>OFF</p></td>
+</tr>
+<tr class="row-even"><td><p>COVERAGE</p></td>
+<td><p>Enable coverage reporting</p></td>
+<td><p>OFF</p></td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="basic-bdd-functionality">
-<h2>Basic BDD functionality<a class="headerlink" href="#basic-bdd-functionality" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="using-hermesbdd">
+<h1>Using HermesBDD<a class="headerlink" href="#using-hermesbdd" title="Permalink to this headline">¶</a></h1>
+<p>To import the library, add the following line to your file:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hermesbdd.h&gt;</span><span class="cp"></span>
+</pre></div>
+</div>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>A simple use of the library is shown below:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cassert&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hermesbdd.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// The True terminal.</span>
+<span class="w">    </span><span class="n">BDD</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BDD</span><span class="o">::</span><span class="n">bdd_true</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// The False terminal.</span>
+<span class="w">    </span><span class="n">BDD</span><span class="w"> </span><span class="n">zero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BDD</span><span class="o">::</span><span class="n">bdd_false</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Create a BDD variable x_0.</span>
+<span class="w">    </span><span class="n">BDD</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Create a BDD variable x_1.</span>
+<span class="w">    </span><span class="n">BDD</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Compute !a and check if !!a is really a.</span>
+<span class="w">    </span><span class="n">BDD</span><span class="w"> </span><span class="n">not_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!</span><span class="n">a</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">assert</span><span class="p">((</span><span class="o">!</span><span class="n">not_a</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">a</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Compute a &amp; b and !(!a ^ !b) and check if they are equivalent.</span>
+<span class="w">    </span><span class="n">BDD</span><span class="w"> </span><span class="n">a_and_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">BDD</span><span class="w"> </span><span class="n">not_not_a_or_not_b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!</span><span class="p">((</span><span class="o">!</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">b</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">a_and_b</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">not_not_a_or_not_b</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// Compute !BDD(1) and nithvar(1) and check if they are equivalent.</span>
+<span class="w">    </span><span class="n">BDD</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">BDD</span><span class="w"> </span><span class="n">not_c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!</span><span class="n">c</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">BDD</span><span class="w"> </span><span class="n">d</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">nithvar</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">not_c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">d</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="basic-hermesbdd-functionality">
+<h2>Basic HermesBDD functionality<a class="headerlink" href="#basic-hermesbdd-functionality" title="Permalink to this headline">¶</a></h2>
 <p>To create new BDDs, you can use:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">BDD(var)</span></code>       : representation of literal &lt;var&gt;.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">BDD::bdd_true</span></code>  : representation of constant <code class="docutils literal notranslate"><span class="pre">true</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">BDD::bdd_false</span></code> : representation of constant <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BDD(v)</span></code>           : representation of literal ‘&lt;v&gt;’.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BDD</span> <span class="pre">nithvar(v)</span></code>   : representation of the negation of literal ‘&lt;v&gt;’.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BDD(node,</span> <span class="pre">dummy)</span></code> : ‘&lt;bdd&gt;’ constructor that does not require creation of a node.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BDD::bdd_true</span></code>    : representation of constant ‘true’.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BDD::bdd_false</span></code>   : representation of constant ‘false’.</p></li>
 </ul>
 <p>The following basic BDD operations are implemented:</p>
 <ul class="simple">
@@ -130,19 +222,41 @@ maximum performance:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">bdd_a</span> <span class="pre">&gt;=</span> <span class="pre">bdd_b</span></code>             : compute ‘&lt;bdd_a&gt; then eq. &lt;bdd_b&gt;’.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">bdd_a</span> <span class="pre">&lt;</span> <span class="pre">bdd_b</span></code>              : compute ‘&lt;bdd_b&gt; then &lt;bdd_a&gt;’.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">bdd_a</span> <span class="pre">&lt;=</span> <span class="pre">bdd_b</span></code>             : compute ‘&lt;bdd_b&gt; then eq. &lt;bdd_a&gt;’.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ITE(a,</span> <span class="pre">b,</span> <span class="pre">c)</span></code>               : compute ‘if &lt;a&gt; then &lt;b&gt; else &lt;c&gt;’ with cache support.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ITE_without_cache(a,</span> <span class="pre">b,</span> <span class="pre">c)</span></code> : compute ‘if &lt;a&gt; then &lt;b&gt; else &lt;c&gt;’ without cache support.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ITE(A,</span> <span class="pre">B,</span> <span class="pre">C)</span></code>               : compute ‘if &lt;A&gt; then &lt;B&gt; else &lt;C&gt;’ with cache support.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ITE_without_cache(A,</span> <span class="pre">B,</span> <span class="pre">C)</span></code> : compute ‘if &lt;A&gt; then &lt;B&gt; else &lt;C&gt;’ without cache support.</p></li>
 </ul>
 </section>
-<section id="tests">
-<h2>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
-<p>Simple tests can be found in the <code class="docutils literal notranslate"><span class="pre">tests</span></code> subdirectory. The file
-<code class="docutils literal notranslate"><span class="pre">test_hermesbdd.cpp</span></code> contains a toy program that uses the C++ objects to
-perform basic BDD manipulation.  The file <code class="docutils literal notranslate"><span class="pre">test_nqueens.cpp</span></code> contains the
-implementation through the use of BDD of the N-queen problem. Finally, the
-file <code class="docutils literal notranslate"><span class="pre">test_ITE.cpp</span></code> contains toy program that checks the correctness of all
-the ITE operators.</p>
 </section>
+<section id="tests">
+<h1>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h1>
+<p>The following tests can be found in the <code class="docutils literal notranslate"><span class="pre">tests/</span></code> subdirectory.</p>
+<section id="queens">
+<h2>Queens<a class="headerlink" href="#queens" title="Permalink to this headline">¶</a></h2>
+<p>Solves the following problem:</p>
+<p><em>Given N, then in how many ways can N queens be placed on an N x N chess board
+without threatening eachother?</em></p>
+<p>Our implementation of these benchmarks are based on the description of
+<a class="reference external" href="https://dl.acm.org/doi/abs/10.1145/1837210.1837222">Kunkle10</a>. We construct
+an BDD row-by-row that represents whether the row is in a legal state: is at
+least one queen placed on each row and is it also in no conflicts with any
+other? On the accumulated BDD we then count the number of satisfying
+assignments.</p>
+</section>
+<section id="id3">
+<h2>HermesBDD<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>The file <code class="docutils literal notranslate"><span class="pre">test_hermesbdd.cpp</span></code> contains a toy program that uses the C++ objects to
+perform basic BDD manipulation.</p>
+</section>
+<section id="ite">
+<h2>ITE<a class="headerlink" href="#ite" title="Permalink to this headline">¶</a></h2>
+<p>Finally, the file <code class="docutils literal notranslate"><span class="pre">test_ITE.cpp</span></code> contains toy program that checks the
+correctness of all the ITE operators.</p>
+</section>
+</section>
+<section id="authors">
+<h1>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h1>
+<p><em>Luigi Capogrosso</em> – PhD at Politecnico di Torino, Italy, <a class="reference external" href="mailto:luigi&#46;capogrosso&#37;&#52;&#48;polito&#46;it">luigi<span>&#46;</span>capogrosso<span>&#64;</span>polito<span>&#46;</span>it</a>.</p>
+<p><em>Luca Geretti</em> – Assistant Professor at University of Verona, Italy, <a class="reference external" href="mailto:luca&#46;geretti&#37;&#52;&#48;univr&#46;it">luca<span>&#46;</span>geretti<span>&#64;</span>univr<span>&#46;</span>it</a>.</p>
 </section>
 
 
