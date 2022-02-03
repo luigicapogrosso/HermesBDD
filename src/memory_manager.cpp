@@ -44,7 +44,7 @@
 
 /*!
  * @brief Compute the memory available size.
- * @return
+ * @return The memory available size.
  */
 static size_t mem_available()
 {

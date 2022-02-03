@@ -68,7 +68,7 @@ public:
      * @param root
      * @param branch_true
      * @param branch_false
-     * @return
+     * @return The node.
      */
     static uint32_t make(uint32_t root,
                         uint32_t branch_true,
@@ -79,7 +79,7 @@ public:
      * @param A
      * @param B
      * @param C
-     * @return
+     * @return The node.
      */
     static uint32_t ITE(uint32_t A, uint32_t B, uint32_t C);
 
@@ -88,7 +88,7 @@ public:
      * @param A
      * @param B
      * @param C
-     * @return
+     * @return The node.
      */
     static uint32_t ITE_without_cache(uint32_t A, uint32_t B, uint32_t C);
 

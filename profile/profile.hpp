@@ -44,7 +44,7 @@ struct Randomiser
 {
     static double get(double min, double max)
     {
-        // TODO: eand() has limited randomness; use C++11 random library.
+        // TODO: rand() has limited randomness; use C++11 random library.
         return ((max - min) * rand() / RAND_MAX + min);
     }
 };

@@ -40,9 +40,9 @@
 #include "bdd_internal.hpp"
 
 /*!
- * @brief Compute the complement of the node.
+ * @brief Compute the complement of node.
  * @param node
- * @return
+ * @return The complement of node.
  */
 static inline uint32_t complement(uint32_t node)
 {
@@ -50,9 +50,9 @@ static inline uint32_t complement(uint32_t node)
 }
 
 /*!
- * @brief Compute if the node is complemented.
+ * @brief Compute if node is complemented.
  * @param node
- * @return
+ * @return 'true' if node is complemented, 'false' otherwise.
  */
 static inline bool is_complemented(uint32_t node)
 {
@@ -60,9 +60,9 @@ static inline bool is_complemented(uint32_t node)
 }
 
 /*!
- * @brief Compute if the node is a leaf.
+ * @brief Compute if node is a leaf.
  * @param node
- * @return
+ * @return 'true' if node is a leaf, 'false' otherwise.
  */
 static inline bool is_leaf(uint32_t node)
 {
@@ -70,9 +70,9 @@ static inline bool is_leaf(uint32_t node)
 }
 
 /*!
- * @brief Get the pointer of the node.
+ * @brief Get the pointer of node.
  * @param node
- * @return
+ * @return The pointer of node.
  */
 static inline Node *pointer(uint32_t node)
 {
@@ -173,14 +173,9 @@ BDD BDD::operator<=(BDD r)
     return *this;
 }
 
-BDD BDD::ithvar(uint32_t v)
-{
-    return Node::make(v, Node::true_node, Node::false_node);
-}
-
 BDD BDD::nithvar(uint32_t v)
 {
-    return !(ithvar(v));
+    return !(BDD(v));
 }
 
 void BDD::print(std::string title)
@@ -204,6 +199,7 @@ static long double count_sat_helper(uint32_t node, int n, std::set<uint32_t>& va
         assert(false);
     }
 
+    // TODO: this can be done in parallel.
     long double countT = count_sat_helper(dnode->branch_true, n, vars);
     long double countF = count_sat_helper(dnode->branch_false, n, vars);
 

@@ -58,7 +58,7 @@ private:
 /*!
  * @brief Compute the hash128 of the cache item.
  * @param data
- * @return
+ * @return The hash128 of the cache item.
  */
 static uint64_t hash(const cache_item& data)
 {

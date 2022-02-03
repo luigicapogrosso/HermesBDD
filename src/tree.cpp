@@ -41,7 +41,7 @@ namespace internal
     /*!
      * @brief Compute the hash128 of the cache item.
      * @param data
-     * @return
+     * @return The hash128 of the cache item.
      */
     static inline size_t hash(const Node& node)
     {

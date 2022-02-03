@@ -48,7 +48,7 @@ public:
     BDD();
 
     /*!
-     * @brief '<bdd>' constructor.
+     * @brief Representation of literal '<v>'.
      * @param v
      */
     BDD(uint32_t v);
@@ -59,92 +59,86 @@ public:
     static BDD bdd_false;
 
     /*!
-     * @brief Compute '<a> == <b>'.
+     * @brief Compute '<bdd_a> == <bdd_b>'.
      * @param r
-     * @return
+     * @return 'true' if '<bdd_a> == <bdd_b>', 'false' otherwise.
      */
     bool operator==(BDD r);
 
     /*!
-     * @brief Compute the negation of '<bdd>'.
-     * @return
+     * @brief Compute the negation of <bdd_a>.
+     * @return The negation of <bdd_a>.
      */
     BDD operator!();
 
     /*!
-     * @brief Compute '<a> and <b>'.
+     * @brief Compute '<bdd_a> and <bdd_b>'.
      * @param r
-     * @return
+     * @return '<bdd_a> and <bdd_b>'
      */
     BDD operator&(BDD r);
     /*!
-     * @brief Compute '<a> and= <b>'.
+     * @brief Compute '<bdd_a> and eq. <bdd_b>'.
      * @param r
-     * @return
+     * @return '<bdd_a> and eq. <bdd_b>'
      */
     BDD operator&=(BDD r);
 
     /*!
-     * @brief Compute '<a> or <b>'.
+     * @brief Compute '<bdd_a> or <bdd_b>'.
      * @param r
-     * @return
+     * @return '<bdd_a> or <bdd_b>'
      */
     BDD operator|(BDD r);
     /*!
-     * @brief Compute '<a> or= <b>'.
+     * @brief Compute '<bdd_a> or eq. <bdd_b>'.
      * @param r
-     * @return
+     * @return '<bdd_a> or eq. <bdd_b>'
      */
     BDD operator|=(BDD r);
 
     /*!
-     * @brief Compute '<a> xor <b>'.
+     * @brief Compute '<bdd_a> xor <bdd_b>'.
      * @param r
-     * @return
+     * @return '<bdd_a> xor <bdd_b>'
      */
     BDD operator^(BDD r);
     /*!
-     * @brief Compute '<a> xor= <b>'.
+     * @brief Compute '<bdd_a> xor eq. <bdd_b>'.
      * @param r
-     * @return
+     * @return '<bdd_a> xor eq. <bdd_b>'
      */
     BDD operator^=(BDD r);
 
     /*!
-     * @brief Compute '<a> then <b>'.
+     * @brief Compute '<bdd_a> then <bdd_b>'.
      * @param r
-     * @return
+     * @return '<bdd_a> then <bdd_b>'
      */
     BDD operator>(BDD r);
     /*!
-     * @brief Compute '<a> then= <b>'.
+     * @brief Compute '<bdd_a> then eq. <bdd_b>'.
      * @param r
-     * @return
+     * @return '<bdd_a> then eq. <bdd_b>'
      */
     BDD operator>=(BDD r);
 
     /*!
-     * @brief Compute '<b> then <a>'.
+     * @brief Compute '<bdd_b> then <bdd_a>'.
      * @param r
-     * @return
+     * @return '<bdd_b> then <bdd_a>'
      */
     BDD operator<(BDD r);
     /*!
-     * @brief Compute '<b> then= <a>'.
+     * @brief Compute '<bdd_b> then eq. <bdd_a>'.
      * @param r
-     * @return
+     * @return '<bdd_b> then eq. <bdd_a>'
      */
     BDD operator<=(BDD r);
 
     /**
-     * @brief Create the BDD representing "if <v> then true else false".
-     * @return
-     */
-    BDD ithvar(uint32_t v);
-
-    /**
-     * @brief Create a BDD representing the negation of <v>.
-     * @return
+     * @brief Representation of the negation of literal '<v>'.
+     * @return The negation of literal '<v>'.
      */
     BDD nithvar(uint32_t v);
 
@@ -156,35 +150,38 @@ public:
 
     /*!
      * @brief Compute the number of minterms (assignments that lead to true)
-              for a function with <number_of_vars> variables; we don’t need to
-              know the exact variables that may be in the BDD, just how many
-              there are.
+     *        for a function with <number_of_vars> variables; we don’t need to
+     *        know the exact variables that may be in the BDD, just how many
+     *        there are.
      * @param vars
      * @return
      */
     long double count_sat(std::set<uint32_t> vars);
 
     /*!
-     * @brief Extract a single path to true from the BDD.
-     * @return
+     * @brief Computes a satisfying truth assignment of a BDD.
+     * @return The result is an unordered map that assigns some of the BDD 
+     *         indices a boolean truth values. If an index vi is not mapped to 
+     *         a boolean value, then vi is a don't care value in this 
+     *         assignment. 
      */
     std::unordered_map<uint32_t, bool> one_sat();
 
     /*!
-     * @brief Returns non-zero if this Bdd is true_node or false_node.
-     * @return
+     * @brief Returns non-zero if this BDD is 'true_node' or 'false_node'.
+     * @return 'true' if this BDD is 'true_node', 'false' otherwise.
      */
     bool is_constant();
 
     /*!
      * @brief Gets the node.
-     * @return
+     * @return The node.
      */
     uint32_t get_node();
 
     /*!
      * @brief Gets the dummy.
-     * @return
+     * @return The dummy.
      */
     bool get_dummy();
 
@@ -193,7 +190,7 @@ private:
     uint32_t node;
 
     /*!
-     * @brief TODO: description.
+     * @brief '<bdd>' constructor that does not require creation of a node.
      * @param node
      * @param dummy
      */

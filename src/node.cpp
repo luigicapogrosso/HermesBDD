@@ -44,9 +44,9 @@
 static constexpr int granularity = 500;
 
 /*!
- * @brief Compute the complement of the node.
+ * @brief Compute the complement of node.
  * @param node
- * @return
+ * @return The complement of node.
  */
 static inline uint32_t complement(uint32_t node)
 {
@@ -54,9 +54,9 @@ static inline uint32_t complement(uint32_t node)
 }
 
 /*!
- * @brief Compute if the node is complemented.
+ * @brief Compute if node is complemented.
  * @param node
- * @return
+ * @return 'true' if node is complemented, 'false' otherwise.
  */
 static inline bool is_complemented(uint32_t node)
 {
@@ -64,9 +64,9 @@ static inline bool is_complemented(uint32_t node)
 }
 
 /*!
- * @brief Compute if the node is a leaf.
+ * @brief Compute if node is a leaf.
  * @param node
- * @return
+ * @return 'true' if node is a leaf, 'false' otherwise.
  */
 static inline bool is_leaf(uint32_t node)
 {
@@ -74,9 +74,9 @@ static inline bool is_leaf(uint32_t node)
 }
 
 /*!
- * @brief Get the pointer of the node.
+ * @brief Get the pointer of node.
  * @param node
- * @return
+ * @return The pointer of node.
  */
 static inline Node *pointer(uint32_t node)
 {
@@ -87,10 +87,10 @@ static inline Node *pointer(uint32_t node)
 }
 
 /*!
- * @brief Compute 'if <A> is equal to complement of <B>.
+ * @brief Compute 'if <A> is equal to complement of <B>'.
  * @param A
  * @param B
- * @return
+ * @return 'true' if '<A> is equal to complement of <B>', 'false' otherwise.
  */
 static inline bool equals_complement(uint32_t A, uint32_t B)
 {
@@ -98,11 +98,11 @@ static inline bool equals_complement(uint32_t A, uint32_t B)
 }
 
 /*!
- * @brief Obtain the variable of the root node of <bdd>.
+ * @brief Obtain the variable of the root node of '<bdd>'.
  * @param A
  * @param B
  * @param C
- * @return
+ * @return The variable of the root node of '<bdd>'.
  */
 static inline uint32_t get_root_var(uint32_t A, uint32_t B, uint32_t C)
 {
@@ -119,7 +119,7 @@ static inline uint32_t get_root_var(uint32_t A, uint32_t B, uint32_t C)
  * @param node
  * @param var
  * @param value
- * @return
+ * @return TODO: description.
  */
 static inline uint32_t evaluate_at(uint32_t node, uint32_t var, bool value)
 {

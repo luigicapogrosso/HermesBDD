@@ -76,7 +76,7 @@ public:
      * @param b
      * @param c
      * @param result
-     * @return
+     * @return 'true' if ITE is in cache, 'false' otherwise.
      */
     bool findITE(const uint32_t a,
                  const uint32_t b,
@@ -108,7 +108,7 @@ private:
     /*!
      * @brief Find item in cache.
      * @param data
-     * @return
+     * @return 'true' if item is in cache, 'false' otherwise.
      */
     bool find(cache_item& data);
 

@@ -62,9 +62,9 @@ namespace internal
         void init(size_t mem_usage);
 
         /*!
-        * @brief TODO: description.
+        * @brief Checks (using the hash table) if there is a node 'v'.
         * @param node
-        * @return
+        * @return 'true' if there is a node 'v', 'false' otherwise.
         */
         uint32_t lookup_or_create(const Node& node);
 
