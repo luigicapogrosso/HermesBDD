@@ -186,8 +186,8 @@ public:
     bool get_dummy();
 
 private:
-    bool dummy;
-    uint32_t node;
+    bool _dummy;
+    uint32_t _node;
 
     /*!
      * @brief '<bdd>' constructor that does not require creation of a node.

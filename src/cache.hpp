@@ -102,8 +102,8 @@ public:
     void init(size_t mem_usage);
 
 private:
-    size_t elems;
-    cache_slot *table;
+    size_t _elems;
+    cache_slot *_table;
 
     /*!
      * @brief Find item in cache.

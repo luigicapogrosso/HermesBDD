@@ -89,33 +89,33 @@ BDD::BDD()
 
 BDD::BDD(uint32_t v)
 {
-    node = Node::make(v, Node::true_node, Node::false_node);
+    _node = Node::make(v, Node::true_node, Node::false_node);
 }
 
 BDD BDD::bdd_true(Node::true_node, true);
 
 BDD BDD::bdd_false(Node::false_node, true);
 
-BDD::BDD(uint32_t node_, bool dummy_)
-    : dummy(dummy_)
-    , node(node_)
+BDD::BDD(uint32_t node, bool dummy)
+    : _dummy(dummy)
+    , _node(node)
 {
 
 }
 
 bool BDD::operator==(BDD r)
 {
-    return this->node == r.node;
+    return this->_node == r._node;
 }
 
 BDD BDD::operator!()
 {
-    return BDD(complement(this->node), true);
+    return BDD(complement(this->_node), true);
 }
 
 BDD BDD::operator&(BDD r)
 {
-    return BDD(Node::ITE(this->node, r.node, Node::false_node),
+    return BDD(Node::ITE(this->_node, r._node, Node::false_node),
                true);
 }
 
@@ -127,7 +127,7 @@ BDD BDD::operator&=(BDD r)
 
 BDD BDD::operator|(BDD r)
 {
-    return BDD(Node::ITE(this->node, Node::true_node, r.node),
+    return BDD(Node::ITE(this->_node, Node::true_node, r._node),
                true);
 }
 
@@ -139,7 +139,7 @@ BDD BDD::operator|=(BDD r)
 
 BDD BDD::operator^(BDD r)
 {
-    return BDD(Node::ITE(this->node, complement(r.node), r.node),
+    return BDD(Node::ITE(this->_node, complement(r._node), r._node),
                true);
 }
 
@@ -151,7 +151,7 @@ BDD BDD::operator^=(BDD r)
 
 BDD BDD::operator>(BDD r)
 {
-    return BDD(Node::ITE(this->node, r.node, Node::true_node),
+    return BDD(Node::ITE(this->_node, r._node, Node::true_node),
                true);
 }
 
@@ -163,7 +163,7 @@ BDD BDD::operator>=(BDD r)
 
 BDD BDD::operator<(BDD r)
 {
-    return BDD(Node::ITE(this->node, Node::true_node, complement(r.node)),
+    return BDD(Node::ITE(this->_node, Node::true_node, complement(r._node)),
                true);
 }
 
@@ -180,7 +180,7 @@ BDD BDD::nithvar(uint32_t v)
 
 void BDD::print(std::string title)
 {
-    Node::print(this->node, title);
+    Node::print(this->_node, title);
 }
 
 static long double count_sat_helper(uint32_t node, int n, std::set<uint32_t>& vars)
@@ -220,9 +220,9 @@ long double BDD::count_sat(std::set<uint32_t> vars)
 {
     int n = vars.size();
     long double pow2 = pow(2, n);
-    long double count = count_sat_helper(this->node, n, vars);
+    long double count = count_sat_helper(this->_node, n, vars);
 
-    if (!is_complemented(this->node))
+    if (!is_complemented(this->_node))
     {
         count = pow2 - count;
     }
@@ -260,7 +260,7 @@ std::unordered_map<uint32_t, bool> BDD::one_sat()
 {
     std::unordered_map<uint32_t, bool> map;
 
-    if (one_sat_helper(this->node, !is_complemented(this->node), map))
+    if (one_sat_helper(this->_node, !is_complemented(this->_node), map))
     {
         return map;
     }
@@ -274,15 +274,15 @@ std::unordered_map<uint32_t, bool> BDD::one_sat()
 
 bool BDD::is_constant()
 {
-    return node == Node::true_node || Node::false_node;
+    return _node == Node::true_node || Node::false_node;
 }
 
 uint32_t BDD::get_node()
 {
-    return node;
+    return _node;
 }
 
 bool BDD::get_dummy()
 {
-    return dummy;
+    return _dummy;
 }

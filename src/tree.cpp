@@ -63,11 +63,11 @@ namespace internal
 
     void Tree::init(size_t mem_usage)
     {
-        elements = mem_usage / sizeof(node_slot);
-        assert(elements <std::numeric_limits<int32_t>::max());
+        _elements = mem_usage / sizeof(node_slot);
+        assert(_elements <std::numeric_limits<int32_t>::max());
 
         // Faster than running constructors.
-        table = (node_slot *) calloc(elements, sizeof(node_slot));
+        table = (node_slot *) calloc(_elements, sizeof(node_slot));
 
         assert(table != nullptr);
         table[0].exists = true;
@@ -97,9 +97,9 @@ namespace internal
     {
         uint32_t hashed = hash(node);
 
-        for (uint32_t offset = 0; offset < elements; offset++)
+        for (uint32_t offset = 0; offset < _elements; offset++)
         {
-            uint32_t index = (hashed + offset) % elements;
+            uint32_t index = (hashed + offset) % _elements;
 
             node_slot& current = table[index];
             lock_protector lock(current);

@@ -67,17 +67,17 @@ static uint64_t hash(const cache_item& data)
 
 void Cache::init(size_t mem_usage)
 {
-    elems = mem_usage / sizeof(cache_slot);
-    table = new cache_slot[elems];
+    _elems = mem_usage / sizeof(cache_slot);
+    _table = new cache_slot[_elems];
 
-    assert(table != nullptr);
+    assert(_table != nullptr);
 }
 
 void Cache::insert(const cache_item& data)
 {
-    uint64_t index = hash(data) % elems;
+    uint64_t index = hash(data) % _elems;
 
-    cache_slot& current = table[index];
+    cache_slot& current = _table[index];
     lock_protector lock(current);
 
     current.data = data;
@@ -86,9 +86,9 @@ void Cache::insert(const cache_item& data)
 
 bool Cache::find(cache_item& item)
 {
-    uint64_t index = hash(item) % elems;
+    uint64_t index = hash(item) % _elems;
 
-    cache_slot& current = table[index];
+    cache_slot& current = _table[index];
     lock_protector lock(current);
 
     if (!current.exists)
