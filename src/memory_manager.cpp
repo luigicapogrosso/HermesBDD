@@ -50,9 +50,9 @@ static size_t mem_available()
 {
 #ifdef WIN32
     MEMORYSTATUSEX statex;
-    GlobalMemoryStatusEx (&statex);
+    GlobalMemoryStatusEx(&statex);
     
-    return static_cast<size_t>(statex.ullAvailPhys);
+    return static_cast<size_t>(statex.ullTotalPhys);
 #else
     long pages = sysconf(_SC_PHYS_PAGES);
     assert(pages != -1);

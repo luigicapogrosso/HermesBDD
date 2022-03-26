@@ -101,7 +101,7 @@ The software files in this repository are provided under the [MIT License](./LIC
 ## Authors ##
 
 `Luigi Capogrosso`
-- PhD at Politecnico di Torino, Italy [luigi.capogrosso@polito.it](mailto:luigi.capogrosso@polito.it)
+- PhD at Politecnico di Torino in collaboration with the University of Verona, Italy [luigi.capogrosso@univr.it](mailto:luigi.capogrosso@univr.it)
 
 `Luca Geretti`
 - Assistant Professor at University of Verona, Italy [luca.geretti@univr.it](mailto:luca.geretti@univr.it)
