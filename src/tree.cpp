@@ -32,21 +32,13 @@
 
 
 #include <cassert>
+#include <cstring>
 
-#include "hash.hpp"
 #include "tree.hpp"
 
 namespace internal
 {
-    /*!
-     * @brief Compute the hash128 of the cache item.
-     * @param data
-     * @return The hash128 of the cache item.
-     */
-    static inline size_t hash(const Node& node)
-    {
-        return hash128(&node, sizeof(Node));
-    }
+    int64_t pos;
 
     /*!
      * @brief Copy node src in dest.
@@ -61,13 +53,17 @@ namespace internal
         dest.size = src.size;
     }
 
-    void Tree::init(size_t mem_usage)
+    void Tree::init()
     {
-        _elements = mem_usage / sizeof(node_slot);
-        assert(_elements <std::numeric_limits<int32_t>::max());
+        pos = 1;
+        _elements = 1000;
 
         // Faster than running constructors.
-        table = (node_slot *) calloc(_elements, sizeof(node_slot));
+		table = (node_slot*) calloc(_elements, sizeof(node_slot));
+		for (uint32_t i = 0; i < _elements; i++)
+		{
+			table[i].node.id = -1;
+		}
 
         assert(table != nullptr);
         table[0].exists = true;
@@ -94,36 +90,37 @@ namespace internal
     };
 
     uint32_t Tree::lookup_or_create(const Node& node)
-    {
-        uint32_t hashed = hash(node);
+	{
+		if (node.id == -1)
+		{
+			node_slot& current = table[pos];
 
-        for (uint32_t offset = 0; offset < _elements; offset++)
-        {
-            uint32_t index = (hashed + offset) % _elements;
+			current.node.id = pos;
+			pos += 1;
+			copy_node(node, current.node);
 
-            node_slot& current = table[index];
-            lock_protector lock(current);
+			if (pos > _elements - 1)
+			{
+				_elements = _elements * 2;
 
-            if (!current.exists)
-            {
-                copy_node(node, current.node);
+				node_slot* table2 = (node_slot*) calloc(_elements, sizeof(node_slot));
+				std::memcpy(table2, table, _elements / 2 * sizeof(node_slot));
+				
+				table = table2;
 
-                // Maintain data structure.
-                count.fetch_add(1, std::memory_order_relaxed);
-                current.exists = true;
+				for (uint64_t i = _elements / 2; i < _elements; i++)
+				{
+					table[i].node.id = -1;
+				}
+			}
 
-                return index;
-            }
+			// Maintain data structure.
+			count.fetch_add(1, std::memory_order_relaxed);
+			current.exists = true;
 
-            if (node.root == current.node.root               &&
-                node.branch_true == current.node.branch_true &&
-                node.branch_false == current.node.branch_false)
-            {
-                // TODO: increase reference count.
-                return index;
-            }
-        }
+			return current.node.id;
+		}
 
-        return 0;
-    }
+		return node.id;
+	}
 }

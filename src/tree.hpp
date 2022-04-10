@@ -57,9 +57,8 @@ namespace internal
 
         /*!
         * @brief Init tree.
-        * @param mem_usage
         */
-        void init(size_t mem_usage);
+        void init();
 
         /*!
         * @brief Checks (using the hash table) if there is a node 'v'.

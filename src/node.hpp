@@ -49,6 +49,7 @@ public:
 
     // Uniquely identifying BDDs in canonical form.
     int size;
+    int64_t id;
     uint32_t root;
     uint32_t branch_true;
     uint32_t branch_false;

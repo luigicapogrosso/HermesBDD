@@ -42,27 +42,6 @@
 
 #include "bdd_internal.hpp"
 
-/*!
- * @brief Compute the memory available size.
- * @return The memory available size.
- */
-static size_t mem_available()
-{
-#ifdef WIN32
-    MEMORYSTATUSEX statex;
-    GlobalMemoryStatusEx(&statex);
-    
-    return static_cast<size_t>(statex.ullTotalPhys);
-#else
-    long pages = sysconf(_SC_PHYS_PAGES);
-    assert(pages != -1);
-
-    long page_size = sysconf(_SC_PAGE_SIZE);
-    assert(page_size != -1);
-    
-    return static_cast<size_t>(pages) * static_cast<size_t>(page_size);
-#endif
-}
 
 namespace internal
 {
@@ -75,19 +54,9 @@ namespace internal
 
         struct ConstructorHack {
             ConstructorHack() {
-                // Leave 256 MB for other people, taking at most 16 GB.
-                size_t max_mem = 0x400000000;
-
-                //size_t max_mem = 0x40000000;
-                size_t extra_mem = 0x10000000;
-
                 size_t cache_size = 0x20000000;
-#ifdef WIN32
-                size_t mem = min(mem_available() - extra_mem, max_mem) - cache_size;
-#else
-                size_t mem = std::min(mem_available() - extra_mem, max_mem) - cache_size;   
-#endif
-                nodes.init(mem);
+                
+                nodes.init();
                 cache.init(cache_size);
             }
         } hack;

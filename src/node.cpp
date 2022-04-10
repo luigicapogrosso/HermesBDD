@@ -175,6 +175,8 @@ Node::Node(uint32_t root_, uint32_t branch_true_, uint32_t branch_false_)
     }
 
     size = size_true + size_false + 1;
+
+    id = -1;
 }
 
 uint32_t Node::make(uint32_t root, uint32_t branch_true, uint32_t branch_false)
