@@ -58,7 +58,7 @@ if(COVERAGE)
     endif()
 endif()
 
-option(NO_CACHE "Do not use cache" ON)
+option(NO_CACHE "Do not use cache" OFF)
 if(NO_CACHE)
     MESSAGE(STATUS "NO_CACHE enabled")
     add_definitions(-DNO_CACHE)
