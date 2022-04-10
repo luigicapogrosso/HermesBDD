@@ -4,11 +4,11 @@
 [![codecov](https://codecov.io/gh/luigicapogrosso/HermesBDD/branch/main/graph/badge.svg)](https://codecov.io/gh/luigicapogrosso/HermesBDD)
 [![Build Status](https://github.com/luigicapogrosso/HermesBDD/workflows/Continuous%20Integration/badge.svg)](https://github.com/luigicapogrosso/HermesBDD/actions)
 
-HermesBDD is a parallel multi-core, and multi-platform, library of [Binary Decision Diagrams](https://en.wikipedia.org/wiki/Binary_decision_diagram) written in C++. It focuses on high performance, usability, and correctness.
+HermesBDD is a parallel multi-core, multi-platform library of [Binary Decision Diagrams](https://en.wikipedia.org/wiki/Binary_decision_diagram) written in C++. It focuses on high performance, usability, and correctness.
 
-So how did HermesBDD get its name? In Greek mythology, Hermes, son of Zeus and the nymph Maia, was the messenger of the gods, because he was as swift as the wind. Hence the name HermesBDD, meaning an extremely fast and light BDD library.
+How did HermesBDD get its name? In Greek mythology, Hermes, son of Zeus and the nymph Maia, was the messenger of the gods. That's because he was as fast as the wind. Hence the name *HermesBDD*, meaning an extremely fast and light BDD library.
 
-For more information, compatibility lists, details, the latest release, progress reports and more, please visit the HermesBDD [home page](https://luigicapogrosso.github.io/HermesBDD/).
+For more information, compatibility lists, details, the latest release, progress reports, and more, please visit the HermesBDD [home page](https://luigicapogrosso.github.io/HermesBDD/).
 
 ## Dependencies ##
 
@@ -17,7 +17,7 @@ HermesBDD has the following dependencies:
 - **CMake**, for compiling;
 - **Sphinx**, for documentation generation.
 
-For further information about CMake and Sphinx, check the following [1](https://cmake.org/) and [2](https://www.sphinx-doc.org/en/master/) documentation page, respectively.
+For further information about CMake and Sphinx, check the following [1](https://cmake.org/) and [2](https://www.sphinx-doc.org/en/master/) documentation pages, respectively.
 
 ## Building ##
 
@@ -27,7 +27,7 @@ The library is tested for compilation using GCC (minimum required: 10.2), Clang 
 $ mkdir build && cd build
 ```
 
-Then, you can prepare the build environment, choosing a Release build for maximum performance:
+Then, you can prepare the built environment, choosing a `Release` build for maximum performance:
 
 ```
 $ cmake .. -DCMAKE_BUILD_TYPE=Release
@@ -51,12 +51,12 @@ Available options are:
 ## Library performance ##
 
 The performance of the library should be comparable to other highly optimized BDD implementations. 
-Below are the timings to solve the the following problem:
+Below are the timings to solve the following problem:
 
-> Given N, then in how many ways can N queens be placed on an N x N chess board
-> without threatening eachother?
+> Given N, then in how many ways can N queens be placed on an N x N chessboard
+> without threatening each other?
 
-The times are calculated on a 64-bitAMD Ryzen Threadripper 1950X CPU @ 3.4GHz machine. In particular, our baselines are:
+The times are calculated on a 64-bit AMD Ryzen Threadripper 1950X CPU @ 3.4GHz machine. In particular, our baselines are:
 
 | Problem        | Samples   | USE_CACHE  | USE_THREAD | Core | Time (ms) |
 |--------------- |-----------|------------|------------|------|-----------|
@@ -91,7 +91,7 @@ And, our speedup achievements are:
 
 ## Contribution guidelines ##
 
-HermesBDD is not yet feature complete, and there are still many interesting things left 
+HermesBDD is not yet feature-complete, and there are still many interesting things left 
 for _you_ to do. So, this project welcomes contributions and suggestions. If you would 
 like to contribute to HermesBDD, please contact the authors.
 
