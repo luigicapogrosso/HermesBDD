@@ -191,15 +191,6 @@ void nqueens_solution_7()
     HERMESBDD_TEST_ASSERT(s == 40);
 }
 
-void nqueens_solution_8()
-{
-    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 8x8 chess board.");
-
-    int s = counting_solution(8);
-
-    HERMESBDD_TEST_ASSERT(s == 92);
-}
-
 
 int main()
 {
@@ -209,7 +200,6 @@ int main()
     nqueens_solution_5();
     nqueens_solution_6();
     nqueens_solution_7();
-    nqueens_solution_8();
 
     return HERMESBDD_TEST_FAILURES;
 }

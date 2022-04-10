@@ -127,19 +127,6 @@ void test_simple()
     // Compute !a and check if !!a is really a.
     BDD not_a = !a;
     HERMESBDD_TEST_ASSERT((!not_a) == a);
-
-    // Compute a & b and !(!a ^ !b) and check if they are equivalent.
-    BDD a_and_b = a & b;
-    BDD not_not_a_or_not_b = !((!a) | (!b));
-    HERMESBDD_TEST_ASSERT(a_and_b == not_not_a_or_not_b);
-
-    // Compute !BDD(1) and nithvar(1) and check if they are equivalent.
-    BDD c(1);
-    BDD not_c = !c;
-
-    BDD d;
-    d = d.nithvar(1);
-    HERMESBDD_TEST_ASSERT(not_c == d);
 }
 
 
