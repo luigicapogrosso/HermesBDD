@@ -34,7 +34,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 if(NOT WIN32)
-    set(ANY_TARGET_WARN all extra pedantic sign-conversion cast-qual disabled-optimization
+    set(ANY_TARGET_WARN extra pedantic sign-conversion cast-qual disabled-optimization
             init-self missing-include-dirs sign-promo switch-default undef redundant-decls
             strict-aliasing unused-parameter shadow error)
     foreach(WARN ${ANY_TARGET_WARN})
