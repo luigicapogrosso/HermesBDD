@@ -70,6 +70,12 @@ if(NO_THREAD)
     add_definitions(-DNO_THREAD)
 endif()
 
+option(NO_DYNMEM "Do not use dynamic memory allocation" OFF)
+if(NO_DYNMEM)
+    MESSAGE(STATUS "NO_DYNMEM enabled")
+    add_definitions(-DNO_DYNMEM)
+endif()
+
 enable_testing()
 include(CTest)
 

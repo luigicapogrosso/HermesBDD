@@ -55,10 +55,18 @@ namespace internal
     public:
         node_slot *table;
 
+#ifdef NO_DYNMEM
+        /*!
+        * @brief Init tree.
+        * @param mem_usage
+        */
+        void init(size_t mem_usage);
+#else
         /*!
         * @brief Init tree.
         */
         void init();
+#endif
 
         /*!
         * @brief Checks (using the hash table) if there is a node 'v'.

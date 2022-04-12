@@ -35,9 +35,24 @@
 #include <cstring>
 
 #include "tree.hpp"
+#ifdef NO_DYNMEM
+    #include "hash.hpp"
+#endif
 
 namespace internal
 {
+#ifdef NO_DYNMEM
+    /*!
+     * @brief Compute the hash128 of the cache item.
+     * @param data
+     * @return The hash128 of the cache item.
+     */
+    static inline size_t hash(const Node& node)
+    {
+        return hash128(&node, sizeof(Node));
+    }
+#endif
+
     int64_t pos;
 
     /*!
@@ -53,6 +68,19 @@ namespace internal
         dest.size = src.size;
     }
 
+#ifdef NO_DYNMEM
+    void Tree::init(size_t mem_usage)
+    {
+        _elements = mem_usage / sizeof(node_slot);
+        assert(_elements <std::numeric_limits<int32_t>::max());
+
+        // Faster than running constructors.
+        table = (node_slot *) calloc(_elements, sizeof(node_slot));
+
+        assert(table != nullptr);
+        table[0].exists = true;
+    }
+#else
     void Tree::init()
     {
         pos = 1;
@@ -68,6 +96,7 @@ namespace internal
         assert(table != nullptr);
         table[0].exists = true;
     }
+#endif
 
     /*!
      * @brief A lock guard around nodes
@@ -89,6 +118,41 @@ namespace internal
         node_slot& _slot;
     };
 
+#ifdef NO_DYNMEM
+    uint32_t Tree::lookup_or_create(const Node& node)
+    {
+        uint32_t hashed = hash(node);
+
+        for (uint32_t offset = 0; offset < _elements; offset++)
+        {
+            uint32_t index = (hashed + offset) % _elements;
+
+            node_slot& current = table[index];
+            lock_protector lock(current);
+
+            if (!current.exists)
+            {
+                copy_node(node, current.node);
+
+                // Maintain data structure.
+                count.fetch_add(1, std::memory_order_relaxed);
+                current.exists = true;
+
+                return index;
+            }
+
+            if (node.root == current.node.root               &&
+                node.branch_true == current.node.branch_true &&
+                node.branch_false == current.node.branch_false)
+            {
+                // TODO: increase reference count.
+                return index;
+            }
+        }
+
+        return 0;
+    }
+#else
     uint32_t Tree::lookup_or_create(const Node& node)
 	{
 		if (node.id == -1)
@@ -123,4 +187,5 @@ namespace internal
 
 		return node.id;
 	}
+#endif
 }

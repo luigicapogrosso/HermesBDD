@@ -42,11 +42,12 @@ $ cmake --build .
 ### CMake options ###
 
 Available options are:
-| CMake Option | Description               | Default Value |
-| ------------ | ------------------------- | ------------- |
-| NO_CACHE     | Do not use cache          | OFF           |
-| NO_THREAD    | Do not use thread         | OFF           |
-| COVERAGE     | Enable coverage reporting | OFF           |
+| CMake Option | Description                          | Default Value |
+| ------------ | ------------------------------------ | ------------- |
+| NO_CACHE     | Do not use cache                     | OFF           |
+| NO_THREAD    | Do not use thread                    | OFF           |
+| NO_DYNMEM    | Do not use dynamic memory allocation | OFF           |
+| COVERAGE     | Enable coverage reporting            | OFF           |
 
 ## Library performance ##
 
