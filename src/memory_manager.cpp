@@ -35,7 +35,7 @@
 #include <cassert>
 #ifdef WIN32
     #include <io.h>
-    #include <windows.h> 
+    #include <windows.h>
 #else
     #include <unistd.h>
 #endif
@@ -52,7 +52,7 @@ static size_t mem_available()
 #ifdef WIN32
     MEMORYSTATUSEX statex;
     GlobalMemoryStatusEx(&statex);
-    
+
     return static_cast<size_t>(statex.ullTotalPhys);
 #else
     long pages = sysconf(_SC_PHYS_PAGES);
@@ -60,7 +60,7 @@ static size_t mem_available()
 
     long page_size = sysconf(_SC_PAGE_SIZE);
     assert(page_size != -1);
-    
+
     return static_cast<size_t>(pages) * static_cast<size_t>(page_size);
 #endif
 }
@@ -70,8 +70,6 @@ namespace internal
 {
     namespace manager
     {
-        // TODO: we need to set the sizes of these somewhere.
-        // std::unordered_map<Query, Node*> cache;
         Cache cache;
         Tree nodes;
 
@@ -83,13 +81,13 @@ namespace internal
                 size_t max_mem = 0x050000000;
                 size_t extra_mem = 0x10000000;
 #ifdef WIN32
-                size_t mem = min(mem_available() - extra_mem, max_mem) - cache_size;
+                size_t mem_size = min(mem_available() - extra_mem, max_mem) - cache_size;
 #else
-                size_t mem = std::min(mem_available() - extra_mem, max_mem) - cache_size;   
+                size_t mem_size = std::min(mem_available() - extra_mem, max_mem) - cache_size;
 #endif
-                nodes.init(mem);
+                nodes.init(mem_size);
 
-#else                
+#else
                 nodes.init();
 #endif
                 cache.init(cache_size);

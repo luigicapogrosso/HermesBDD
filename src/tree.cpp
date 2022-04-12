@@ -169,7 +169,7 @@ namespace internal
 
 				node_slot* table2 = (node_slot*) calloc(_elements, sizeof(node_slot));
 				std::memcpy(table2, table, _elements / 2 * sizeof(node_slot));
-				
+
 				table = table2;
 
 				for (uint64_t i = _elements / 2; i < _elements; i++)

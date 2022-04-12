@@ -76,7 +76,7 @@ namespace internal
         uint32_t lookup_or_create(const Node& node);
 
         std::atomic<uint32_t> count;
-        
+
     private:
         uint32_t _elements;
     };

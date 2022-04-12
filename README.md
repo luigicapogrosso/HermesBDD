@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/luigicapogrosso/HermesBDD/branch/main/graph/badge.svg)](https://codecov.io/gh/luigicapogrosso/HermesBDD)
 [![Build Status](https://github.com/luigicapogrosso/HermesBDD/workflows/Continuous%20Integration/badge.svg)](https://github.com/luigicapogrosso/HermesBDD/actions)
 
-HermesBDD is a parallel multi-core, multi-platform library of [Binary Decision Diagrams](https://en.wikipedia.org/wiki/Binary_decision_diagram) written in C++. It focuses on high performance, usability, and correctness.
+HermesBDD is a parallel multi-core and multi-platform library of [Binary Decision Diagrams](https://en.wikipedia.org/wiki/Binary_decision_diagram), written in C++. It focuses on high performance, usability, and correctness.
 
 How did HermesBDD get its name? In Greek mythology, Hermes, son of Zeus and the nymph Maia, was the messenger of the gods. That's because he was as fast as the wind. Hence the name *HermesBDD*, meaning an extremely fast and light BDD library.
 
@@ -51,7 +51,7 @@ Available options are:
 
 ## Library performance ##
 
-The performance of the library should be comparable to other highly optimized BDD implementations. 
+The performance of the library should be comparable to other highly optimized BDD implementations.
 Below are the timings to solve the following problem:
 
 > Given N, then in how many ways can N queens be placed on an N x N chessboard
@@ -92,8 +92,8 @@ And, our speedup achievements are:
 
 ## Contribution guidelines ##
 
-HermesBDD is not yet feature-complete, and there are still many interesting things left 
-for _you_ to do. So, this project welcomes contributions and suggestions. If you would 
+HermesBDD is not yet feature-complete, and there are still many interesting things left
+for _you_ to do. So, this project welcomes contributions and suggestions. If you would
 like to contribute to HermesBDD, please contact the authors.
 
 ## License ##
@@ -111,5 +111,5 @@ The software files in this repository are provided under the [MIT License](./LIC
 
 - [[van2015sylvan](https://link.springer.com/content/pdf/10.1007/978-3-662-46681-0_60.pdf)] van Dijk, T., & van de Pol, J. (2015, April). “_Sylvan: Multi-core decision diagrams._” _In International Conference on Tools and Algorithms for the Construction and Analysis of Systems_ (pp. 677-691). Springer, Berlin, Heidelberg.
 
-- [[Kunkle10](https://dl.acm.org/doi/abs/10.1145/1837210.1837222)] 
+- [[Kunkle10](https://dl.acm.org/doi/abs/10.1145/1837210.1837222)]
 Kunkle, D., Slavici, V., & Cooperman, G. (2010, July). “_Parallel disk-based computation for large, monolithic binary decision diagrams._” _In Proceedings of the 4th International Workshop on Parallel and Symbolic Computation_ (pp. 63-72).

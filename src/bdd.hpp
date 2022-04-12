@@ -160,10 +160,10 @@ public:
 
     /*!
      * @brief Computes a satisfying truth assignment of a BDD.
-     * @return The result is an unordered map that assigns some of the BDD 
-     *         indices a boolean truth values. If an index vi is not mapped to 
-     *         a boolean value, then vi is a don't care value in this 
-     *         assignment. 
+     * @return The result is an unordered map that assigns some of the BDD
+     *         indices a boolean truth values. If an index vi is not mapped to
+     *         a boolean value, then vi is a don't care value in this
+     *         assignment.
      */
     std::unordered_map<uint32_t, bool> one_sat();
 
