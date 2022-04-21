@@ -2,7 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/luigicapogrosso/HermesBDD/branch/main/graph/badge.svg)](https://codecov.io/gh/luigicapogrosso/HermesBDD)
-[![Build Status](https://github.com/luigicapogrosso/HermesBDD/workflows/Continuous%20Integration/badge.svg)](https://github.com/luigicapogrosso/HermesBDD/actions)
+[![Unix Status](https://github.com/luigicapogrosso/HermesBDD/workflows/Unix/badge.svg)](https://github.com/luigicapogrosso/HermesBDD/actions/workflows/unix.yml)
+[![Windows Status](https://github.com/luigicapogrosso/HermesBDD/workflows/Windows/badge.svg)](https://github.com/luigicapogrosso/HermesBDD/actions/workflows/windows.yml)
 
 HermesBDD is a parallel multi-core and multi-platform library of [Binary Decision Diagrams](https://en.wikipedia.org/wiki/Binary_decision_diagram), written in C++. It focuses on high performance, usability, and correctness.
 
