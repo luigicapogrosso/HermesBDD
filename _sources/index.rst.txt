@@ -1,49 +1,107 @@
 HermesBDD
 =========
 
-HermesBDD is a parallel multi-core, and multi-platform, library of `Binary Decision Diagrams <https://en.wikipedia.org/wiki/Binary_decision_diagram>`_ 
-written in C++. It focuses on high performance, usability, and correctness.
+HermesBDD is a novel **multi-core** and **multi-platform** binary decision diagrams 
+package focused on high performance and usability. HermesBDD supports a **static 
+and dynamic memory management** mechanism, the possibility to exploit **lock-free 
+hash tables**, and a simple **parallel implementation of the ITE procedure** based 
+on a higher-level wrapper for threads and futures.
 
-So how did HermesBDD get its name? In Greek mythology, Hermes, son of Zeus and 
-the nymph Maia, was the messenger of the gods, because he was as swift as the wind. 
-Hence the name HermesBDD, meaning an extremely fast and light BDD library.
+HermesBDD is **completely written in C++** with no need to rely on external 
+libraries and is developed according to software engineering principles for 
+reliability and easy maintenance over time.
 
-The main repository of HermesBDD is https://github.com/luigicapogrosso/HermesBDD.
+The main repository of HermesBDD is at https://github.com/luigicapogrosso/HermesBDD.
+
+Introduction
+------------
+
+There are several implementations of BDDs packages in the literature, but they 
+focus mainly on package performance in terms of speedup and memory efficiency. 
+However, we believe that performance is only one aspect on which to judge a 
+BDD package. Other aspects matter too, such as (not necessarily in order of 
+importance) *functionality*, *robustness*, *reliability*, *portability*, and 
+*documentation*. 
+
+According to those principle, we developed **HermesBDD**: a novel multi-core and 
+multi-platform binary decision diagram package **focused on high 
+performance**, **usability**, and **correctness**.
+
+In summary, the contributions of HermesBDD are as follows:
+
+- Computationally faster, by exploiting multi-threading for parallel processing and concurrent access to a BDD;
+- Multi-platform (Windows, Linux, and macOS) to accommodate integration within tools from different environments;
+- Support for a static and dynamic memory management mechanism, the possibility to exploit lock-free hash tables, and a novel parallel implementation of the ITE procedure based on a higher-level wrapper for threads and futures;
+- High usability and robustness by design, thanks to development based on engineering principles such as code coverage and continuous integration, along with independence from external software.
+
+Contribution guidelines
+-----------------------
+
+HermesBDD is not yet feature-complete, and there are still many interesting things 
+left for *you* to do. So, this project welcomes contributions and suggestions. 
+If you would like to contribute to HermesBDD, please contact the authors.
+
+Installation
+============
+
+A pre-packaged source :code:`zip/tar.gz` archive is always available in the 
+releases section of HermesBDD's GitHub space. Still, it is usually preferable to 
+clone the repository using **Git**, in order to keep the distribution updated as 
+soon as a new release is available. To do that, you shall issue:
+
+.. code:: bash
+
+    $ git clone https://github.com/luigicapogrosso/HermesBDD.git
+
+which creates the :code:`HermesBDD/` directory under the present working 
+directory. Let's switch into that directory.
 
 Dependencies
-============
+------------
 
 HermesBDD has the following dependencies:
 
 - **CMake**, for compiling;
 - **Sphinx**, for documentation generation.
 
-For further information about CMake and Sphinx, check the following `1 <https://cmake.org/>`_ and 
-`2 <https://www.sphinx-doc.org/en/master/>`_ documentation page, respectively.
+For further information about CMake and Sphinx, check the following 
+`1 <https://cmake.org/>`_ and `2 <https://www.sphinx-doc.org/en/master/>`_ 
+documentation page, respectively.
 
 Building
-========
-
-The library is tested for compilation using GCC (minimum required: 10.2), Clang 
-(minimum required: 11.0), and MSVC (minimum required: 19.20). To build the library 
-from sources in a clean way, it is preferable that you set up a build subdirectory, say:
+--------
+The library is tested for compilation using **GCC** (minimum required: 10.2), 
+**Clang** (minimum required: 11.0), and **MSVC** (minimum required: 19.20).
+The build system used is CMake. To build the library from sources in a clean 
+way, it is preferable that you set up a build subdirectory, say:
 
 .. code:: bash
 
-    mkdir build && cd build
+    $ mkdir build && cd build
 
 Then, you can prepare the build environment, choosing a Release build for 
 maximum performance:
 
 .. code:: bash
 
-    cmake .. -DCMAKE_BUILD_TYPE=Release
+    $ cmake .. -DCMAKE_BUILD_TYPE=Release
 
 At this point, if no error arises, you can build with:
 
 .. code:: bash
 
-    cmake --build .
+    $ cmake --build .
+
+To install the library globally from built sources, you must do:
+
+.. code:: bash
+
+    $ cmake --build . --target install
+
+using :code:`sudo` if you require administrator privileges for a Linux installation. 
+Please note that the installation will build the whole distribution beforehand, 
+hence it is preferable that you first build the other targets without 
+administrator privileges, build the install target.
 
 CMake options
 -------------
@@ -67,7 +125,7 @@ Available options are:
      - Enable coverage reporting
      - OFF
 
-Using HermesBDD
+Getting Started
 ===============
 
 To import the library, add the following line to your file:
@@ -76,8 +134,8 @@ To import the library, add the following line to your file:
 
     #include <hermesbdd.h>
 
-Getting Started
---------------------------
+Using HermesBDD
+---------------
 
 A simple use of the library is shown below:
 
@@ -118,8 +176,8 @@ A simple use of the library is shown below:
       return 0;
   }
 
-Basic HermesBDD functionality
------------------------------
+Basic functionality
+--------------------
 
 To create new BDDs, you can use:
 
@@ -146,41 +204,9 @@ The following basic BDD operations are implemented:
 - ``ITE(A, B, C)``               : compute 'if <A> then <B> else <C>' with cache support.
 - ``ITE_without_cache(A, B, C)`` : compute 'if <A> then <B> else <C>' without cache support.
 
-Tests
-=====
-
-The following tests can be found in the ``tests/`` subdirectory. 
-
-Queens
-------
-
-Solves the following problem:
-
-*Given N, then in how many ways can N queens be placed on an N x N chess board 
-without threatening eachother?*
-
-Our implementation of these benchmarks are based on the description of 
-`Kunkle10 <https://dl.acm.org/doi/abs/10.1145/1837210.1837222>`_. We construct 
-an BDD row-by-row that represents whether the row is in a legal state: is at 
-least one queen placed on each row and is it also in no conflicts with any 
-other? On the accumulated BDD we then count the number of satisfying 
-assignments.
-
-HermesBDD
----------
-
-The file ``test_hermesbdd.cpp`` contains a toy program that uses the C++ objects to
-perform basic BDD manipulation.
-
-ITE
----
-
-Finally, the file ``test_ITE.cpp`` contains toy program that checks the 
-correctness of all the ITE operators.
-
 Authors
 =======
 
-*Luigi Capogrosso* -- PhD at Politecnico di Torino, Italy, luigi.capogrosso@polito.it.
+*Luigi Capogrosso* -- PhD at Politecnico di Torino in collaboration with the University of Verona, Italy, luigi.capogrosso@polito.it.
 
 *Luca Geretti* -- Assistant Professor at University of Verona, Italy, luca.geretti@univr.it.

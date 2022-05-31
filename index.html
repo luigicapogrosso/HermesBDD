@@ -14,6 +14,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -40,21 +41,20 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <!-- Local TOC -->
               <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">HermesBDD</a></li>
+<li><a class="reference internal" href="#">HermesBDD</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#contribution-guidelines">Contribution guidelines</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li><a class="reference internal" href="#building">Building</a><ul>
+<li><a class="reference internal" href="#building">Building</a></li>
 <li><a class="reference internal" href="#cmake-options">CMake options</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#using-hermesbdd">Using HermesBDD</a><ul>
-<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
-<li><a class="reference internal" href="#basic-hermesbdd-functionality">Basic HermesBDD functionality</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#tests">Tests</a><ul>
-<li><a class="reference internal" href="#queens">Queens</a></li>
-<li><a class="reference internal" href="#id3">HermesBDD</a></li>
-<li><a class="reference internal" href="#ite">ITE</a></li>
+<li><a class="reference internal" href="#getting-started">Getting Started</a><ul>
+<li><a class="reference internal" href="#using-hermesbdd">Using HermesBDD</a></li>
+<li><a class="reference internal" href="#basic-functionality">Basic functionality</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#authors">Authors</a></li>
@@ -85,43 +85,93 @@
            <div itemprop="articleBody">
              
   <section id="hermesbdd">
-<h1>HermesBDD<a class="headerlink" href="#hermesbdd" title="Permalink to this headline">¶</a></h1>
-<p>HermesBDD is a parallel multi-core, and multi-platform, library of <a class="reference external" href="https://en.wikipedia.org/wiki/Binary_decision_diagram">Binary Decision Diagrams</a>
-written in C++. It focuses on high performance, usability, and correctness.</p>
-<p>So how did HermesBDD get its name? In Greek mythology, Hermes, son of Zeus and
-the nymph Maia, was the messenger of the gods, because he was as swift as the wind.
-Hence the name HermesBDD, meaning an extremely fast and light BDD library.</p>
-<p>The main repository of HermesBDD is <a class="reference external" href="https://github.com/luigicapogrosso/HermesBDD">https://github.com/luigicapogrosso/HermesBDD</a>.</p>
+<h1>HermesBDD<a class="headerlink" href="#hermesbdd" title="Permalink to this heading">¶</a></h1>
+<p>HermesBDD is a novel <strong>multi-core</strong> and <strong>multi-platform</strong> binary decision diagrams
+package focused on high performance and usability. HermesBDD supports a <strong>static
+and dynamic memory management</strong> mechanism, the possibility to exploit <strong>lock-free
+hash tables</strong>, and a simple <strong>parallel implementation of the ITE procedure</strong> based
+on a higher-level wrapper for threads and futures.</p>
+<p>HermesBDD is <strong>completely written in C++</strong> with no need to rely on external
+libraries and is developed according to software engineering principles for
+reliability and easy maintenance over time.</p>
+<p>The main repository of HermesBDD is at <a class="reference external" href="https://github.com/luigicapogrosso/HermesBDD">https://github.com/luigicapogrosso/HermesBDD</a>.</p>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
+<p>There are several implementations of BDDs packages in the literature, but they
+focus mainly on package performance in terms of speedup and memory efficiency.
+However, we believe that performance is only one aspect on which to judge a
+BDD package. Other aspects matter too, such as (not necessarily in order of
+importance) <em>functionality</em>, <em>robustness</em>, <em>reliability</em>, <em>portability</em>, and
+<em>documentation</em>.</p>
+<p>According to those principle, we developed <strong>HermesBDD</strong>: a novel multi-core and
+multi-platform binary decision diagram package <strong>focused on high
+performance</strong>, <strong>usability</strong>, and <strong>correctness</strong>.</p>
+<p>In summary, the contributions of HermesBDD are as follows:</p>
+<ul class="simple">
+<li><p>Computationally faster, by exploiting multi-threading for parallel processing and concurrent access to a BDD;</p></li>
+<li><p>Multi-platform (Windows, Linux, and macOS) to accommodate integration within tools from different environments;</p></li>
+<li><p>Support for a static and dynamic memory management mechanism, the possibility to exploit lock-free hash tables, and a novel parallel implementation of the ITE procedure based on a higher-level wrapper for threads and futures;</p></li>
+<li><p>High usability and robustness by design, thanks to development based on engineering principles such as code coverage and continuous integration, along with independence from external software.</p></li>
+</ul>
 </section>
+<section id="contribution-guidelines">
+<h2>Contribution guidelines<a class="headerlink" href="#contribution-guidelines" title="Permalink to this heading">¶</a></h2>
+<p>HermesBDD is not yet feature-complete, and there are still many interesting things
+left for <em>you</em> to do. So, this project welcomes contributions and suggestions.
+If you would like to contribute to HermesBDD, please contact the authors.</p>
+</section>
+</section>
+<section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h1>
+<p>A pre-packaged source <code class="code docutils literal notranslate"><span class="pre">zip/tar.gz</span></code> archive is always available in the
+releases section of HermesBDD’s GitHub space. Still, it is usually preferable to
+clone the repository using <strong>Git</strong>, in order to keep the distribution updated as
+soon as a new release is available. To do that, you shall issue:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/luigicapogrosso/HermesBDD.git
+</pre></div>
+</div>
+<p>which creates the <code class="code docutils literal notranslate"><span class="pre">HermesBDD/</span></code> directory under the present working
+directory. Let’s switch into that directory.</p>
 <section id="dependencies">
-<h1>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h1>
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading">¶</a></h2>
 <p>HermesBDD has the following dependencies:</p>
 <ul class="simple">
 <li><p><strong>CMake</strong>, for compiling;</p></li>
 <li><p><strong>Sphinx</strong>, for documentation generation.</p></li>
 </ul>
-<p>For further information about CMake and Sphinx, check the following <a class="reference external" href="https://cmake.org/">1</a> and
-<a class="reference external" href="https://www.sphinx-doc.org/en/master/">2</a> documentation page, respectively.</p>
+<p>For further information about CMake and Sphinx, check the following
+<a class="reference external" href="https://cmake.org/">1</a> and <a class="reference external" href="https://www.sphinx-doc.org/en/master/">2</a>
+documentation page, respectively.</p>
 </section>
 <section id="building">
-<h1>Building<a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h1>
-<p>The library is tested for compilation using GCC (minimum required: 10.2), Clang
-(minimum required: 11.0), and MSVC (minimum required: 19.20). To build the library
-from sources in a clean way, it is preferable that you set up a build subdirectory, say:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build
+<h2>Building<a class="headerlink" href="#building" title="Permalink to this heading">¶</a></h2>
+<p>The library is tested for compilation using <strong>GCC</strong> (minimum required: 10.2),
+<strong>Clang</strong> (minimum required: 11.0), and <strong>MSVC</strong> (minimum required: 19.20).
+The build system used is CMake. To build the library from sources in a clean
+way, it is preferable that you set up a build subdirectory, say:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build
 </pre></div>
 </div>
 <p>Then, you can prepare the build environment, choosing a Release build for
 maximum performance:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake .. -DCMAKE_BUILD_TYPE<span class="o">=</span>Release
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cmake .. -DCMAKE_BUILD_TYPE<span class="o">=</span>Release
 </pre></div>
 </div>
 <p>At this point, if no error arises, you can build with:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake --build .
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cmake --build .
 </pre></div>
 </div>
+<p>To install the library globally from built sources, you must do:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cmake --build . --target install
+</pre></div>
+</div>
+<p>using <code class="code docutils literal notranslate"><span class="pre">sudo</span></code> if you require administrator privileges for a Linux installation.
+Please note that the installation will build the whole distribution beforehand,
+hence it is preferable that you first build the other targets without
+administrator privileges, build the install target.</p>
+</section>
 <section id="cmake-options">
-<h2>CMake options<a class="headerlink" href="#cmake-options" title="Permalink to this headline">¶</a></h2>
+<h2>CMake options<a class="headerlink" href="#cmake-options" title="Permalink to this heading">¶</a></h2>
 <p>Available options are:</p>
 <table class="colwidths-given docutils align-default">
 <colgroup>
@@ -152,14 +202,14 @@ maximum performance:</p>
 </table>
 </section>
 </section>
-<section id="using-hermesbdd">
-<h1>Using HermesBDD<a class="headerlink" href="#using-hermesbdd" title="Permalink to this headline">¶</a></h1>
+<section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">¶</a></h1>
 <p>To import the library, add the following line to your file:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hermesbdd.h&gt;</span><span class="cp"></span>
 </pre></div>
 </div>
-<section id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<section id="using-hermesbdd">
+<h2>Using HermesBDD<a class="headerlink" href="#using-hermesbdd" title="Permalink to this heading">¶</a></h2>
 <p>A simple use of the library is shown below:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cassert&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hermesbdd.h&gt;</span><span class="cp"></span>
@@ -198,8 +248,8 @@ maximum performance:</p>
 </pre></div>
 </div>
 </section>
-<section id="basic-hermesbdd-functionality">
-<h2>Basic HermesBDD functionality<a class="headerlink" href="#basic-hermesbdd-functionality" title="Permalink to this headline">¶</a></h2>
+<section id="basic-functionality">
+<h2>Basic functionality<a class="headerlink" href="#basic-functionality" title="Permalink to this heading">¶</a></h2>
 <p>To create new BDDs, you can use:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">BDD(v)</span></code>           : representation of literal ‘&lt;v&gt;’.</p></li>
@@ -227,35 +277,9 @@ maximum performance:</p>
 </ul>
 </section>
 </section>
-<section id="tests">
-<h1>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h1>
-<p>The following tests can be found in the <code class="docutils literal notranslate"><span class="pre">tests/</span></code> subdirectory.</p>
-<section id="queens">
-<h2>Queens<a class="headerlink" href="#queens" title="Permalink to this headline">¶</a></h2>
-<p>Solves the following problem:</p>
-<p><em>Given N, then in how many ways can N queens be placed on an N x N chess board
-without threatening eachother?</em></p>
-<p>Our implementation of these benchmarks are based on the description of
-<a class="reference external" href="https://dl.acm.org/doi/abs/10.1145/1837210.1837222">Kunkle10</a>. We construct
-an BDD row-by-row that represents whether the row is in a legal state: is at
-least one queen placed on each row and is it also in no conflicts with any
-other? On the accumulated BDD we then count the number of satisfying
-assignments.</p>
-</section>
-<section id="id3">
-<h2>HermesBDD<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>The file <code class="docutils literal notranslate"><span class="pre">test_hermesbdd.cpp</span></code> contains a toy program that uses the C++ objects to
-perform basic BDD manipulation.</p>
-</section>
-<section id="ite">
-<h2>ITE<a class="headerlink" href="#ite" title="Permalink to this headline">¶</a></h2>
-<p>Finally, the file <code class="docutils literal notranslate"><span class="pre">test_ITE.cpp</span></code> contains toy program that checks the
-correctness of all the ITE operators.</p>
-</section>
-</section>
 <section id="authors">
-<h1>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h1>
-<p><em>Luigi Capogrosso</em> – PhD at Politecnico di Torino, Italy, <a class="reference external" href="mailto:luigi&#46;capogrosso&#37;&#52;&#48;polito&#46;it">luigi<span>&#46;</span>capogrosso<span>&#64;</span>polito<span>&#46;</span>it</a>.</p>
+<h1>Authors<a class="headerlink" href="#authors" title="Permalink to this heading">¶</a></h1>
+<p><em>Luigi Capogrosso</em> – PhD at Politecnico di Torino in collaboration with the University of Verona, Italy, <a class="reference external" href="mailto:luigi&#46;capogrosso&#37;&#52;&#48;polito&#46;it">luigi<span>&#46;</span>capogrosso<span>&#64;</span>polito<span>&#46;</span>it</a>.</p>
 <p><em>Luca Geretti</em> – Assistant Professor at University of Verona, Italy, <a class="reference external" href="mailto:luca&#46;geretti&#37;&#52;&#48;univr&#46;it">luca<span>&#46;</span>geretti<span>&#64;</span>univr<span>&#46;</span>it</a>.</p>
 </section>
 
@@ -267,7 +291,7 @@ correctness of all the ITE operators.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Luigi Capogrosso and Luca Geretti.</p>
+    <p>&#169; Copyright 2022, Luigi Capogrosso and Luca Geretti.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

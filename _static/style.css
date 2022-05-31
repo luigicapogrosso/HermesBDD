@@ -1,0 +1,7 @@
+/* make sure to sync this with the base theme's css filename */
+@import url("/home/lcapogrosso/Projects/HermesBDD@FDL22/docs/_build/html/_static/css/theme.css");
+
+.strike {
+    text-align: justify;
+    text-decoration: line-through;
+}
