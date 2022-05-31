@@ -93,3 +93,6 @@ target_link_libraries(hermesbdd ${CMAKE_THREAD_LIBS_INIT})
 if(COVERAGE)
     target_link_libraries(hermesbdd coverage_config)
 endif()
+
+install(TARGETS hermesbdd DESTINATION lib)
+install(DIRECTORY include/ DESTINATION include/hermesbdd FILES_MATCHING PATTERN "*.hpp")
