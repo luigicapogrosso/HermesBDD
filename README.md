@@ -38,6 +38,20 @@ At this point, if no error arises, you can build with:
 $ cmake --build .
 ```
 
+To install the library globally from built sources, you must do:
+
+```
+$ cmake --build . --target install
+```
+
+using `sudo` if you require administrator privileges for a Linux installation. Please note that the installation will build the whole distribution beforehand, hence it is preferable that you first build the other targets without administrator privileges, build the install target.
+
+To find the installed library under Ubuntu, you may need to set the `LD_LIBRARY_PATH` in the `.bashrc` file of your home directory:
+
+```
+export LD_LIBRARY_PATH=/usr/local/lib
+```
+
 ### CMake options ###
 
 Available options are:
