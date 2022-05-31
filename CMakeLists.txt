@@ -80,7 +80,8 @@ enable_testing()
 include(CTest)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
-include_directories(${PROJECT_SOURCE_DIR}/utility)
+include_directories(${PROJECT_SOURCE_DIR}/utils)
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
 add_subdirectory(src)
 add_subdirectory(tests)
