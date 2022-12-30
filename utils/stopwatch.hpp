@@ -1,13 +1,13 @@
 /***************************************************************************
  *
- *            utility/stopwatch.hpp
+ *            utils/stopwatch.hpp
  *
  ****************************************************************************/
 
 /*
  * MIT License
  *
- * Copyright (c) 2022 Luigi Capogrosso and Luca Geretti
+ * Copyright (c) 2022 Luigi Capogrosso, Luca Geretti, Marco cristani, Franco Fummi, and Tiziano Villa.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
