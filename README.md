@@ -67,7 +67,7 @@ Available options are:
 
 HermesBDD is not yet feature-complete, and there are still many interesting things left
 for _you_ to do. So, this project welcomes contributions and suggestions. If you would
-like to contribute to HermesBDD, please contact the authors.
+like to contribute to HermesBDD, or do an internship or thesis, please contact the authors.
 
 ## License ##
 
@@ -76,7 +76,16 @@ The software files in this repository are provided under the [MIT License](./LIC
 ## Authors ##
 
 `Luigi Capogrosso`
-- PhD at Politecnico di Torino in collaboration with the University of Verona, Italy, [luigi.capogrosso@univr.it](mailto:luigi.capogrosso@univr.it).
+- Ph.D. student at the University of Verona, Italy, [luigi.capogrosso@univr.it](mailto:luigi.capogrosso@univr.it).
 
 `Luca Geretti`
 - Assistant Professor at University of Verona, Italy, [luca.geretti@univr.it](mailto:luca.geretti@univr.it).
+
+`Marco Cristani`
+- Full Professor at University of Verona, Italy, [marco.cristani@univr.it](mailto:marco.cristani@univr.it).
+
+`Franco Fummi`
+- Full Professor at University of Verona, Italy, [franco.fummi@univr.it](mailto:franco.fummi@univr.it).
+
+`Tiziano Villa`
+- Full Professor at University of Verona, Italy, [tiziano.villa@univr.it](mailto:tiziano.villa@univr.it).
