@@ -52,11 +52,11 @@
 <li><a class="reference internal" href="#cmake-options">CMake options</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#getting-started">Getting Started</a><ul>
+<li><a class="reference internal" href="#introduction-by-example">Introduction by Example</a><ul>
 <li><a class="reference internal" href="#using-hermesbdd">Using HermesBDD</a></li>
-<li><a class="reference internal" href="#basic-functionality">Basic functionality</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#package-reference">Package Reference</a></li>
 <li><a class="reference internal" href="#authors">Authors</a></li>
 </ul>
 </div>
@@ -86,15 +86,18 @@
              
   <section id="hermesbdd">
 <h1>HermesBDD<a class="headerlink" href="#hermesbdd" title="Permalink to this heading">¶</a></h1>
-<p>HermesBDD is a novel <strong>multi-core</strong> and <strong>multi-platform</strong> binary decision diagrams
-package focused on high performance and usability. HermesBDD supports a <strong>static
-and dynamic memory management</strong> mechanism, the possibility to exploit <strong>lock-free
-hash tables</strong>, and a simple <strong>parallel implementation of the ITE procedure</strong> based
-on a higher-level wrapper for threads and futures.</p>
+<p>HermesBDD is a novel <strong>multi-core</strong> and <strong>multi-platform</strong> binary decision
+diagrams package focused on high performance and usability. HermesBDD supports
+a <strong>static and dynamic memory management</strong> mechanism, the possibility to
+exploit <strong>lock-free hash tables</strong>, and a simple <strong>parallel implementation of
+the ITE procedure</strong> based on a higher-level wrapper for threads and futures.</p>
 <p>HermesBDD is <strong>completely written in C++</strong> with no need to rely on external
-libraries and is developed according to software engineering principles for
-reliability and easy maintenance over time.</p>
-<p>The main repository of HermesBDD is at <a class="reference external" href="https://github.com/luigicapogrosso/HermesBDD">https://github.com/luigicapogrosso/HermesBDD</a>.</p>
+libraries and is developed according to software engineering principles such as
+testability, code coverage, and continuous integration to offer high usability,
+reliability, and easy maintenance over time.</p>
+<p>The main repository of HermesBDD is at
+<a class="reference external" href="https://github.com/luigicapogrosso/HermesBDD">https://github.com/luigicapogrosso/HermesBDD</a>. The software files in this
+repository are provided under the MIT License.</p>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>There are several implementations of BDDs packages in the literature, but they
@@ -103,9 +106,9 @@ However, we believe that performance is only one aspect on which to judge a
 BDD package. Other aspects matter too, such as (not necessarily in order of
 importance) <em>functionality</em>, <em>robustness</em>, <em>reliability</em>, <em>portability</em>, and
 <em>documentation</em>.</p>
-<p>According to those principle, we developed <strong>HermesBDD</strong>: a novel multi-core and
-multi-platform binary decision diagram package <strong>focused on high
-performance</strong>, <strong>usability</strong>, and <strong>correctness</strong>.</p>
+<p>According to those principle, we developed <strong>HermesBDD</strong>: a novel multi-core
+and multi-platform binary decision diagram package <strong>focused on high
+performance</strong> and <strong>usability</strong>.</p>
 <p>In summary, the contributions of HermesBDD are as follows:</p>
 <ul class="simple">
 <li><p>Computationally faster, by exploiting multi-threading for parallel processing and concurrent access to a BDD;</p></li>
@@ -116,17 +119,18 @@ performance</strong>, <strong>usability</strong>, and <strong>correctness</stron
 </section>
 <section id="contribution-guidelines">
 <h2>Contribution guidelines<a class="headerlink" href="#contribution-guidelines" title="Permalink to this heading">¶</a></h2>
-<p>HermesBDD is not yet feature-complete, and there are still many interesting things
-left for <em>you</em> to do. So, this project welcomes contributions and suggestions.
-If you would like to contribute to HermesBDD, please contact the authors.</p>
+<p>HermesBDD is not yet feature-complete, and there are still many interesting
+things left for <em>you</em> to do. So, this project welcomes contributions and
+suggestions. If you would like to contribute to HermesBDD, or do an internship
+or thesis, please contact the authors.</p>
 </section>
 </section>
 <section id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h1>
 <p>A pre-packaged source <code class="code docutils literal notranslate"><span class="pre">zip/tar.gz</span></code> archive is always available in the
-releases section of HermesBDD’s GitHub space. Still, it is usually preferable to
-clone the repository using <strong>Git</strong>, in order to keep the distribution updated as
-soon as a new release is available. To do that, you shall issue:</p>
+releases section of HermesBDD’s GitHub space. Still, it is usually preferable
+to clone the repository using <strong>Git</strong>, in order to keep the distribution
+updated as soon as a new release is available. To do that, you shall issue:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/luigicapogrosso/HermesBDD.git
 </pre></div>
 </div>
@@ -165,10 +169,10 @@ maximum performance:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cmake --build . --target install
 </pre></div>
 </div>
-<p>using <code class="code docutils literal notranslate"><span class="pre">sudo</span></code> if you require administrator privileges for a Linux installation.
-Please note that the installation will build the whole distribution beforehand,
-hence it is preferable that you first build the other targets without
-administrator privileges, build the install target.</p>
+<p>using <code class="code docutils literal notranslate"><span class="pre">sudo</span></code> if you require administrator privileges for a Linux
+installation. Please note that the installation will build the whole
+distribution beforehand, hence it is preferable that you first build the other
+targets without administrator privileges, and build the install target.</p>
 </section>
 <section id="cmake-options">
 <h2>CMake options<a class="headerlink" href="#cmake-options" title="Permalink to this heading">¶</a></h2>
@@ -194,7 +198,11 @@ administrator privileges, build the install target.</p>
 <td><p>Do not use thread</p></td>
 <td><p>OFF</p></td>
 </tr>
-<tr class="row-even"><td><p>COVERAGE</p></td>
+<tr class="row-even"><td><p>NO_DYNMEM</p></td>
+<td><p>Do not use dynamic memory allocation</p></td>
+<td><p>OFF</p></td>
+</tr>
+<tr class="row-odd"><td><p>COVERAGE</p></td>
 <td><p>Enable coverage reporting</p></td>
 <td><p>OFF</p></td>
 </tr>
@@ -202,8 +210,8 @@ administrator privileges, build the install target.</p>
 </table>
 </section>
 </section>
-<section id="getting-started">
-<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">¶</a></h1>
+<section id="introduction-by-example">
+<h1>Introduction by Example<a class="headerlink" href="#introduction-by-example" title="Permalink to this heading">¶</a></h1>
 <p>To import the library, add the following line to your file:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;hermesbdd.h&gt;</span><span class="cp"></span>
 </pre></div>
@@ -248,8 +256,9 @@ administrator privileges, build the install target.</p>
 </pre></div>
 </div>
 </section>
-<section id="basic-functionality">
-<h2>Basic functionality<a class="headerlink" href="#basic-functionality" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="package-reference">
+<h1>Package Reference<a class="headerlink" href="#package-reference" title="Permalink to this heading">¶</a></h1>
 <p>To create new BDDs, you can use:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">BDD(v)</span></code>           : representation of literal ‘&lt;v&gt;’.</p></li>
@@ -276,11 +285,15 @@ administrator privileges, build the install target.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">ITE_without_cache(A,</span> <span class="pre">B,</span> <span class="pre">C)</span></code> : compute ‘if &lt;A&gt; then &lt;B&gt; else &lt;C&gt;’ without cache support.</p></li>
 </ul>
 </section>
-</section>
 <section id="authors">
 <h1>Authors<a class="headerlink" href="#authors" title="Permalink to this heading">¶</a></h1>
-<p><em>Luigi Capogrosso</em> – PhD at Politecnico di Torino in collaboration with the University of Verona, Italy, <a class="reference external" href="mailto:luigi&#46;capogrosso&#37;&#52;&#48;polito&#46;it">luigi<span>&#46;</span>capogrosso<span>&#64;</span>polito<span>&#46;</span>it</a>.</p>
-<p><em>Luca Geretti</em> – Assistant Professor at University of Verona, Italy, <a class="reference external" href="mailto:luca&#46;geretti&#37;&#52;&#48;univr&#46;it">luca<span>&#46;</span>geretti<span>&#64;</span>univr<span>&#46;</span>it</a>.</p>
+<ul class="simple">
+<li><p><em>Luigi Capogrosso</em> – Ph.D. student at the University of Verona, Italy, <a class="reference external" href="mailto:luigi&#46;capogrosso&#37;&#52;&#48;univr&#46;it">luigi<span>&#46;</span>capogrosso<span>&#64;</span>univr<span>&#46;</span>it</a>.</p></li>
+<li><p><em>Luca Geretti</em> – Assistant Professor at University of Verona, Italy, <a class="reference external" href="mailto:luca&#46;geretti&#37;&#52;&#48;univr&#46;it">luca<span>&#46;</span>geretti<span>&#64;</span>univr<span>&#46;</span>it</a>.</p></li>
+<li><p><em>Marco Cristani</em> – Full Professor at University of Verona, Italy, <a class="reference external" href="mailto:marco&#46;cristani&#37;&#52;&#48;univr&#46;it">marco<span>&#46;</span>cristani<span>&#64;</span>univr<span>&#46;</span>it</a>.</p></li>
+<li><p><em>Franco Fummi</em> – Full Professor at University of Verona, Italy, <a class="reference external" href="mailto:franco&#46;fummi&#37;&#52;&#48;univr&#46;it">franco<span>&#46;</span>fummi<span>&#64;</span>univr<span>&#46;</span>it</a>.</p></li>
+<li><p><em>Tiziano Villa</em> – Full Professor at University of Verona, Italy, <a class="reference external" href="mailto:tiziano&#46;villa&#37;&#52;&#48;univr&#46;it">tiziano<span>&#46;</span>villa<span>&#64;</span>univr<span>&#46;</span>it</a>.</p></li>
+</ul>
 </section>
 
 
@@ -291,7 +304,7 @@ administrator privileges, build the install target.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Luigi Capogrosso and Luca Geretti.</p>
+    <p>&#169; Copyright 2022, Luigi Capogrosso, Luca Geretti, Marco cristani, Franco Fummi, and Tiziano Villa.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
