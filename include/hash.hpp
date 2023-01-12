@@ -7,7 +7,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2022 Luigi Capogrosso, Luca Geretti, Marco cristani, Franco Fummi, and Tiziano Villa.
+ * Copyright (c) 2023 Luigi Capogrosso, Luca Geretti, Marco cristani, Franco Fummi, and Tiziano Villa.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -54,14 +54,12 @@ static inline uint64_t rotl64 (uint64_t x, int8_t r)
 
 // Block read - if your platform needs to do endian-swapping or can only
 // handle aligned reads, do the conversion here.
-
 FORCE_INLINE uint64_t getblock64 (const uint64_t * p, int i)
 {
     return p[i];
 }
 
 // Finalization mix - force all bits of a hash block to avalanche.
-
 FORCE_INLINE uint64_t fmix64 (uint64_t k)
 {
     k ^= k >> 33;
@@ -85,7 +83,6 @@ static uint64_t hash128(const void* key, const uint64_t len)
     const uint64_t c2 = BIG_CONSTANT(0x4cf5ad432745937f);
 
     // Body.
-
     const uint64_t * blocks = (const uint64_t *)(data);
 
     for(int i = 0; i < nblocks; i++)
@@ -103,7 +100,6 @@ static uint64_t hash128(const void* key, const uint64_t len)
     }
 
     // Tail.
-
     const uint8_t * tail = (const uint8_t*)(data + nblocks*16);
 
     uint64_t k1 = 0;
@@ -133,7 +129,6 @@ static uint64_t hash128(const void* key, const uint64_t len)
     };
 
     // Finalization.
-
     h1 ^= len; h2 ^= len;
 
     h1 += h2;
