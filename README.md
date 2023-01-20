@@ -73,19 +73,11 @@ like to contribute to HermesBDD, or do an internship or thesis, please contact t
 
 The software files in this repository are provided under the [MIT License](./LICENSE).
 
+
 ## Authors ##
 
-`Luigi Capogrosso`
-- Ph.D. student at the University of Verona, Italy, [luigi.capogrosso@univr.it](mailto:luigi.capogrosso@univr.it).
+Luigi Capogrosso, Luca Geretti, Marco Cristani, Franco Fummi, Tiziano Villa
 
-`Luca Geretti`
-- Assistant Professor at University of Verona, Italy, [luca.geretti@univr.it](mailto:luca.geretti@univr.it).
+*Department of Computer Science, University of Verona, Italy*
 
-`Marco Cristani`
-- Full Professor at University of Verona, Italy, [marco.cristani@univr.it](mailto:marco.cristani@univr.it).
-
-`Franco Fummi`
-- Full Professor at University of Verona, Italy, [franco.fummi@univr.it](mailto:franco.fummi@univr.it).
-
-`Tiziano Villa`
-- Full Professor at University of Verona, Italy, [tiziano.villa@univr.it](mailto:tiziano.villa@univr.it).
+`name.surname@univr.it`

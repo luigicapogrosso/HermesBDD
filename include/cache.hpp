@@ -7,7 +7,8 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Luigi Capogrosso, Luca Geretti, Marco cristani, Franco Fummi, and Tiziano Villa.
+ * Copyright (c) 2023 Luigi Capogrosso, Luca Geretti, 
+ *                    Marco cristani, Franco Fummi, and Tiziano Villa.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +28,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 
 
 #ifndef CACHE_HPP
