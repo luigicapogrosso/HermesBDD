@@ -81,3 +81,15 @@ Luigi Capogrosso, Luca Geretti, Marco Cristani, Franco Fummi, Tiziano Villa
 *Department of Computer Science, University of Verona, Italy*
 
 `name.surname@univr.it`
+
+## Citation ##
+
+If you use [**HermesBDD**](https://arxiv.org/abs/2305.00039), please, cite the following paper:
+```
+@article{capogrosso2023hermesbdd,
+  title={HermesBDD: A Multi-Core and Multi-Platform Binary Decision Diagram Package},
+  author={Capogrosso, Luigi and Geretti, Luca and Cristani, Marco and Fummi, Franco and Villa, Tiziano},
+  journal={arXiv preprint arXiv:2305.00039},
+  year={2023}
+}
+```
