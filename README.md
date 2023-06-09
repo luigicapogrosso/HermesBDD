@@ -84,12 +84,14 @@ Luigi Capogrosso, Luca Geretti, Marco Cristani, Franco Fummi, Tiziano Villa
 
 ## Citation ##
 
-If you use [**HermesBDD**](https://arxiv.org/abs/2305.00039), please, cite the following paper:
+If you use [**HermesBDD**](https://ieeexplore.ieee.org/abstract/document/10139480), please, cite the following paper:
 ```
-@article{capogrosso2023hermesbdd,
+@inproceedings{capogrosso2023hermesbdd,
   title={HermesBDD: A Multi-Core and Multi-Platform Binary Decision Diagram Package},
   author={Capogrosso, Luigi and Geretti, Luca and Cristani, Marco and Fummi, Franco and Villa, Tiziano},
-  journal={arXiv preprint arXiv:2305.00039},
-  year={2023}
+  booktitle={2023 26th International Symposium on Design and Diagnostics of Electronic Circuits and Systems (DDECS)},
+  pages={87--90},
+  year={2023},
+  organization={IEEE}
 }
 ```
