@@ -76,7 +76,7 @@ The software files in this repository are provided under the [MIT License](./LIC
 
 ## Authors ##
 
-Luigi Capogrosso, Luca Geretti, Marco Cristani, Franco Fummi, Tiziano Villa
+[Luigi Capogrosso](https://www.capogrosso.eu/), Luca Geretti, Marco Cristani, Franco Fummi, Tiziano Villa
 
 *Department of Computer Science, University of Verona, Italy*
 
