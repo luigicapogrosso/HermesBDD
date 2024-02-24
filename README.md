@@ -26,7 +26,7 @@ The library is tested for compilation using GCC (minimum required: 10.2), Clang 
 $ mkdir build && cd build
 ```
 
-Then, you can prepare the built environment, choosing a `Release` build for maximum performance:
+Then, you can prepare the build environment, choosing a `Release` build for maximum performance:
 
 ```
 $ cmake .. -DCMAKE_BUILD_TYPE=Release
