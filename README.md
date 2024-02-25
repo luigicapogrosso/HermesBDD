@@ -7,7 +7,7 @@
 
 HermesBDD is a novel multi-core and multi-platform [binary decision diagrams](https://en.wikipedia.org/wiki/Binary_decision_diagram) package focused on high performance and usability. HermesBDD supports a static and dynamic memory management mechanism, the possibility to exploit lock-free hash tables, and a simple parallel implementation of the ITE procedure based on a higher-level wrapper for threads and futures.
 
-For more information, progress reports, and more, please visit the HermesBDD [home page](https://luigicapogrosso.github.io/HermesBDD/).
+For more information on progress reports, please visit the HermesBDD [home page](https://luigicapogrosso.github.io/HermesBDD/).
 
 ## Dependencies ##
 
@@ -38,13 +38,13 @@ At this point, if no error arises, you can build with:
 $ cmake --build .
 ```
 
-To install the library globally from built sources, you must do:
+To install the library globally from built sources, you must do the following:
 
 ```
 $ cmake --build . --target install
 ```
 
-using `sudo` if you require administrator privileges for a Linux installation. Please note that the installation will build the whole distribution beforehand, hence it is preferable that you first build the other targets without administrator privileges, build the install target.
+using `sudo` if you require administrator privileges for a Linux installation. Just so you know, the installation will build the whole distribution beforehand, so it is better that you first build the other targets without administrator privileges to build the install target.
 
 To find the installed library under Ubuntu, you may need to set the `LD_LIBRARY_PATH` in the `.bashrc` file of your home directory:
 
@@ -65,9 +65,9 @@ Available options are:
 
 ## Contribution guidelines ##
 
-HermesBDD is not yet feature-complete, and there are still many interesting things left
+HermesBDD is not yet feature-complete, and many interesting things remain left
 for _you_ to do. So, this project welcomes contributions and suggestions. If you would
-like to contribute to HermesBDD, or do an internship or thesis, please contact the authors.
+like to contribute to HermesBDD or do an internship or thesis, please don't hesitate to contact the authors.
 
 ## License ##
 
