@@ -2,8 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/luigicapogrosso/HermesBDD/branch/main/graph/badge.svg)](https://codecov.io/gh/luigicapogrosso/HermesBDD)
-[![Unix Status](https://github.com/luigicapogrosso/HermesBDD/workflows/Unix/badge.svg)](https://github.com/luigicapogrosso/HermesBDD/actions/workflows/unix.yml)
-[![Windows Status](https://github.com/luigicapogrosso/HermesBDD/workflows/Windows/badge.svg)](https://github.com/luigicapogrosso/HermesBDD/actions/workflows/windows.yml)
+[![Unix Status](https://github.com/luigicapogrosso/HermesBDD/actions/workflows/unix.yml/badge.svg)](https://github.com/luigicapogrosso/HermesBDD/actions/workflows/unix.yml)
+[![Windows Status](https://github.com/luigicapogrosso/HermesBDD/actions/workflows/windows.yml/badge.svg)](https://github.com/luigicapogrosso/HermesBDD/actions/workflows/windows.yml)
 
 HermesBDD is a novel multi-core and multi-platform [binary decision diagrams](https://en.wikipedia.org/wiki/Binary_decision_diagram) package focused on high performance and usability. HermesBDD supports a static and dynamic memory management mechanism, the possibility to exploit lock-free hash tables, and a simple parallel implementation of the ITE procedure based on a higher-level wrapper for threads and futures.
 
