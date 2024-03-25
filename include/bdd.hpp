@@ -37,6 +37,7 @@
 #include <set>
 #include <string>
 #include <unordered_map>
+#include <cstdint>
 
 class BDD
 {
