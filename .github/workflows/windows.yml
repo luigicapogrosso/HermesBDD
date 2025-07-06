@@ -32,8 +32,6 @@ jobs:
     steps:
       # Use actions/checkout@v4 for the latest features and security.
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive # Keep this if you use submodules.
 
       - name: Create Build Environment
         # Use cmake -E make_directory to create the build directory.
@@ -41,11 +39,7 @@ jobs:
 
       - name: Configure CMake
         working-directory: ${{runner.workspace}}/build
-        # Use $GITHUB_WORKSPACE as the source directory for CMake.
-        # This points to the root of your checked-out repository.
-        # If your CMakeLists.txt is in a subdirectory (e.g., 'hermesbdd'),
-        # change this to 'cmake $GITHUB_WORKSPACE/hermesbdd'.
-        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=${{matrix.config.build-type}}
+        run: cmake .. -DCMAKE_BUILD_TYPE=${{matrix.config.build-type}}
 
       - name: Build
         working-directory: ${{runner.workspace}}/build
