@@ -19,51 +19,56 @@ jobs:
       fail-fast: false
       matrix:
         config:
+          # Updated macOS runners and compilers.
           - {
-            name: "macOS 11 AppleClang",
-            os: macos-11,
+            name: "macOS Latest AppleClang",
+            os: macos-latest, # Recommend macos-latest (currently macos-14).
             cxx: "clang++"
           }
           - {
-            name: "macOS 11 GCC 10",
-            os: macos-11,
-            cxx: "g++-10"
+            name: "macOS Latest GCC",
+            os: macos-latest, # Recommend macos-latest (currently macos-14).
+            cxx: "g++-13"     # Or whatever the latest stable GCC version from Homebrew is.
+          }
+          # Updated Ubuntu runners and compilers.
+          - {
+            name: "Ubuntu Latest Clang",
+            os: ubuntu-latest, # Recommend ubuntu-latest (currently ubuntu-22.04).
+            cxx: "clang++"     # Will usually point to the default clang version.
           }
           - {
-            name: "Ubuntu 20.04 Clang 11",
-            os: ubuntu-20.04,
-            cxx: "clang++-11"
-          }
-          - {
-            name: "Ubuntu 20.04 GCC 10",
-            os: ubuntu-20.04,
-            cxx: "g++-10"
+            name: "Ubuntu Latest GCC",
+            os: ubuntu-latest, # Recommend ubuntu-latest (currently ubuntu-22.04).
+            cxx: "g++"         # Will usually point to the default g++ version.
           }
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4 # Update to v4 for latest features and security.
 
-    - name: Get macOS Concurrency
+    - name: Set NPROC (macOS)
       if: runner.os == 'macOS'
-      run: |
-        echo NPROC="sysctl -n hw.ncpu" >> $GITHUB_ENV
-        echo "Running on $(sysctl -n hw.ncpu) threads ..."
+      run: echo "NPROC=$(sysctl -n hw.ncpu)" >> $GITHUB_ENV
 
-    - name: Get Linux Concurrency
+    - name: Set NPROC (Linux)
       if: runner.os == 'Linux'
-      run: |
-        echo NPROC="nproc" >> $GITHUB_ENV
-        echo "Running on $(nproc) threads ..."
+      run: echo "NPROC=$(nproc)" >> $GITHUB_ENV
 
     - name: Set Up macOS Dependencies
       if: runner.os == 'macOS'
       run: |
-        brew install gcc@10
+        # Use Homebrew to install GCC if needed, otherwise clang++ is usually default
+        # If you need a specific GCC, check 'brew search gcc' for available versions
+        # brew install gcc # This installs the latest GCC from Homebrew
+        # No specific action needed for clang on macOS, it's usually pre-installed
 
     - name: Set Up Linux Dependencies
       if: runner.os == 'Linux'
       run: |
-        sudo apt install -y cmake pkg-config clang-11 g++-10
+        # Update apt cache first
+        sudo apt update
+        # Install CMake, pkg-config, and default clang/g++ if not already present
+        # Or install specific versions if needed, e.g., clang-14, g++-12
+        sudo apt install -y cmake pkg-config clang g++
 
     - name: Create Build Environment
       run: cmake -E make_directory ${{runner.workspace}}/build
@@ -74,8 +79,10 @@ jobs:
 
     - name: Build All
       working-directory: ${{runner.workspace}}/build
-      run: make -j $($NPROC)
+      # Use the NPROC environment variable set in earlier steps.
+      run: make -j $NPROC
 
     - name: Test
       working-directory: ${{runner.workspace}}/build
-      run: ctest -j $($NPROC)
+      # Use the NPROC environment variable set in earlier steps.
+      run: ctest -j $NPROC
