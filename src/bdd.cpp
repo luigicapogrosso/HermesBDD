@@ -7,7 +7,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Luigi Capogrosso, Luca Geretti, 
+ * Copyright (c) 2023 Luigi Capogrosso, Luca Geretti,
  *                    Marco cristani, Franco Fummi, and Tiziano Villa.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,6 +30,7 @@
  */
 
 
+#include <map>
 #include <cmath>
 #include <cassert>
 #include <iostream>
@@ -182,49 +183,107 @@ void BDD::print(std::string title)
     Node::print(this->_node, title);
 }
 
-static long double count_sat_helper(uint32_t node, int n, std::set<uint32_t>& vars)
+// Using std::map for cache. Key: node ID, Value: computed count.
+static long double count_sat_helper(uint32_t node_ref,
+                                    int n_total_vars,
+                                    const std::set<uint32_t>& vars_set,
+                                    long double pow2_n_total_vars,
+                                    std::map<uint32_t, long double>& cache)
 {
-    long double pow2 = pow(2, n);
-    if (is_leaf(node))
+    // 1. Handle base cases: TrueNode and FalseNode.
+    if (node_ref == Node::true_node)
     {
-        return pow2;
+        return pow2_n_total_vars;
+    }
+    if (node_ref == Node::false_node)
+    {
+        return 0.0L;
     }
 
-    // TODO: check cache now.
-
-    Node *dnode = pointer(node);
-    if (vars.count(dnode->root) == 0)
+    // 2. Check cache.
+    auto it = cache.find(node_ref);
+    if (it != cache.end())
     {
-        assert(false);
+        return it->second;
     }
 
-    // TODO: this can be done in parallel.
-    long double countT = count_sat_helper(dnode->branch_true, n, vars);
-    long double countF = count_sat_helper(dnode->branch_false, n, vars);
+    // Get the actual node data (strips complement from node_ref).
+    Node *dnode_ptr = pointer(node_ref);
 
-    if (is_complemented(dnode->branch_true))
+    // 3. Assert that the variable of this node is in the vars_set.
+    assert(vars_set.count(dnode_ptr->root) != 0 && "Variable of BDD node not in specified variable set for count_sat");
+
+    // 4. Recursive calls for children.
+    // The `n_total_vars` and `pow2_n_total_vars` are passed down unchanged,
+    // as they represent the total context for scaling.
+    long double count_for_true_branch = count_sat_helper(dnode_ptr->branch_true,
+                                                         n_total_vars,
+                                                         vars_set,
+                                                         pow2_n_total_vars,
+                                                         cache);
+
+    long double count_for_false_branch = count_sat_helper(dnode_ptr->branch_false,
+                                                          n_total_vars,
+                                                          vars_set,
+                                                          pow2_n_total_vars,
+                                                          cache);
+
+    // 5. Adjust counts if branches are complemented.
+    // This logic assumes count_sat_helper returns the count for the specific node_ref passed to it.
+    // If dnode_ptr->branch_true is a complemented ref (e.g., !G),
+    // then count_for_true_branch is already CountSat(!G).
+    // No further adjustment needed here based on branch's complement bit.
+    // The recursive call handles the complement of its argument.
+
+    // Recursive step based on Shannon expansion: C(f) = (C(f|v=0) + C(f|v=1))/2, scaled by 2^N.
+    // Or, if C means full count: C(f) = (C(f|v=0) + C(f|v=1))/2 if var v is part of N.
+    // Here, count_for_true_branch is C(TrueBranchFunction, N vars).
+    // and count_for_false_branch is C(FalseBranchFunction, N vars).
+    long double result_for_dnode_ptr = (count_for_true_branch + count_for_false_branch) / 2.0L;
+
+    // 6. Handle if the current node_ref itself was complemented.
+    long double final_result_for_node_ref;
+    if (is_complemented(node_ref))
     {
-        countT = pow2 - countT;
+        final_result_for_node_ref = pow2_n_total_vars - result_for_dnode_ptr;
+    }
+    else
+    {
+        final_result_for_node_ref = result_for_dnode_ptr;
     }
 
-    long double count = countT + (countF - countT) / 2;
-    assert(count >= 0);
+    // Allow for small floating point inaccuracies if near zero.
+    assert(final_result_for_node_ref >= -1e-9);
 
-    // TODO: add to cache now.
-
-    return count;
+    // 7. Store in cache and return.
+    cache[node_ref] = final_result_for_node_ref;
+    return final_result_for_node_ref;
 }
+
 
 long double BDD::count_sat(std::set<uint32_t> vars)
 {
     int n = vars.size();
-    long double pow2 = pow(2, n);
-    long double count = count_sat_helper(this->_node, n, vars);
-
-    if (!is_complemented(this->_node))
-    {
-        count = pow2 - count;
+    if (n == 0 && (this->_node == Node::true_node || this->_node == Node::false_node)) {
+        // Special case: if no variables, True node has 1 satisfying assignment (empty assignment), False has 0.
+        // However, the problem is usually defined over a set of variables.
+        // If vars is empty, pow(2,0)=1.
+        // True node -> 1. False node -> 0.
+        if (this->_node == Node::true_node) return 1.0L;
+        if (this->_node == Node::false_node) return 0.0L;
+        // If node is not a terminal and n=0, it's ill-defined.
+        // The helper expects dnode->root to be in vars.
+        // For safety, if called with n=0 and non-terminal node, could return error or 0.
+        // Current structure will proceed, pow2=1. Assertion might fail.
+        // Let's assume n > 0 if node is not terminal, or vars contains all support vars.
     }
+
+
+    long double pow2_n = std::pow(2.0L, n); // Use long double for pow.
+    std::map<uint32_t, long double> cache;  // Create cache for this call.
+
+    // The helper function will now correctly calculate based on the node_ref it receives, including handling its own complement bit.
+    long double count = count_sat_helper(this->_node, n, vars, pow2_n, cache);
 
     return count;
 }

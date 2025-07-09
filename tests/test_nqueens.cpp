@@ -7,7 +7,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Luigi Capogrosso, Luca Geretti, 
+ * Copyright (c) 2023 Luigi Capogrosso, Luca Geretti,
  *                    Marco cristani, Franco Fummi, and Tiziano Villa.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -32,6 +32,7 @@
 
 #include <set>
 #include <ctime>
+#include <cmath>
 #include <chrono>
 #include <cassert>
 #include <unordered_map>
@@ -39,11 +40,12 @@
 #include "bdd.hpp"
 #include "test.hpp"
 
+// Global static for board size, used by counting_solution.
 static int N;
 
-int counting_solution(int n)
+long long counting_solution(int n_board_size)
 {
-    N = n;
+    N = n_board_size;
 
     BDD **X;
     BDD queen = BDD::bdd_true;
@@ -133,61 +135,112 @@ int counting_solution(int n)
         vars.insert((unsigned int) i);
     }
 
-    return queen.count_sat(vars);
+    return static_cast<long long>(std::round(queen.count_sat(vars)));
 }
 
 void nqueens_solution_1()
 {
     HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 1x1 chessboard.");
-
-    int s = counting_solution(1);
-
-    HERMESBDD_TEST_ASSERT(s == 1);
+    long long s = counting_solution(1);
+    HERMESBDD_TEST_ASSERT(s == 1LL);
 }
 
 void nqueens_solution_2()
 {
     HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 2x2 chessboard.");
+    long long s = counting_solution(2);
+    HERMESBDD_TEST_ASSERT(s == 0LL);
+}
 
-    int s = counting_solution(2);
-
-    HERMESBDD_TEST_ASSERT(s == 0);
+void nqueens_solution_3()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 3x3 chessboard.");
+    long long s = counting_solution(3);
+    HERMESBDD_TEST_ASSERT(s == 0LL);
 }
 
 void nqueens_solution_4()
 {
     HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 4x4 chessboard.");
-
-    int s = counting_solution(4);
-
-    HERMESBDD_TEST_ASSERT(s == 2);
+    long long s = counting_solution(4);
+    HERMESBDD_TEST_ASSERT(s == 2LL);
 }
 
 void nqueens_solution_5()
 {
     HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 5x5 chessboard.");
-
-    int s = counting_solution(5);
-
-    HERMESBDD_TEST_ASSERT(s == 10);
+    long long s = counting_solution(5);
+    HERMESBDD_TEST_ASSERT(s == 10LL);
 }
 
 void nqueens_solution_6()
 {
     HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 6x6 chessboard.");
-
-    int s = counting_solution(6);
-
-    HERMESBDD_TEST_ASSERT(s == 4);
+    long long s = counting_solution(6);
+    HERMESBDD_TEST_ASSERT(s == 4LL);
 }
 
 void nqueens_solution_7()
 {
     HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 7x7 chessboard.");
+    long long s = counting_solution(7);
+    HERMESBDD_TEST_ASSERT(s == 40LL);
+}
 
-    int s = counting_solution(7);
+void nqueens_solution_8()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 8x8 chessboard.");
+    long long s = counting_solution(8);
+    HERMESBDD_TEST_ASSERT(s == 92LL);
+}
 
-    HERMESBDD_TEST_ASSERT(s == 40);
+void nqueens_solution_9()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 9x9 chessboard.");
+    long long s = counting_solution(9);
+    HERMESBDD_TEST_ASSERT(s == 352LL);
+}
+
+void nqueens_solution_10()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 10x10 chessboard.");
+    long long s = counting_solution(10);
+    HERMESBDD_TEST_ASSERT(s == 724LL);
+}
+
+void nqueens_solution_11()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 11x11 chessboard.");
+    long long s = counting_solution(11);
+    HERMESBDD_TEST_ASSERT(s == 2680LL);
+}
+
+void nqueens_solution_12()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 12x12 chessboard.");
+    long long s = counting_solution(12);
+    HERMESBDD_TEST_ASSERT(s == 14200LL);
+}
+
+void nqueens_solution_13()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 13x13 chessboard.");
+    long long s = counting_solution(13);
+    HERMESBDD_TEST_ASSERT(s == 73712LL);
+}
+
+void nqueens_solution_14()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 14x14 chessboard.");
+    long long s = counting_solution(14);
+    HERMESBDD_TEST_ASSERT(s == 365596LL);
+}
+
+void nqueens_solution_15()
+{
+    HERMESBDD_PRINT_TEST_COMMENT("Testing N-queen problem using a 15x15 chessboard.");
+    long long s = counting_solution(15);
+    HERMESBDD_TEST_ASSERT(s == 2279184LL);
 }
 
 
@@ -195,10 +248,24 @@ int main()
 {
     nqueens_solution_1();
     nqueens_solution_2();
+    nqueens_solution_3();
     nqueens_solution_4();
     nqueens_solution_5();
     nqueens_solution_6();
     nqueens_solution_7();
+    nqueens_solution_8();
+    nqueens_solution_9();
+    nqueens_solution_10();
+
+    // Disabling tests for N > 10 by default due to long execution times.
+    // To enable them, uncomment the lines below.
+
+    // HERMESBDD_PRINT_TEST_COMMENT("Running extended N-Queens tests (N=11 to N=15). These may take some time.");
+    // nqueens_solution_11();
+    // nqueens_solution_12();
+    // nqueens_solution_13();
+    // nqueens_solution_14();
+    // nqueens_solution_15();
 
     return HERMESBDD_TEST_FAILURES;
 }
