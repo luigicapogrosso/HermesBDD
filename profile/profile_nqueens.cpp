@@ -7,7 +7,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Luigi Capogrosso, Luca Geretti, 
+ * Copyright (c) 2023 Luigi Capogrosso, Luca Geretti,
  *                    Marco cristani, Franco Fummi, and Tiziano Villa.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,17 +30,19 @@
  */
 
 
+#include <cmath>
 #include <cassert>
 #include <iostream>
 
 #include "bdd.hpp"
 #include "profile.hpp"
 
+// Global static for board size, used by counting_solution.
 static int N;
 
-int counting_solution(int n)
+long long counting_solution(int n_board_size)
 {
-    N = n;
+    N = n_board_size;
 
     BDD **X;
     BDD queen = BDD::bdd_true;
@@ -130,7 +132,7 @@ int counting_solution(int n)
         vars.insert((unsigned int)i);
     }
 
-    return queen.count_sat(vars);
+    return static_cast<long long>(std::round(queen.count_sat(vars)));
 }
 
 struct ProfileNQueens : public Profiler
