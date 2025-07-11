@@ -7,7 +7,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Luigi Capogrosso, Luca Geretti, 
+ * Copyright (c) 2023 Luigi Capogrosso, Luca Geretti,
  *                    Marco cristani, Franco Fummi, and Tiziano Villa.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -39,8 +39,7 @@
 #include "node.hpp"
 #include "bdd_internal.hpp"
 
-// TODO: tune this.
-static constexpr int granularity = 500;
+static constexpr int granularity = 50000;
 
 /*!
  * @brief Compute the complement of node.
@@ -319,37 +318,54 @@ uint32_t Node::ITE_without_cache(uint32_t A, uint32_t B, uint32_t C)
         uint32_t C_true = evaluate_at(C, x, true);
 
         uint32_t R_false, R_true;
-        if (pointer(A_false)->size +
-            pointer(B_false)->size +
-            pointer(C_false)->size > granularity)
-        {
-#ifdef NO_THREAD
-            R_false = ITE(A_false, B_false, C_false);
-#else
-            auto future = std::async (ITE, A_false, B_false, C_false);
-            R_false = future.get();
-#endif
-        }
-        else
-        {
-            R_false = ITE(A_false, B_false, C_false);
-        }
 
-        if (pointer(A_false)->size +
-            pointer(B_false)->size +
-            pointer(C_false)->size > granularity)
-        {
 #ifdef NO_THREAD
-            R_true = ITE(A_true, B_true, C_true);
+        R_false = ITE(A_false, B_false, C_false);
+        R_true = ITE(A_true, B_true, C_true);
 #else
-            auto future = std::async (ITE, A_true, B_true, C_true);
-            R_true = future.get();
-#endif
+        // Determine if tasks should run in parallel based on granularity.
+        auto get_node_size = [](uint32_t n) -> int {
+            if (is_leaf(n)) {
+                return 0; // Return int
+            }
+            // Ensure that we are not calling pointer() on a complemented leaf node directly for size.
+            // pointer() masks off the complement bit, so this should be okay,
+            // but the size is associated with the non-complemented node structure.
+            return pointer(n)->size;
+        };
+
+        bool parallel_false = (get_node_size(A_false) +
+                               get_node_size(B_false) +
+                               get_node_size(C_false) > granularity);
+        bool parallel_true = (get_node_size(A_true) +
+                              get_node_size(B_true) +
+                              get_node_size(C_true) > granularity);
+
+        if (parallel_false && parallel_true)
+        {
+            auto future_false = std::async(std::launch::async, ITE, A_false, B_false, C_false);
+            auto future_true = std::async(std::launch::async, ITE, A_true, B_true, C_true);
+            R_false = future_false.get();
+            R_true = future_true.get();
+        }
+        else if (parallel_false)
+        {
+            auto future_false = std::async(std::launch::async, ITE, A_false, B_false, C_false);
+            R_true = ITE(A_true, B_true, C_true);       // Run true path sequentially.
+            R_false = future_false.get();
+        }
+        else if (parallel_true)
+        {
+            auto future_true = std::async(std::launch::async, ITE, A_true, B_true, C_true);
+            R_false = ITE(A_false, B_false, C_false);   // Run false path sequentially.
+            R_true = future_true.get();
         }
         else
         {
+            R_false = ITE(A_false, B_false, C_false);
             R_true = ITE(A_true, B_true, C_true);
         }
+#endif
 
         result = make(x, R_true, R_false);
     }
