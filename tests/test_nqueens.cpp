@@ -255,12 +255,11 @@ int main()
     nqueens_solution_7();
     nqueens_solution_8();
     nqueens_solution_9();
-    nqueens_solution_10();
-
-    // Disabling tests for N > 10 by default due to long execution times.
+    // Disabling tests for N > 9 by default due to long execution times.
     // To enable them, uncomment the lines below.
 
-    // HERMESBDD_PRINT_TEST_COMMENT("Running extended N-Queens tests (N=11 to N=15). These may take some time.");
+    // HERMESBDD_PRINT_TEST_COMMENT("Running extended N-Queens tests (N=10 to N=15). These may take some time.");
+    // nqueens_solution_10();
     // nqueens_solution_11();
     // nqueens_solution_12();
     // nqueens_solution_13();

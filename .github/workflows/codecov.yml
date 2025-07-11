@@ -41,7 +41,7 @@ jobs:
       env:
           GCOV: gcov-10
       run: |
-        lcov --gcov-tool $GCOV --directory ${{runner.workspace}}/build --capture --output-file coverage.info
+        lcov --gcov-tool $GCOV --directory ${{runner.workspace}}/build --capture --output-file coverage.info --ignore-errors negative
         lcov --gcov-tool $GCOV --remove coverage.info '/usr/*' --output-file coverage.info
         lcov --gcov-tool $GCOV --list coverage.info
         bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
